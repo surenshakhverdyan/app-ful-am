@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Request } from 'express';
 import * as bcrypt from 'bcrypt';
 
 import { User } from 'src/schemas';
@@ -21,7 +22,11 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(dto: SignInDto) {
+  async signIn(dto: SignInDto): Promise<{
+    userResponse: IUserResponse;
+    authToken: string;
+    refreshToken: string;
+  }> {
     const user = await this.userModel.findOne({ email: dto.email });
     if (!user) throw new HttpException('User not found', 404);
 
@@ -50,5 +55,23 @@ export class AuthService {
     });
 
     return { userResponse, authToken, refreshToken };
+  }
+
+  async refreshToken(req: Request): Promise<{ authToken: string }> {
+    const payload: IPayload = await this.jwtService.verifyAsync(
+      req['refresh'],
+      {
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+      },
+    );
+    delete payload.exp;
+    delete payload.iat;
+
+    const authToken = await this.jwtService.signAsync(payload, {
+      secret: this.configService.get<string>('JWT_AUTH_SECRET'),
+      expiresIn: '1d',
+    });
+
+    return { authToken };
   }
 }
