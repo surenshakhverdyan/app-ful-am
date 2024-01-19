@@ -6,13 +6,15 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
+import { MailerService } from '@nestjs-modules/mailer';
 import { Model } from 'mongoose';
 import { Request } from 'express';
 import * as bcrypt from 'bcrypt';
 
 import { User } from 'src/schemas';
-import { SignInDto } from 'src/dtos';
+import { ForgotPasswordDto, ResetPasswordDto, SignInDto } from 'src/dtos';
 import { IPayload, IUserResponse } from 'src/interfaces';
+import { forgotPasswordTemplate } from 'src/templates';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +22,7 @@ export class AuthService {
     @InjectModel(User.name) private userModel: Model<User>,
     private readonly configService: ConfigService,
     private jwtService: JwtService,
+    private mailerService: MailerService,
   ) {}
 
   async signIn(dto: SignInDto): Promise<{
@@ -73,5 +76,46 @@ export class AuthService {
     });
 
     return { authToken };
+  }
+
+  async forgotPassword(dto: ForgotPasswordDto): Promise<boolean> {
+    const user = await this.userModel.findOne({ email: dto.email });
+    if (!user) throw new HttpException('User not found', 404);
+
+    const payload: IPayload = { sub: user._id, roles: user.roles };
+    const resetPasswordToken = await this.jwtService.signAsync(payload, {
+      secret: this.configService.get<string>('JWT_FORGOT_PASSWORD_SECRET'),
+      expiresIn: '1h',
+    });
+    const link = `${this.configService.get<string>('BASE_URL')}/reset-password/${resetPasswordToken}`;
+
+    const email = await this.mailerService.sendMail({
+      from: this.configService.get<string>('EMAIL_ADDRESS'),
+      to: user.email,
+      subject: 'Reset password',
+      html: forgotPasswordTemplate(link),
+    });
+
+    if (!(email.response.split(' ')[0] === '250')) return false;
+
+    return true;
+  }
+
+  async resetPassword(token: string, dto: ResetPasswordDto): Promise<boolean> {
+    if (!(dto.password === dto.passwordConfirmation))
+      throw new HttpException('Passwords do not match', 403);
+
+    const { sub } = await this.jwtService.verifyAsync(token, {
+      secret: this.configService.get<string>('JWT_FORGOT_PASSWORD_SECRET'),
+    });
+    const hashedPassword = await bcrypt.hash(dto.password, 10);
+
+    await this.userModel.findByIdAndUpdate(
+      sub,
+      { $set: { password: hashedPassword } },
+      { new: true },
+    );
+
+    return true;
   }
 }
