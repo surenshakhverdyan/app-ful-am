@@ -12,8 +12,7 @@ import { AuthService } from './auth.service';
 import { ForgotPasswordDto, ResetPasswordDto, SignInDto } from 'src/dtos';
 import { IUserResponse } from 'src/interfaces';
 import { Request } from 'express';
-import { RefreshGuard } from 'src/guards';
-import { ResetPasswordGuard } from 'src/guards/reset-password.guard';
+import { RefreshGuard, ResetPasswordGuard } from 'src/guards';
 
 @Controller('auth')
 export class AuthController {
