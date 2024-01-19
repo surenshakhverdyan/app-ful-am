@@ -4,6 +4,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MulterModule } from '@nestjs/platform-express';
 
+import { AdminModule } from './admin/admin.module';
+import { AuthModule } from './auth/auth.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,6 +28,8 @@ import { MulterModule } from '@nestjs/platform-express';
         uri: configService.get<string>('MONGO_URI'),
       }),
     }),
+    AdminModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
