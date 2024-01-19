@@ -11,7 +11,7 @@ import * as bcrypt from 'bcrypt';
 
 import { User } from 'src/schemas';
 import { SignInDto } from 'src/dtos';
-import { IPayload } from 'src/interfaces';
+import { IPayload, IUserResponse } from 'src/interfaces';
 
 @Injectable()
 export class AuthService {
@@ -28,6 +28,15 @@ export class AuthService {
     if (!(await bcrypt.compare(dto.password, user.password)))
       throw new UnauthorizedException();
 
+    const userResponse: IUserResponse = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      roles: user.roles,
+      team: user.team,
+    };
+
     const payload: IPayload = { sub: user._id, roles: user.roles };
 
     const authToken = await this.jwtService.signAsync(payload, {
@@ -35,6 +44,11 @@ export class AuthService {
       expiresIn: '1d',
     });
 
-    return { authToken };
+    const refreshToken = await this.jwtService.signAsync(payload, {
+      secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+      expiresIn: '7d',
+    });
+
+    return { userResponse, authToken, refreshToken };
   }
 }
