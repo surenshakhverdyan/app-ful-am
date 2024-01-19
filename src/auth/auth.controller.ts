@@ -7,11 +7,11 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { Request } from 'express';
 
 import { AuthService } from './auth.service';
 import { ForgotPasswordDto, ResetPasswordDto, SignInDto } from 'src/dtos';
 import { IUserResponse } from 'src/interfaces';
-import { Request } from 'express';
 import { RefreshGuard, ResetPasswordGuard } from 'src/guards';
 
 @Controller('auth')
