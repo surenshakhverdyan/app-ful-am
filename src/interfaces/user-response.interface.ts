@@ -1,6 +1,7 @@
 import { Types } from 'mongoose';
 
 import { Role } from 'src/enums';
+import { Team } from 'src/schemas';
 
 export interface IUserResponse {
   _id: Types.ObjectId;
@@ -9,5 +10,5 @@ export interface IUserResponse {
   phone: string;
   password?: string;
   roles: [Role];
-  team?: Types.ObjectId;
+  team?: Team;
 }
