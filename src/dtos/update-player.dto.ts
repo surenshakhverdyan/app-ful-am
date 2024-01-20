@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class UpdatePlayerAvatarDto {
+export class UpdatePlayerDto {
   @IsString()
   @IsNotEmpty()
   teamId: string;

@@ -6,11 +6,7 @@ import { Model } from 'mongoose';
 import { extname } from 'path';
 import * as fs from 'fs';
 
-import {
-  CreateTeamDto,
-  UpdatePlayerAvatarDto,
-  UpdateTeamAvatarDto,
-} from 'src/dtos';
+import { CreateTeamDto, UpdatePlayerDto, UpdateTeamAvatarDto } from 'src/dtos';
 import { Team, User } from 'src/schemas';
 
 @Injectable()
@@ -76,7 +72,7 @@ export class TeamService {
   }
 
   async updatePlayerAvatar(
-    dto: UpdatePlayerAvatarDto,
+    dto: UpdatePlayerDto,
     avatar: Express.Multer.File,
   ): Promise<boolean> {
     const { players } = await this.teamModel.findOne(
@@ -104,6 +100,32 @@ export class TeamService {
     } catch (error: any) {
       fs.promises.unlink(`uploads/${fileName}`);
       throw new HttpException(error.message, error.code);
+    }
+
+    return true;
+  }
+
+  async deletePlayer(dto: UpdatePlayerDto): Promise<boolean> {
+    const { players } = await this.teamModel.findOne(
+      {
+        _id: dto.teamId,
+        'players._id': dto.playerId,
+      },
+      { 'players.$': 1 },
+    );
+    fs.promises.unlink(`uploads/${players[0].avatar}`);
+
+    const team = await this.teamModel.findByIdAndUpdate(
+      dto.teamId,
+      {
+        $pull: { players: { _id: dto.playerId } },
+      },
+      { new: true },
+    );
+
+    if (team.players.length < 9) {
+      team.status = false;
+      await team.save();
     }
 
     return true;

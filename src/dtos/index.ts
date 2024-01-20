@@ -6,4 +6,4 @@ export * from './update-password.dto';
 export * from './update-profile.dto';
 export * from './create-team.dto';
 export * from './update-team-avatar.dto';
-export * from './update-player-avatar.dto';
+export * from './update-player.dto';
