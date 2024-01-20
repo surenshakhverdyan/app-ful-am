@@ -22,7 +22,7 @@ export class User {
   roles: [Role];
 
   @Prop({ type: Types.ObjectId, ref: 'Team' })
-  team?: Team;
+  team: Team;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

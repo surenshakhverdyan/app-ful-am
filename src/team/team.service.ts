@@ -1,0 +1,43 @@
+import { HttpException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
+import { CreateTeamDto } from 'src/dtos';
+import { Team, User } from 'src/schemas';
+
+@Injectable()
+export class TeamService {
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Team.name) private teamModel: Model<Team>,
+    private readonly configService: ConfigService,
+    private jwtService: JwtService,
+  ) {}
+
+  async createTeam(token: string, dto: CreateTeamDto): Promise<boolean> {
+    const { sub } = await this.jwtService.verifyAsync(token.split(' ')[1], {
+      secret: this.configService.get<string>('JWT_AUTH_SECRET'),
+    });
+
+    try {
+      const user = await this.userModel.findById(sub);
+      dto.user = user._id;
+
+      const team = await this.teamModel.create(dto);
+      if (dto.players.length > 8) {
+        team.status = true;
+        team.save();
+      }
+
+      await user.updateOne({ $set: { team: team._id } });
+    } catch (error: any) {
+      if (error.code === 11000)
+        throw new HttpException('You already have created a team', 403);
+      throw new HttpException(error.message, error.code);
+    }
+
+    return true;
+  }
+}
