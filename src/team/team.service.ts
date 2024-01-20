@@ -2,11 +2,15 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { extname } from 'path';
 import * as fs from 'fs';
 
-import { CreateTeamDto } from 'src/dtos';
+import {
+  CreateTeamDto,
+  UpdatePlayerAvatarDto,
+  UpdateTeamAvatarDto,
+} from 'src/dtos';
 import { Team, User } from 'src/schemas';
 
 @Injectable()
@@ -54,15 +58,10 @@ export class TeamService {
   }
 
   async updateTeamAvatar(
-    token: string,
+    dto: UpdateTeamAvatarDto,
     avatar: Express.Multer.File,
   ): Promise<boolean> {
-    const { sub } = await this.jwtService.verifyAsync(token.split(' ')[1], {
-      secret: this.configService.get<string>('JWT_AUTH_SECRET'),
-    });
-
-    const userId = new Types.ObjectId(sub);
-    const team = await this.teamModel.findOne({ user: userId });
+    const team = await this.teamModel.findById(dto.teamId);
     if (team.avatar) {
       fs.promises.unlink(`uploads/${team.avatar}`);
     }
@@ -72,6 +71,40 @@ export class TeamService {
 
     team.avatar = fileName;
     team.save();
+
+    return true;
+  }
+
+  async updatePlayerAvatar(
+    dto: UpdatePlayerAvatarDto,
+    avatar: Express.Multer.File,
+  ): Promise<boolean> {
+    const { players } = await this.teamModel.findOne(
+      { _id: dto.teamId, 'players._id': dto.playerId },
+      { 'players.$': 1 },
+    );
+
+    if (players) {
+      fs.promises.unlink(`uploads/${players[0].avatar}`);
+    }
+
+    const fileName = `${Date.now()}${extname(avatar.originalname)}`;
+    fs.writeFileSync(`uploads/${fileName}`, avatar.buffer);
+    try {
+      await this.teamModel.findByIdAndUpdate(
+        dto.teamId,
+        {
+          $set: { 'players.$[elem].avatar': fileName },
+        },
+        {
+          arrayFilters: [{ 'elem._id': dto.playerId }],
+          new: true,
+        },
+      );
+    } catch (error: any) {
+      fs.promises.unlink(`uploads/${fileName}`);
+      throw new HttpException(error.message, error.code);
+    }
 
     return true;
   }

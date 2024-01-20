@@ -14,7 +14,11 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 import { AuthGuard } from 'src/guards';
 import { TeamService } from './team.service';
-import { CreateTeamDto } from 'src/dtos';
+import {
+  CreateTeamDto,
+  UpdatePlayerAvatarDto,
+  UpdateTeamAvatarDto,
+} from 'src/dtos';
 
 @UseGuards(AuthGuard)
 @Controller('team')
@@ -40,7 +44,7 @@ export class TeamController {
   @Patch('update-team-avatar')
   @UseInterceptors(FileInterceptor('avatar'))
   updateTeamAvatar(
-    @Headers('authorization') token: string,
+    @Body() dto: UpdateTeamAvatarDto,
     @UploadedFile(
       new ParseFilePipe({
         validators: [new FileTypeValidator({ fileType: 'jpg|jpeg|png' })],
@@ -49,6 +53,21 @@ export class TeamController {
     )
     avatar: Express.Multer.File,
   ): Promise<boolean> {
-    return this.teamService.updateTeamAvatar(token, avatar);
+    return this.teamService.updateTeamAvatar(dto, avatar);
+  }
+
+  @Patch('update-player-avatar')
+  @UseInterceptors(FileInterceptor('avatar'))
+  updatePlayerAvatar(
+    @Body() dto: UpdatePlayerAvatarDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: 'jpg|jpeg|png' })],
+        fileIsRequired: true,
+      }),
+    )
+    avatar: Express.Multer.File,
+  ): Promise<boolean> {
+    return this.teamService.updatePlayerAvatar(dto, avatar);
   }
 }
