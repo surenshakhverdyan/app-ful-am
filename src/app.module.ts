@@ -2,7 +2,6 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MulterModule } from '@nestjs/platform-express';
 
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
@@ -20,9 +19,6 @@ import { TeamModule } from './team/team.module';
       useFactory: async (configService: ConfigService) => ({
         transport: `smtps://${configService.get<string>('EMAIL_ADDRESS')}:${configService.get<string>('EMAIL_PASSWORD')}@${configService.get<string>('EMAIL_HOST')}`,
       }),
-    }),
-    MulterModule.register({
-      dest: 'uploads',
     }),
     MongooseModule.forRootAsync({
       inject: [ConfigService],

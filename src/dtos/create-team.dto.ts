@@ -28,6 +28,10 @@ export class CreateTeamDto {
   @IsNotEmpty()
   name: string;
 
+  @IsString()
+  @IsOptional()
+  avatar?: string;
+
   @IsOptional()
   user?: Types.ObjectId;
 

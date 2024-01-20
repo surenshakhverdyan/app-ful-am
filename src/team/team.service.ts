@@ -3,6 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { extname } from 'path';
+import * as fs from 'fs';
 
 import { CreateTeamDto } from 'src/dtos';
 import { Team, User } from 'src/schemas';
@@ -16,13 +18,22 @@ export class TeamService {
     private jwtService: JwtService,
   ) {}
 
-  async createTeam(token: string, dto: CreateTeamDto): Promise<boolean> {
+  async createTeam(
+    token: string,
+    avatar: Express.Multer.File,
+    dto: CreateTeamDto,
+  ): Promise<boolean> {
     const { sub } = await this.jwtService.verifyAsync(token.split(' ')[1], {
       secret: this.configService.get<string>('JWT_AUTH_SECRET'),
     });
 
     try {
       const user = await this.userModel.findById(sub);
+      if (avatar !== undefined) {
+        const fileName = `${Date.now()}${extname(avatar.originalname)}`;
+        fs.writeFileSync(`uploads/${fileName}`, avatar.buffer);
+        dto.avatar = fileName;
+      }
       dto.user = user._id;
 
       const team = await this.teamModel.create(dto);
@@ -33,6 +44,7 @@ export class TeamService {
 
       await user.updateOne({ $set: { team: team._id } });
     } catch (error: any) {
+      if (dto.avatar) await fs.promises.unlink(`uploads/${dto.avatar}`);
       if (error.code === 11000)
         throw new HttpException('You already have created a team', 403);
       throw new HttpException(error.message, error.code);
