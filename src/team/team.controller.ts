@@ -4,6 +4,7 @@ import {
   FileTypeValidator,
   Headers,
   ParseFilePipe,
+  Patch,
   Post,
   UploadedFile,
   UseGuards,
@@ -34,5 +35,20 @@ export class TeamController {
     avatar: Express.Multer.File,
   ): Promise<boolean> {
     return this.teamService.createTeam(token, avatar, dto);
+  }
+
+  @Patch('update-team-avatar')
+  @UseInterceptors(FileInterceptor('avatar'))
+  updateTeamAvatar(
+    @Headers('authorization') token: string,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: 'jpg|jpeg|png' })],
+        fileIsRequired: true,
+      }),
+    )
+    avatar: Express.Multer.File,
+  ): Promise<boolean> {
+    return this.teamService.updateTeamAvatar(token, avatar);
   }
 }

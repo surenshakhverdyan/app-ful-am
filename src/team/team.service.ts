@@ -2,7 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { extname } from 'path';
 import * as fs from 'fs';
 
@@ -49,6 +49,29 @@ export class TeamService {
         throw new HttpException('You already have created a team', 403);
       throw new HttpException(error.message, error.code);
     }
+
+    return true;
+  }
+
+  async updateTeamAvatar(
+    token: string,
+    avatar: Express.Multer.File,
+  ): Promise<boolean> {
+    const { sub } = await this.jwtService.verifyAsync(token.split(' ')[1], {
+      secret: this.configService.get<string>('JWT_AUTH_SECRET'),
+    });
+
+    const userId = new Types.ObjectId(sub);
+    const team = await this.teamModel.findOne({ user: userId });
+    if (team.avatar) {
+      fs.promises.unlink(`uploads/${team.avatar}`);
+    }
+
+    const fileName = `${Date.now()}${extname(avatar.originalname)}`;
+    fs.writeFileSync(`uploads/${fileName}`, avatar.buffer);
+
+    team.avatar = fileName;
+    team.save();
 
     return true;
   }
