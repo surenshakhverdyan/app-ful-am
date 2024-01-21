@@ -1,8 +1,9 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Delete, UseGuards } from '@nestjs/common';
 
 import { AdminService } from './admin.service';
 import { CreateUserDto } from 'src/dtos/create-user.dto';
 import { AdminGuard } from 'src/guards';
+import { DeleteUserDto } from 'src/dtos';
 
 @UseGuards(AdminGuard)
 @Controller('admin')
@@ -12,5 +13,10 @@ export class AdminController {
   @Post('create-user')
   createUser(@Body() dto: CreateUserDto): Promise<boolean> {
     return this.adminService.createUser(dto);
+  }
+
+  @Delete('delete-user')
+  DeleteUser(@Body() dto: DeleteUserDto): Promise<boolean> {
+    return this.adminService.deleteUser(dto);
   }
 }

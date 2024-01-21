@@ -4,9 +4,10 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
+import * as fs from 'fs';
 
-import { CreateUserDto } from 'src/dtos';
-import { User } from 'src/schemas';
+import { CreateUserDto, DeleteUserDto } from 'src/dtos';
+import { Team, User } from 'src/schemas';
 import { IUserResponse } from 'src/interfaces';
 import { welcomeTemplate } from 'src/templates';
 
@@ -14,6 +15,7 @@ import { welcomeTemplate } from 'src/templates';
 export class AdminService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Team.name) private teamModel: Model<Team>,
     private readonly mailerService: MailerService,
     private readonly configService: ConfigService,
   ) {}
@@ -49,6 +51,27 @@ export class AdminService {
     } catch (error: any) {
       if (error.code === 11000)
         throw new HttpException('The email or phone already taken', 403);
+    }
+
+    return true;
+  }
+
+  async deleteUser(dto: DeleteUserDto): Promise<boolean> {
+    try {
+      const user = await this.userModel
+        .findByIdAndDelete(dto.userId)
+        .populate('team');
+      if (user.team.avatar !== undefined)
+        fs.promises.unlink(`uploads/${user.team.avatar}`);
+
+      user.team.players.forEach((player) => {
+        if (player.avatar !== undefined)
+          fs.promises.unlink(`uploads/${player.avatar}`);
+      });
+
+      await this.teamModel.findByIdAndDelete(user.team);
+    } catch (error: any) {
+      throw new HttpException(error.message, error.code);
     }
 
     return true;

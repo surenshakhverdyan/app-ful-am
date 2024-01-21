@@ -8,3 +8,4 @@ export * from './create-team.dto';
 export * from './update-team-avatar.dto';
 export * from './update-player.dto';
 export * from './add-plyaer.dto';
+export * from './delete-user.dto';
