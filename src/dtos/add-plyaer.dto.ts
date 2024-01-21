@@ -1,4 +1,10 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 import { Position } from 'src/enums';
 
@@ -18,4 +24,8 @@ export class AddPlayerDto {
   @IsString()
   @IsNotEmpty()
   teamId: string;
+
+  @IsString()
+  @IsOptional()
+  avatar?: string;
 }

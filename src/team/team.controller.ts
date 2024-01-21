@@ -7,7 +7,6 @@ import {
   ParseFilePipe,
   Patch,
   Post,
-  Put,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -79,7 +78,7 @@ export class TeamController {
     return this.teamService.deletePlayer(dto);
   }
 
-  @Put('add-player')
+  @Patch('add-player')
   @UseInterceptors(FileInterceptor('avatar'))
   addPlayer(
     @UploadedFile(

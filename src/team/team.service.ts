@@ -143,25 +143,19 @@ export class TeamService {
     const team = await this.teamModel.findById(dto.teamId);
 
     try {
-      const plyaer = {
-        name: dto.name,
-        number: dto.number,
-        position: dto.position,
-        avatar: undefined,
-      };
-
-      if (avatar) {
+      if (avatar !== undefined) {
         const fileName = `${Date.now()}${extname(avatar.originalname)}`;
         fs.writeFileSync(`uploads/${fileName}`, avatar.buffer);
-        plyaer.avatar = fileName;
+        dto.avatar = fileName;
       }
 
-      team.players.push(plyaer);
+      team.players.push(dto);
 
       if (team.players.length > 8) team.status = true;
 
       await team.save();
     } catch (error: any) {
+      if (dto.avatar) fs.promises.unlink(`uploads/${dto.avatar}`);
       throw new HttpException(error.message, error.code);
     }
 
