@@ -6,7 +6,12 @@ import { Model } from 'mongoose';
 import { extname } from 'path';
 import * as fs from 'fs';
 
-import { CreateTeamDto, UpdatePlayerDto, UpdateTeamAvatarDto } from 'src/dtos';
+import {
+  AddPlayerDto,
+  CreateTeamDto,
+  UpdatePlayerDto,
+  UpdateTeamAvatarDto,
+} from 'src/dtos';
 import { Team, User } from 'src/schemas';
 
 @Injectable()
@@ -126,6 +131,38 @@ export class TeamService {
     if (team.players.length < 9) {
       team.status = false;
       await team.save();
+    }
+
+    return true;
+  }
+
+  async addPlayer(
+    avatar: Express.Multer.File,
+    dto: AddPlayerDto,
+  ): Promise<boolean> {
+    const team = await this.teamModel.findById(dto.teamId);
+
+    try {
+      const plyaer = {
+        name: dto.name,
+        number: dto.number,
+        position: dto.position,
+        avatar: undefined,
+      };
+
+      if (avatar) {
+        const fileName = `${Date.now()}${extname(avatar.originalname)}`;
+        fs.writeFileSync(`uploads/${fileName}`, avatar.buffer);
+        plyaer.avatar = fileName;
+      }
+
+      team.players.push(plyaer);
+
+      if (team.players.length > 8) team.status = true;
+
+      await team.save();
+    } catch (error: any) {
+      throw new HttpException(error.message, error.code);
     }
 
     return true;
