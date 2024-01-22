@@ -118,7 +118,8 @@ export class TeamService {
       },
       { 'players.$': 1 },
     );
-    fs.promises.unlink(`uploads/${players[0].avatar}`);
+    if (players[0].avatar !== undefined)
+      fs.promises.unlink(`uploads/${players[0].avatar}`);
 
     const team = await this.teamModel.findByIdAndUpdate(
       dto.teamId,

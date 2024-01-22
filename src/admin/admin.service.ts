@@ -6,7 +6,7 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as fs from 'fs';
 
-import { CreateUserDto, DeleteUserDto } from 'src/dtos';
+import { CreateUserDto, DeleteUserDto, UpdatePlayerDto } from 'src/dtos';
 import { Team, User } from 'src/schemas';
 import { IUserResponse } from 'src/interfaces';
 import { welcomeTemplate } from 'src/templates';
@@ -51,6 +51,33 @@ export class AdminService {
     } catch (error: any) {
       if (error.code === 11000)
         throw new HttpException('The email or phone already taken', 403);
+    }
+
+    return true;
+  }
+
+  async deletePlayer(dto: UpdatePlayerDto): Promise<boolean> {
+    const { players } = await this.teamModel.findOne(
+      {
+        _id: dto.teamId,
+        'players._id': dto.playerId,
+      },
+      { 'players.$': 1 },
+    );
+    if (players[0].avatar !== undefined)
+      fs.promises.unlink(`uploads/${players[0].avatar}`);
+
+    const team = await this.teamModel.findByIdAndUpdate(
+      dto.teamId,
+      {
+        $pull: { players: { _id: dto.playerId } },
+      },
+      { new: true },
+    );
+
+    if (team.players.length < 9) {
+      team.status = false;
+      await team.save();
     }
 
     return true;
