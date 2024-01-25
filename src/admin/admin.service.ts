@@ -88,13 +88,18 @@ export class AdminService {
       const user = await this.userModel
         .findByIdAndDelete(dto.userId)
         .populate('team');
-      if (user.team.avatar !== undefined)
+
+      if (!user) throw new HttpException('User not found', 404);
+      if (user.team && user.team.avatar !== undefined) {
         fs.promises.unlink(`uploads/${user.team.avatar}`);
 
-      user.team.players.forEach((player) => {
-        if (player.avatar !== undefined)
-          fs.promises.unlink(`uploads/${player.avatar}`);
-      });
+        if (user.team.players) {
+          user.team.players.forEach((player) => {
+            if (player.avatar !== undefined)
+              fs.promises.unlink(`uploads/${player.avatar}`);
+          });
+        }
+      }
 
       await this.teamModel.findByIdAndDelete(user.team);
     } catch (error: any) {
