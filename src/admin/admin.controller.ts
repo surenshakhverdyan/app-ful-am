@@ -4,7 +4,7 @@ import { AdminService } from './admin.service';
 import { CreateUserDto } from 'src/dtos/create-user.dto';
 import { AdminGuard } from 'src/guards';
 import { DeleteUserDto, UpdatePlayerDto } from 'src/dtos';
-import { User } from 'src/schemas';
+import { IUserResponse } from 'src/interfaces';
 
 @UseGuards(AdminGuard)
 @Controller('admin')
@@ -27,7 +27,7 @@ export class AdminController {
   }
 
   @Get('get-users')
-  getUsers(): Promise<User[]> {
+  getUsers(): Promise<IUserResponse[]> {
     return this.adminService.getUsers();
   }
 }

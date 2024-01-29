@@ -110,8 +110,21 @@ export class AdminService {
     return true;
   }
 
-  async getUsers(): Promise<User[]> {
+  async getUsers(): Promise<IUserResponse[]> {
     const users = await this.userModel.find({ roles: { $nin: [Role.Admin] } });
-    return users;
+    const usersResponse = users.map((user) => {
+      const userResponse: IUserResponse = {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        roles: user.roles,
+        team: user.team,
+      };
+
+      return userResponse;
+    });
+
+    return usersResponse;
   }
 }
