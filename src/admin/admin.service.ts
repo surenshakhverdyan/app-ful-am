@@ -10,6 +10,7 @@ import { CreateUserDto, DeleteUserDto, UpdatePlayerDto } from 'src/dtos';
 import { Team, User } from 'src/schemas';
 import { IUserResponse } from 'src/interfaces';
 import { welcomeTemplate } from 'src/templates';
+import { Role } from 'src/enums';
 
 @Injectable()
 export class AdminService {
@@ -107,5 +108,10 @@ export class AdminService {
     }
 
     return true;
+  }
+
+  async getUsers(): Promise<User[]> {
+    const users = await this.userModel.find({ roles: { $nin: [Role.Admin] } });
+    return users;
   }
 }
