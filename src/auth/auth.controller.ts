@@ -29,7 +29,9 @@ export class AuthController {
 
   @UseGuards(RefreshGuard)
   @Post('refresh-token')
-  refreshToken(@Headers() req: Request): Promise<{ authToken: string }> {
+  refreshToken(
+    @Headers() req: Request,
+  ): Promise<{ userResponse: IUserResponse; authToken: string }> {
     return this.authService.refreshToken(req);
   }
 

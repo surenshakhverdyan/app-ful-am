@@ -60,7 +60,9 @@ export class AuthService {
     return { userResponse, authToken, refreshToken };
   }
 
-  async refreshToken(req: Request): Promise<{ authToken: string }> {
+  async refreshToken(
+    req: Request,
+  ): Promise<{ userResponse: IUserResponse; authToken: string }> {
     const payload: IPayload = await this.jwtService.verifyAsync(
       req['refresh'],
       {
@@ -70,12 +72,22 @@ export class AuthService {
     delete payload.exp;
     delete payload.iat;
 
+    const user = await this.userModel.findById(payload.sub);
+    const userResponse: IUserResponse = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      roles: user.roles,
+      team: user.team,
+    };
+
     const authToken = await this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('JWT_AUTH_SECRET'),
       expiresIn: '1d',
     });
 
-    return { authToken };
+    return { userResponse, authToken };
   }
 
   async forgotPassword(dto: ForgotPasswordDto): Promise<boolean> {
