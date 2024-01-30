@@ -6,11 +6,18 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as fs from 'fs';
 
-import { CreateUserDto, DeleteUserDto, UpdatePlayerDto } from 'src/dtos';
+import {
+  CreateUserDto,
+  DeleteUserDto,
+  UpdatePasswordDto,
+  UpdatePlayerDto,
+  UpdateProfileDto,
+} from 'src/dtos';
 import { Team, User } from 'src/schemas';
-import { IUserResponse } from 'src/interfaces';
+import { IPayload, IUserResponse } from 'src/interfaces';
 import { welcomeTemplate } from 'src/templates';
 import { Role } from 'src/enums';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AdminService {
@@ -19,6 +26,7 @@ export class AdminService {
     @InjectModel(Team.name) private teamModel: Model<Team>,
     private readonly mailerService: MailerService,
     private readonly configService: ConfigService,
+    private jwtService: JwtService,
   ) {}
 
   async createUser(dto: CreateUserDto): Promise<boolean> {
@@ -126,5 +134,41 @@ export class AdminService {
     });
 
     return usersResponse;
+  }
+
+  async passwordUpdate(
+    token: string,
+    dto: UpdatePasswordDto,
+  ): Promise<boolean> {
+    const payload: IPayload = await this.jwtService.verifyAsync(
+      token.split(' ')[1],
+      {
+        secret: this.configService.get<string>('JWT_AUTH_SECRET'),
+      },
+    );
+
+    const user = await this.userModel.findById(payload.sub);
+    if (!(dto.newPassword === dto.passwordConfirmation))
+      throw new HttpException('Passwords do not match', 403);
+
+    if (!(await bcrypt.compare(dto.password, user.password)))
+      throw new HttpException('Current password was wrong', 403);
+
+    const hashedPassword = await bcrypt.hash(dto.newPassword, 10);
+
+    user.password = hashedPassword;
+    user.save();
+
+    return true;
+  }
+
+  async updateProfile(token: string, dto: UpdateProfileDto): Promise<boolean> {
+    const { sub } = await this.jwtService.verifyAsync(token.split(' ')[1], {
+      secret: this.configService.get<string>('JWT_AUTH_SECRET'),
+    });
+
+    await this.userModel.findByIdAndUpdate(sub, { $set: dto }, { new: true });
+
+    return true;
   }
 }
