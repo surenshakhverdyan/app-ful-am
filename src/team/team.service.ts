@@ -25,7 +25,7 @@ export class TeamService {
 
   async createTeam(
     token: string,
-    avatar: Express.Multer.File,
+    avatars: Express.Multer.File[],
     dto: CreateTeamDto,
   ): Promise<boolean> {
     const { sub } = await this.jwtService.verifyAsync(token.split(' ')[1], {
@@ -34,12 +34,23 @@ export class TeamService {
 
     try {
       const user = await this.userModel.findById(sub);
-      if (avatar !== undefined) {
-        const fileName = `${Date.now()}${extname(avatar.originalname)}`;
-        fs.writeFileSync(`uploads/${fileName}`, avatar.buffer);
+      if (avatars['avatar'][0] !== undefined) {
+        const fileName = `${Date.now() + Math.floor(Math.random() * 9999)}${extname(avatars['avatar'][0].originalname)}`;
+        fs.writeFileSync(`uploads/${fileName}`, avatars['avatar'][0].buffer);
         dto.avatar = fileName;
       }
       dto.user = user._id;
+
+      for (let i = 0; i < dto.players.length; i++) {
+        if (avatars[`players[${i}][avatar]`] !== undefined) {
+          const filename = `${Date.now() + Math.floor(Math.random() * 9999)}${extname(avatars[`players[${i}][avatar]`][0].originalname)}`;
+          fs.writeFileSync(
+            `uploads/${filename}`,
+            avatars[`players[${i}][avatar]`][0].buffer,
+          );
+          dto.players[i].avatar = filename;
+        }
+      }
 
       const team = await this.teamModel.create(dto);
       if (dto.players.length > 8) {
@@ -50,6 +61,11 @@ export class TeamService {
       await user.updateOne({ $set: { team: team._id } });
     } catch (error: any) {
       if (dto.avatar) await fs.promises.unlink(`uploads/${dto.avatar}`);
+      for (let i = 0; i < dto.players.length; i++) {
+        if (dto.players[i].avatar) {
+          await fs.promises.unlink(`uploads/${dto.players[i].avatar}`);
+        }
+      }
       if (error.code === 11000)
         throw new HttpException('You already have created a team', 403);
       throw new HttpException(error.message, error.code);

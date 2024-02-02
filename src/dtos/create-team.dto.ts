@@ -21,6 +21,10 @@ class PlayerDTO {
 
   @IsEnum(Position)
   position: Position;
+
+  @IsString()
+  @IsOptional()
+  avatar?: string;
 }
 
 export class CreateTeamDto {

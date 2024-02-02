@@ -4,14 +4,19 @@ import {
   Delete,
   FileTypeValidator,
   Headers,
+  HttpException,
   ParseFilePipe,
   Patch,
   Post,
   UploadedFile,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  FileFieldsInterceptor,
+  FileInterceptor,
+} from '@nestjs/platform-express';
 
 import { AuthGuard } from 'src/guards';
 import { TeamService } from './team.service';
@@ -28,19 +33,35 @@ export class TeamController {
   constructor(private teamService: TeamService) {}
 
   @Post('create-team')
-  @UseInterceptors(FileInterceptor('avatar'))
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'avatar' },
+      ...Array.from({ length: 21 }, (_, index) => ({
+        name: `players[${index}][avatar]`,
+        maxCount: 1,
+      })),
+    ]),
+  )
   createTeam(
     @Headers('authorization') token: string,
     @Body() dto: CreateTeamDto,
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [new FileTypeValidator({ fileType: 'jpg|jpeg|png' })],
-        fileIsRequired: false,
-      }),
-    )
-    avatar: Express.Multer.File,
+    @UploadedFiles(new ParseFilePipe({ fileIsRequired: false }))
+    avatars: Express.Multer.File[],
   ): Promise<boolean> {
-    return this.teamService.createTeam(token, avatar, dto);
+    const flatAvatarArray = Object.values(
+      avatars,
+    ).flat() as Express.Multer.File[];
+
+    const fileTypeValidator = new FileTypeValidator({
+      fileType: 'jpg|jpeg|png',
+    });
+    flatAvatarArray.map((avatar) => {
+      const isValid = fileTypeValidator.isValid(avatar);
+      if (!isValid) {
+        throw new HttpException('Invalid file type', 403);
+      }
+    });
+    return this.teamService.createTeam(token, avatars, dto);
   }
 
   @Patch('update-team-avatar')
