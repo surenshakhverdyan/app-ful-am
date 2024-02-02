@@ -61,4 +61,9 @@ export class AdminController {
   ): Promise<boolean> {
     return this.adminService.updateProfile(token, dto);
   }
+
+  @Get('get-roles')
+  getRoles(): Record<string, string> {
+    return this.adminService.getRoles();
+  }
 }

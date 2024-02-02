@@ -171,4 +171,8 @@ export class AdminService {
 
     return true;
   }
+
+  getRoles(): Record<string, string> {
+    return Role;
+  }
 }

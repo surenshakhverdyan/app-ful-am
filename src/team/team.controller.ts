@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   FileTypeValidator,
+  Get,
   Headers,
   HttpException,
   ParseFilePipe,
@@ -112,5 +113,10 @@ export class TeamController {
     @Body() dto: AddPlayerDto,
   ): Promise<boolean> {
     return this.teamService.addPlayer(avatar, dto);
+  }
+
+  @Get('get-positions')
+  getPositions(): Record<string, string> {
+    return this.teamService.getPositions();
   }
 }
