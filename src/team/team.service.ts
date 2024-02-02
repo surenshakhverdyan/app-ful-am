@@ -13,7 +13,6 @@ import {
   UpdateTeamAvatarDto,
 } from 'src/dtos';
 import { Team, User } from 'src/schemas';
-import { Position } from 'src/enums';
 
 @Injectable()
 export class TeamService {
@@ -178,9 +177,5 @@ export class TeamService {
     }
 
     return true;
-  }
-
-  getPositions(): Record<string, string> {
-    return Position;
   }
 }

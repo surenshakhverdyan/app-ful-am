@@ -119,7 +119,9 @@ export class AdminService {
   }
 
   async getUsers(): Promise<IUserResponse[]> {
-    const users = await this.userModel.find({ roles: { $nin: [Role.Admin] } });
+    const users = await this.userModel
+      .find({ roles: { $nin: [Role.Admin] } })
+      .populate('team');
     const usersResponse = users.map((user) => {
       const userResponse: IUserResponse = {
         _id: user._id,
@@ -170,9 +172,5 @@ export class AdminService {
     await this.userModel.findByIdAndUpdate(sub, { $set: dto }, { new: true });
 
     return true;
-  }
-
-  getRoles(): Record<string, string> {
-    return Role;
   }
 }
