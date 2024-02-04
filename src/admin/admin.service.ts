@@ -2,6 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as fs from 'fs';
@@ -17,7 +18,6 @@ import { Team, User } from 'src/schemas';
 import { IPayload, IUserResponse } from 'src/interfaces';
 import { welcomeTemplate } from 'src/templates';
 import { Role } from 'src/enums';
-import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AdminService {

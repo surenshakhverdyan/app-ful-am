@@ -163,6 +163,32 @@ export class TeamService {
     return true;
   }
 
+  async addPlayer(
+    avatar: Express.Multer.File,
+    dto: AddPlayerDto,
+  ): Promise<boolean> {
+    const team = await this.teamModel.findById(dto.teamId);
+
+    try {
+      if (avatar !== undefined) {
+        const fileName = `${Date.now()}${extname(avatar.originalname)}`;
+        fs.writeFileSync(`uploads/${fileName}`, avatar.buffer);
+        dto.avatar = fileName;
+      }
+
+      team.players.push(dto);
+
+      if (team.players.length > 8) team.status = true;
+
+      await team.save();
+    } catch (error: any) {
+      if (dto.avatar) fs.promises.unlink(`uploads/${dto.avatar}`);
+      throw new HttpException(error.message, error.code);
+    }
+
+    return true;
+  }
+
   async deletePlayer(dto: UpdatePlayerDto): Promise<boolean> {
     const { players } = await this.teamModel.findOne(
       {
@@ -185,32 +211,6 @@ export class TeamService {
     if (team.players.length < 9) {
       team.status = false;
       await team.save();
-    }
-
-    return true;
-  }
-
-  async addPlayer(
-    avatar: Express.Multer.File,
-    dto: AddPlayerDto,
-  ): Promise<boolean> {
-    const team = await this.teamModel.findById(dto.teamId);
-
-    try {
-      if (avatar !== undefined) {
-        const fileName = `${Date.now()}${extname(avatar.originalname)}`;
-        fs.writeFileSync(`uploads/${fileName}`, avatar.buffer);
-        dto.avatar = fileName;
-      }
-
-      team.players.push(dto);
-
-      if (team.players.length > 8) team.status = true;
-
-      await team.save();
-    } catch (error: any) {
-      if (dto.avatar) fs.promises.unlink(`uploads/${dto.avatar}`);
-      throw new HttpException(error.message, error.code);
     }
 
     return true;
