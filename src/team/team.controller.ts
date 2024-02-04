@@ -26,6 +26,7 @@ import {
   UpdatePlayerDto,
   UpdateTeamAvatarDto,
 } from 'src/dtos';
+import { Team } from 'src/schemas';
 
 @UseGuards(AuthGuard)
 @Controller('team')
@@ -47,7 +48,7 @@ export class TeamController {
     @Body() dto: CreateTeamDto,
     @UploadedFiles(new ParseFilePipe({ fileIsRequired: false }))
     avatars: Express.Multer.File[],
-  ): Promise<boolean> {
+  ): Promise<Team> {
     const flatAvatarArray = Object.values(
       avatars,
     ).flat() as Express.Multer.File[];

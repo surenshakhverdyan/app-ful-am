@@ -27,7 +27,7 @@ export class TeamService {
     token: string,
     avatars: Express.Multer.File[],
     dto: CreateTeamDto,
-  ): Promise<boolean> {
+  ): Promise<Team> {
     const { sub } = await this.jwtService.verifyAsync(token.split(' ')[1], {
       secret: this.configService.get<string>('JWT_AUTH_SECRET'),
     });
@@ -59,6 +59,7 @@ export class TeamService {
       }
 
       await user.updateOne({ $set: { team: team._id } });
+      return team;
     } catch (error: any) {
       if (dto.avatar) await fs.promises.unlink(`uploads/${dto.avatar}`);
       for (let i = 0; i < dto.players.length; i++) {
@@ -70,8 +71,6 @@ export class TeamService {
         throw new HttpException('You already have created a team', 403);
       throw new HttpException(error.message, error.code);
     }
-
-    return true;
   }
 
   async updateTeamAvatar(

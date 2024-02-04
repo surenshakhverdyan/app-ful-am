@@ -30,7 +30,9 @@ export class AuthService {
     authToken: string;
     refreshToken: string;
   }> {
-    const user = await this.userModel.findOne({ email: dto.email });
+    const user = await this.userModel
+      .findOne({ email: dto.email })
+      .populate('team');
     if (!user) throw new HttpException('User not found', 404);
 
     if (!(await bcrypt.compare(dto.password, user.password)))
