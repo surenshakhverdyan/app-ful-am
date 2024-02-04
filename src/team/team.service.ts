@@ -91,7 +91,7 @@ export class TeamService {
     return true;
   }
 
-  async updatePlayerAvatar(
+  async updatePlayer(
     dto: UpdatePlayerDto,
     avatar: Express.Multer.File,
   ): Promise<boolean> {
@@ -101,27 +101,65 @@ export class TeamService {
     );
 
     if (players) {
-      fs.promises.unlink(`uploads/${players[0].avatar}`);
+      if (avatar !== undefined) {
+        if (players[0].avatar)
+          fs.promises.unlink(`uploads/${players[0].avatar}`);
+        const fileName = `${Date.now()}${extname(avatar.originalname)}`;
+        fs.writeFileSync(`uploads/${fileName}`, avatar.buffer);
+
+        try {
+          await this.teamModel.findByIdAndUpdate(
+            dto.teamId,
+            {
+              $set: { 'players.$[elem].avatar': fileName },
+            },
+            {
+              arrayFilters: [{ 'elem._id': dto.playerId }],
+              new: true,
+            },
+          );
+        } catch (error: any) {
+          if (avatar !== undefined) fs.promises.unlink(`uploads/${fileName}`);
+          throw new HttpException(error.message, error.code);
+        }
+      }
     }
 
-    const fileName = `${Date.now()}${extname(avatar.originalname)}`;
-    fs.writeFileSync(`uploads/${fileName}`, avatar.buffer);
-    try {
+    if (dto.name) {
       await this.teamModel.findByIdAndUpdate(
         dto.teamId,
         {
-          $set: { 'players.$[elem].avatar': fileName },
+          $set: { 'players.$[elem].name': dto.name },
         },
         {
           arrayFilters: [{ 'elem._id': dto.playerId }],
-          new: true,
         },
       );
-    } catch (error: any) {
-      fs.promises.unlink(`uploads/${fileName}`);
-      throw new HttpException(error.message, error.code);
     }
 
+    if (dto.number) {
+      await this.teamModel.findByIdAndUpdate(
+        dto.teamId,
+        {
+          $set: { 'players.$[elem].number': dto.number },
+        },
+        {
+          arrayFilters: [{ 'elem._id': dto.playerId }],
+        },
+      );
+    }
+
+    if (dto.position) {
+      await this.teamModel.findByIdAndUpdate(
+        dto.teamId,
+        {
+          $set: { 'players.$[elem].position': dto.position },
+        },
+        {
+          arrayFilters: [{ 'elem._id': dto.playerId }],
+        },
+      );
+    }
     return true;
   }
 

@@ -80,19 +80,19 @@ export class TeamController {
     return this.teamService.updateTeamAvatar(dto, avatar);
   }
 
-  @Patch('update-player-avatar')
+  @Patch('update-player')
   @UseInterceptors(FileInterceptor('avatar'))
-  updatePlayerAvatar(
+  updatePlayer(
     @Body() dto: UpdatePlayerDto,
     @UploadedFile(
       new ParseFilePipe({
         validators: [new FileTypeValidator({ fileType: 'jpg|jpeg|png' })],
-        fileIsRequired: true,
+        fileIsRequired: false,
       }),
     )
     avatar: Express.Multer.File,
   ): Promise<boolean> {
-    return this.teamService.updatePlayerAvatar(dto, avatar);
+    return this.teamService.updatePlayer(dto, avatar);
   }
 
   @Delete('delete-player')
