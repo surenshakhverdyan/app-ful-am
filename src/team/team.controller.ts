@@ -52,7 +52,6 @@ export class TeamController {
     const flatAvatarArray = Object.values(
       avatars,
     ).flat() as Express.Multer.File[];
-
     const fileTypeValidator = new FileTypeValidator({
       fileType: 'jpg|jpeg|png',
     });
@@ -62,6 +61,7 @@ export class TeamController {
         throw new HttpException('Invalid file type', 403);
       }
     });
+
     return this.teamService.createTeam(token, avatars, dto);
   }
 
