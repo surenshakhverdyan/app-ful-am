@@ -3,9 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import * as fs from 'fs';
 
 import {
   CreateUserDto,
@@ -14,7 +13,7 @@ import {
   UpdatePlayerDto,
   UpdateProfileDto,
 } from 'src/dtos';
-import { Team, User } from 'src/schemas';
+import { DeletedPlayer, DeletedTeam, Team, User } from 'src/schemas';
 import { IPayload, IUserResponse } from 'src/interfaces';
 import { welcomeTemplate } from 'src/templates';
 import { Role } from 'src/enums';
@@ -24,6 +23,10 @@ export class AdminService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Team.name) private teamModel: Model<Team>,
+    @InjectModel(DeletedPlayer.name)
+    private deletedPlayerModel: Model<DeletedPlayer>,
+    @InjectModel(DeletedTeam.name)
+    private deletedTeamModel: Model<DeletedTeam>,
     private readonly mailerService: MailerService,
     private readonly configService: ConfigService,
     private jwtService: JwtService,
@@ -73,8 +76,18 @@ export class AdminService {
       },
       { 'players.$': 1 },
     );
-    if (players[0].avatar !== undefined)
-      fs.promises.unlink(`uploads/${players[0].avatar}`);
+
+    await this.deletedPlayerModel.create({
+      name: players[0].name,
+      number: players[0].number,
+      position: players[0].position,
+      avatar: players[0].avatar,
+      goals: players[0].goals,
+      cards: players[0].cards,
+      assist: players[0].assist,
+      teamId: new Types.ObjectId(dto.teamId),
+      _id: players[0]._id,
+    });
 
     const team = await this.teamModel.findByIdAndUpdate(
       dto.teamId,
@@ -99,13 +112,29 @@ export class AdminService {
         .populate('team');
 
       if (!user) throw new HttpException('User not found', 404);
-      if (user.team && user.team.avatar !== undefined) {
-        fs.promises.unlink(`uploads/${user.team.avatar}`);
+      if (user.team) {
+        await this.deletedTeamModel.create({
+          name: user.team.name,
+          avatar: user.team.avatar,
+          // @ts-ignore
+          _id: user.team._id,
+          user: user._id,
+        });
 
         if (user.team.players) {
-          user.team.players.forEach((player) => {
-            if (player.avatar !== undefined)
-              fs.promises.unlink(`uploads/${player.avatar}`);
+          user.team.players.forEach(async (player) => {
+            await this.deletedPlayerModel.create({
+              name: player.name,
+              number: player.number,
+              position: player.position,
+              avatar: player.avatar,
+              goals: player.goals,
+              cards: player.cards,
+              assist: player.assist,
+              // @ts-ignore
+              teamId: new Types.ObjectId(user.team._id),
+              _id: player._id,
+            });
           });
         }
       }

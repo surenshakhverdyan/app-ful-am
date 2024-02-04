@@ -3,7 +3,16 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 
 import { AdminService } from './admin.service';
-import { Team, TeamSchema, User, UserSchema } from 'src/schemas';
+import {
+  DeletedPlayer,
+  DeletedPlayerSchema,
+  DeletedTeam,
+  DeletedTeamSchema,
+  Team,
+  TeamSchema,
+  User,
+  UserSchema,
+} from 'src/schemas';
 import { AdminController } from './admin.controller';
 
 @Module({
@@ -16,6 +25,14 @@ import { AdminController } from './admin.controller';
       {
         name: Team.name,
         schema: TeamSchema,
+      },
+      {
+        name: DeletedPlayer.name,
+        schema: DeletedPlayerSchema,
+      },
+      {
+        name: DeletedTeam.name,
+        schema: DeletedTeamSchema,
       },
     ]),
   ],

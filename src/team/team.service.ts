@@ -2,7 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { extname } from 'path';
 import * as fs from 'fs';
 
@@ -12,13 +12,15 @@ import {
   UpdatePlayerDto,
   UpdateTeamAvatarDto,
 } from 'src/dtos';
-import { Team, User } from 'src/schemas';
+import { DeletedPlayer, Team, User } from 'src/schemas';
 
 @Injectable()
 export class TeamService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Team.name) private teamModel: Model<Team>,
+    @InjectModel(DeletedPlayer.name)
+    private deletedPlayerModel: Model<DeletedPlayer>,
     private readonly configService: ConfigService,
     private jwtService: JwtService,
   ) {}
@@ -197,8 +199,18 @@ export class TeamService {
       },
       { 'players.$': 1 },
     );
-    if (players[0].avatar !== undefined)
-      fs.promises.unlink(`uploads/${players[0].avatar}`);
+
+    await this.deletedPlayerModel.create({
+      name: players[0].name,
+      number: players[0].number,
+      position: players[0].position,
+      avatar: players[0].avatar,
+      goals: players[0].goals,
+      cards: players[0].cards,
+      assist: players[0].assist,
+      teamId: new Types.ObjectId(dto.teamId),
+      _id: players[0]._id,
+    });
 
     const team = await this.teamModel.findByIdAndUpdate(
       dto.teamId,

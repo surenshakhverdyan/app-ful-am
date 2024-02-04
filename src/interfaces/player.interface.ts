@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { Position } from 'src/enums';
 
 export interface IPlayer {
@@ -8,4 +9,5 @@ export interface IPlayer {
   goals?: object;
   cards?: object;
   assist?: number;
+  _id?: Types.ObjectId;
 }

@@ -4,7 +4,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { TeamService } from './team.service';
 import { TeamController } from './team.controller';
-import { Team, TeamSchema, User, UserSchema } from 'src/schemas';
+import {
+  DeletedPlayer,
+  DeletedPlayerSchema,
+  Team,
+  TeamSchema,
+  User,
+  UserSchema,
+} from 'src/schemas';
 
 @Module({
   imports: [
@@ -16,6 +23,10 @@ import { Team, TeamSchema, User, UserSchema } from 'src/schemas';
       {
         name: Team.name,
         schema: TeamSchema,
+      },
+      {
+        name: DeletedPlayer.name,
+        schema: DeletedPlayerSchema,
       },
     ]),
   ],
