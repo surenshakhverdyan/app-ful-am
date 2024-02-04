@@ -7,7 +7,7 @@ import { PublicService } from './public.service';
 export class PublicController {
   constructor(private publicService: PublicService) {}
 
-  @Get('uploads/:image')
+  @Get('images/:image')
   getImage(@Param('image') path: string, @Res() res: Response): void {
     return res.sendFile(this.publicService.getImage(path));
   }
