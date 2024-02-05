@@ -96,7 +96,7 @@ export class TeamService {
   async updatePlayer(
     dto: UpdatePlayerDto,
     avatar: Express.Multer.File,
-  ): Promise<boolean> {
+  ): Promise<Team> {
     const { players } = await this.teamModel.findOne(
       { _id: dto.teamId, 'players._id': dto.playerId },
       { 'players.$': 1 },
@@ -162,7 +162,7 @@ export class TeamService {
         },
       );
     }
-    return true;
+    return this.teamModel.findById(dto.teamId);
   }
 
   async addPlayer(

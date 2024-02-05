@@ -1,10 +1,4 @@
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 import { Position } from 'src/enums';
 
@@ -25,7 +19,6 @@ export class UpdatePlayerDto {
   @IsOptional()
   position?: Position;
 
-  @IsNumber()
   @IsOptional()
   number?: number;
 }

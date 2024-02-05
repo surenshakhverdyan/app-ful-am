@@ -91,7 +91,7 @@ export class TeamController {
       }),
     )
     avatar: Express.Multer.File,
-  ): Promise<boolean> {
+  ): Promise<Team> {
     return this.teamService.updatePlayer(dto, avatar);
   }
 
