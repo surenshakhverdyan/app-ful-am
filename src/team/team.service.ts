@@ -78,7 +78,7 @@ export class TeamService {
   async updateTeamAvatar(
     dto: UpdateTeamAvatarDto,
     avatar: Express.Multer.File,
-  ): Promise<boolean> {
+  ): Promise<Team> {
     const team = await this.teamModel.findById(dto.teamId);
     if (team.avatar) {
       fs.promises.unlink(`uploads/${team.avatar}`);
@@ -90,7 +90,7 @@ export class TeamService {
     team.avatar = fileName;
     team.save();
 
-    return true;
+    return team;
   }
 
   async updatePlayer(
