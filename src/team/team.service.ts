@@ -191,7 +191,7 @@ export class TeamService {
     return true;
   }
 
-  async deletePlayer(dto: UpdatePlayerDto): Promise<boolean> {
+  async deletePlayer(dto: UpdatePlayerDto): Promise<Team> {
     const { players } = await this.teamModel.findOne(
       {
         _id: dto.teamId,
@@ -225,6 +225,6 @@ export class TeamService {
       await team.save();
     }
 
-    return true;
+    return team;
   }
 }

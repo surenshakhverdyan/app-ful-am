@@ -96,7 +96,7 @@ export class TeamController {
   }
 
   @Delete('delete-player')
-  deletePlayer(@Body() dto: UpdatePlayerDto): Promise<boolean> {
+  deletePlayer(@Body() dto: UpdatePlayerDto): Promise<Team> {
     return this.teamService.deletePlayer(dto);
   }
 
