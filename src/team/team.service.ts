@@ -168,7 +168,7 @@ export class TeamService {
   async addPlayer(
     avatar: Express.Multer.File,
     dto: AddPlayerDto,
-  ): Promise<boolean> {
+  ): Promise<Team> {
     const team = await this.teamModel.findById(dto.teamId);
 
     try {
@@ -188,10 +188,10 @@ export class TeamService {
       throw new HttpException(error.message, error.code);
     }
 
-    return true;
+    return team;
   }
 
-  async deletePlayer(dto: UpdatePlayerDto): Promise<Team> {
+  async deletePlayer(dto: UpdatePlayerDto): Promise<boolean> {
     const { players } = await this.teamModel.findOne(
       {
         _id: dto.teamId,
@@ -225,6 +225,6 @@ export class TeamService {
       await team.save();
     }
 
-    return team;
+    return true;
   }
 }

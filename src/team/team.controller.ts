@@ -96,7 +96,7 @@ export class TeamController {
   }
 
   @Delete('delete-player')
-  deletePlayer(@Body() dto: UpdatePlayerDto): Promise<Team> {
+  deletePlayer(@Body() dto: UpdatePlayerDto): Promise<boolean> {
     return this.teamService.deletePlayer(dto);
   }
 
@@ -111,7 +111,7 @@ export class TeamController {
     )
     avatar: Express.Multer.File,
     @Body() dto: AddPlayerDto,
-  ): Promise<boolean> {
+  ): Promise<Team> {
     return this.teamService.addPlayer(avatar, dto);
   }
 }
