@@ -200,22 +200,17 @@ export class TeamService {
       { 'players.$': 1 },
     );
 
-    try {
-      await this.deletedPlayerModel.create({
-        name: players[0].name,
-        number: players[0].number,
-        position: players[0].position,
-        avatar: players[0].avatar,
-        goals: players[0].goals,
-        cards: players[0].cards,
-        assist: players[0].assist,
-        teamId: new Types.ObjectId(dto.teamId),
-        _id: players[0]._id,
-      });
-    } catch (error: any) {
-      console.log('test ', error.message);
-      throw new HttpException(error.message, error.code);
-    }
+    await this.deletedPlayerModel.create({
+      name: players[0].name,
+      number: players[0].number,
+      position: players[0].position,
+      avatar: players[0].avatar,
+      goals: players[0].goals,
+      cards: players[0].cards,
+      assist: players[0].assist,
+      teamId: new Types.ObjectId(dto.teamId),
+      _id: players[0]._id,
+    });
 
     const team = await this.teamModel.findByIdAndUpdate(
       dto.teamId,
