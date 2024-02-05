@@ -213,6 +213,7 @@ export class TeamService {
         _id: players[0]._id,
       });
     } catch (error: any) {
+      console.log('test ', error.message);
       throw new HttpException(error.message, error.code);
     }
 
