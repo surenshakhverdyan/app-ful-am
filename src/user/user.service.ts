@@ -6,7 +6,7 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 import { UpdatePasswordDto, UpdateProfileDto } from 'src/dtos';
-import { IPayload } from 'src/interfaces';
+import { IPayload, IUserResponse } from 'src/interfaces';
 import { User } from 'src/schemas';
 
 @Injectable()
@@ -43,7 +43,10 @@ export class UserService {
     return true;
   }
 
-  async updateProfile(token: string, dto: UpdateProfileDto): Promise<User> {
+  async updateProfile(
+    token: string,
+    dto: UpdateProfileDto,
+  ): Promise<IUserResponse> {
     const { sub } = await this.jwtService.verifyAsync(token.split(' ')[1], {
       secret: this.configService.get<string>('JWT_AUTH_SECRET'),
     });
@@ -54,6 +57,15 @@ export class UserService {
       { new: true },
     );
 
-    return user;
+    const userResponse = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      roles: user.roles,
+      team: user.team,
+    };
+
+    return userResponse;
   }
 }

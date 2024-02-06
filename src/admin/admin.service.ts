@@ -193,7 +193,10 @@ export class AdminService {
     return true;
   }
 
-  async updateProfile(token: string, dto: UpdateProfileDto): Promise<User> {
+  async updateProfile(
+    token: string,
+    dto: UpdateProfileDto,
+  ): Promise<IUserResponse> {
     const { sub } = await this.jwtService.verifyAsync(token.split(' ')[1], {
       secret: this.configService.get<string>('JWT_AUTH_SECRET'),
     });
@@ -204,6 +207,15 @@ export class AdminService {
       { new: true },
     );
 
-    return user;
+    const userResponse = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      roles: user.roles,
+      team: user.team,
+    };
+
+    return userResponse;
   }
 }
