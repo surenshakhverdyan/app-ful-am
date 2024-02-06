@@ -193,13 +193,17 @@ export class AdminService {
     return true;
   }
 
-  async updateProfile(token: string, dto: UpdateProfileDto): Promise<boolean> {
+  async updateProfile(token: string, dto: UpdateProfileDto): Promise<User> {
     const { sub } = await this.jwtService.verifyAsync(token.split(' ')[1], {
       secret: this.configService.get<string>('JWT_AUTH_SECRET'),
     });
 
-    await this.userModel.findByIdAndUpdate(sub, { $set: dto }, { new: true });
+    const user = await this.userModel.findByIdAndUpdate(
+      sub,
+      { $set: dto },
+      { new: true },
+    );
 
-    return true;
+    return user;
   }
 }

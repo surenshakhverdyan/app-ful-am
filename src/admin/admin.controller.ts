@@ -20,6 +20,7 @@ import {
   UpdateProfileDto,
 } from 'src/dtos';
 import { IUserResponse } from 'src/interfaces';
+import { User } from 'src/schemas';
 
 @UseGuards(AdminGuard)
 @Controller('admin')
@@ -58,7 +59,7 @@ export class AdminController {
   updateProfile(
     @Headers('authorization') token: string,
     @Body() dto: UpdateProfileDto,
-  ): Promise<boolean> {
+  ): Promise<User> {
     return this.adminService.updateProfile(token, dto);
   }
 }

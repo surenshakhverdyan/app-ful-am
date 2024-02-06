@@ -10,6 +10,7 @@ import {
 import { AuthGuard } from 'src/guards';
 import { UserService } from './user.service';
 import { UpdatePasswordDto, UpdateProfileDto } from 'src/dtos';
+import { User } from 'src/schemas';
 
 @UseGuards(AuthGuard)
 @Controller('user')
@@ -28,7 +29,7 @@ export class UserController {
   updateProfile(
     @Headers('authorization') token: string,
     @Body() dto: UpdateProfileDto,
-  ): Promise<boolean> {
+  ): Promise<User> {
     return this.userService.updateProfile(token, dto);
   }
 }
