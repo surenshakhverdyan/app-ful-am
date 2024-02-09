@@ -20,6 +20,7 @@ import {
   UpdateProfileDto,
 } from 'src/dtos';
 import { IUserResponse } from 'src/interfaces';
+import { Team } from 'src/schemas';
 
 @UseGuards(AdminGuard)
 @Controller('admin')
@@ -60,5 +61,10 @@ export class AdminController {
     @Body() dto: UpdateProfileDto,
   ): Promise<IUserResponse> {
     return this.adminService.updateProfile(token, dto);
+  }
+
+  @Get('get-teams')
+  getTeams(): Promise<Team[]> {
+    return this.adminService.getTeams();
   }
 }

@@ -218,4 +218,10 @@ export class AdminService {
 
     return userResponse;
   }
+
+  async getTeams(): Promise<Team[]> {
+    const teams = await this.teamModel.find().populate('user', '-password');
+
+    return teams;
+  }
 }
