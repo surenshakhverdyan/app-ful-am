@@ -2,6 +2,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import { PublicModule } from './public/public.module';

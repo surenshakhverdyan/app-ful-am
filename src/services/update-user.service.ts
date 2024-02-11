@@ -3,13 +3,13 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { REQUEST } from '@nestjs/core';
 import { Model } from 'mongoose';
+import { Request } from 'express';
 import * as bcrypt from 'bcrypt';
 
 import { UpdatePasswordDto, UpdateProfileDto } from 'src/dtos';
 import { IUser } from 'src/interfaces';
 import { User } from 'src/schemas';
 import { TokenService } from './jwt.service';
-import { Request } from 'express';
 
 @Injectable()
 export class UpdateUserService {

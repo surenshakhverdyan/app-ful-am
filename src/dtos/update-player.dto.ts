@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+
 import { Position } from 'src/enums';
 
 export class UpdatePlayerDto {

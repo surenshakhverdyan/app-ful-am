@@ -1,4 +1,5 @@
 import { Body, Controller, Patch, Put } from '@nestjs/common';
+
 import { UpdatePasswordDto, UpdateProfileDto } from 'src/dtos';
 import { IUser } from 'src/interfaces';
 import { UpdateUserService } from 'src/services';
