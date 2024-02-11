@@ -4,30 +4,24 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+
+import { TokenType } from 'src/enums';
+import { TokenService } from 'src/services';
 
 @Injectable()
 export class RefreshGuard implements CanActivate {
-  constructor(
-    private readonly configService: ConfigService,
-    private jwtService: JwtService,
-  ) {}
+  constructor(private tokenService: TokenService) {}
 
-  async canActivate(context: ExecutionContext): Promise<boolean> {
+  canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
     const token = request.headers.refresh;
 
     if (!token) throw new UnauthorizedException();
 
-    try {
-      await this.jwtService.verifyAsync(token, {
-        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-      });
-    } catch {
-      throw new UnauthorizedException();
-    }
+    const payload = this.tokenService.jwtVerify(token);
 
-    return true;
+    if (payload.type === TokenType.RefreshToken) return true;
+
+    throw new UnauthorizedException();
   }
 }

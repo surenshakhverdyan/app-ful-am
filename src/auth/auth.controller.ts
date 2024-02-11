@@ -1,17 +1,17 @@
 import {
   Body,
   Controller,
-  Headers,
   Param,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
 
 import { AuthService } from './auth.service';
 import { ForgotPasswordDto, ResetPasswordDto, SignInDto } from 'src/dtos';
-import { IUserResponse } from 'src/interfaces';
+import { IUser } from 'src/interfaces';
 import { RefreshGuard, ResetPasswordGuard } from 'src/guards';
 
 @Controller('auth')
@@ -19,19 +19,15 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('sign-in')
-  signIn(@Body() dto: SignInDto): Promise<{
-    userResponse: IUserResponse;
-    authToken: string;
-    refreshToken: string;
-  }> {
+  signIn(
+    @Body() dto: SignInDto,
+  ): Promise<{ userResponse: IUser; authToken: string; refreshToken: string }> {
     return this.authService.signIn(dto);
   }
 
   @UseGuards(RefreshGuard)
   @Post('refresh-token')
-  refreshToken(
-    @Headers() req: Request,
-  ): Promise<{ userResponse: IUserResponse; authToken: string }> {
+  refreshToken(@Req() req: Request) {
     return this.authService.refreshToken(req);
   }
 

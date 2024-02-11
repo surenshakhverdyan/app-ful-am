@@ -25,6 +25,9 @@ class PlayerDTO {
   @IsString()
   @IsOptional()
   avatar?: string;
+
+  @IsOptional()
+  team?: Types.ObjectId;
 }
 
 export class CreateTeamDto {

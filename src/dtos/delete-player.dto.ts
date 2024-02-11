@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class UpdateTeamAvatarDto {
+export class DeletePlayerDto {
   @IsString()
   @IsNotEmpty()
-  teamId: string;
+  playerId: string;
 }

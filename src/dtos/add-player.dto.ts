@@ -1,4 +1,5 @@
 import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Types } from 'mongoose';
 
 import { Position } from 'src/enums';
 
@@ -15,8 +16,8 @@ export class AddPlayerDto {
   number: number;
 
   @IsString()
-  @IsNotEmpty()
-  teamId: string;
+  @IsOptional()
+  team?: Types.ObjectId;
 
   @IsString()
   @IsOptional()

@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   FileTypeValidator,
-  Headers,
   HttpException,
   ParseFilePipe,
   Patch,
@@ -18,20 +17,24 @@ import {
   FileInterceptor,
 } from '@nestjs/platform-express';
 
-import { AuthGuard } from 'src/guards';
 import { TeamService } from './team.service';
 import {
-  AddPlayerDto,
   CreateTeamDto,
   UpdatePlayerDto,
-  UpdateTeamAvatarDto,
+  AddPlayerDto,
+  DeletePlayerDto,
 } from 'src/dtos';
-import { Team } from 'src/schemas';
+import { AuthGuard } from 'src/guards';
+import { Player, Team } from 'src/schemas';
+import { DeletePlayerService } from 'src/services';
 
 @UseGuards(AuthGuard)
 @Controller('team')
 export class TeamController {
-  constructor(private teamService: TeamService) {}
+  constructor(
+    private teamService: TeamService,
+    private deletePlayerService: DeletePlayerService,
+  ) {}
 
   @Post('create-team')
   @UseInterceptors(
@@ -44,9 +47,12 @@ export class TeamController {
     ]),
   )
   createTeam(
-    @Headers('authorization') token: string,
     @Body() dto: CreateTeamDto,
-    @UploadedFiles(new ParseFilePipe({ fileIsRequired: false }))
+    @UploadedFiles(
+      new ParseFilePipe({
+        fileIsRequired: false,
+      }),
+    )
     avatars: Express.Multer.File[],
   ): Promise<Team> {
     const flatAvatarArray = Object.values(
@@ -62,22 +68,21 @@ export class TeamController {
       }
     });
 
-    return this.teamService.createTeam(token, avatars, dto);
+    return this.teamService.createTeam(avatars, dto);
   }
 
   @Patch('update-team-avatar')
   @UseInterceptors(FileInterceptor('avatar'))
   updateTeamAvatar(
-    @Body() dto: UpdateTeamAvatarDto,
     @UploadedFile(
       new ParseFilePipe({
         validators: [new FileTypeValidator({ fileType: 'jpg|jpeg|png' })],
-        fileIsRequired: true,
+        fileIsRequired: false,
       }),
     )
     avatar: Express.Multer.File,
   ): Promise<Team> {
-    return this.teamService.updateTeamAvatar(dto, avatar);
+    return this.teamService.updateTeamAvatar(avatar);
   }
 
   @Patch('update-player')
@@ -91,18 +96,14 @@ export class TeamController {
       }),
     )
     avatar: Express.Multer.File,
-  ): Promise<Team> {
+  ): Promise<Player> {
     return this.teamService.updatePlayer(dto, avatar);
   }
 
-  @Delete('delete-player')
-  deletePlayer(@Body() dto: UpdatePlayerDto): Promise<Team> {
-    return this.teamService.deletePlayer(dto);
-  }
-
-  @Patch('add-player')
+  @Post('add-player')
   @UseInterceptors(FileInterceptor('avatar'))
   addPlayer(
+    @Body() dto: AddPlayerDto,
     @UploadedFile(
       new ParseFilePipe({
         validators: [new FileTypeValidator({ fileType: 'jpg|jpeg|png' })],
@@ -110,8 +111,12 @@ export class TeamController {
       }),
     )
     avatar: Express.Multer.File,
-    @Body() dto: AddPlayerDto,
-  ): Promise<Team> {
-    return this.teamService.addPlayer(avatar, dto);
+  ): Promise<Player> {
+    return this.teamService.addPlayer(dto, avatar);
+  }
+
+  @Delete('delete-player')
+  deletePlayer(@Body() dto: DeletePlayerDto): Promise<boolean> {
+    return this.deletePlayerService.DeletePlayer(dto);
   }
 }

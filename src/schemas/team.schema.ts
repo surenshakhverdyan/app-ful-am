@@ -1,65 +1,48 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
-import { Position } from 'src/enums';
 import { User } from './user.schema';
-import { IPlayer } from 'src/interfaces';
+import { Status } from 'src/enums';
 
 @Schema({ timestamps: true })
 export class Team {
-  @Prop({ required: true, type: Types.ObjectId, ref: 'User', unique: true })
+  @Prop({
+    required: true,
+    type: Types.ObjectId,
+    ref: 'User',
+    unique: true,
+  })
   user: User;
 
-  @Prop({ required: true })
+  @Prop({
+    required: true,
+    type: String,
+  })
   name: string;
 
-  @Prop()
+  @Prop({ type: String })
   avatar: string;
 
   @Prop({
-    type: [
-      {
-        name: { type: String },
-        number: { type: Number },
-        position: { type: String, enum: Object.values(Position) },
-        avatar: { type: String },
-        goals: {
-          penalty: { type: Number },
-          goal: { type: Number },
-        },
-        cards: {
-          yellow: { type: Number },
-          red: { type: Number },
-        },
-        assist: { type: Number },
-      },
-    ],
+    type: [{ type: Types.ObjectId, ref: 'Player' }],
     validate: [
       {
-        validator: function (value: any[]) {
+        validator: (value: any[]) => {
           return value.length <= 21;
         },
         message: 'The length of players array must not exceed 21',
       },
-      {
-        validator: function (value: any[]) {
-          const numbers = new Set();
-          for (const player of value) {
-            if (numbers.has(player.number)) {
-              return false;
-            }
-            numbers.add(player.number);
-          }
-          return true;
-        },
-        message: 'Each player must have a unique number',
-      },
     ],
   })
-  players: Array<IPlayer>;
+  players: Types.ObjectId[];
 
-  @Prop({ required: true, default: false })
-  status: boolean;
+  @Prop({
+    required: true,
+    type: String,
+    enum: Object.values(Status),
+    default: Status.Inactive,
+  })
+  status: Status;
 }
 
 export const TeamSchema = SchemaFactory.createForClass(Team);

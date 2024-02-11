@@ -4,7 +4,6 @@ import {
   IsNotEmpty,
   IsPhoneNumber,
   IsString,
-  MinLength,
 } from 'class-validator';
 
 import { Role } from 'src/enums';
@@ -15,15 +14,18 @@ export class CreateUserDto {
   name: string;
 
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
-  // @IsPhoneNumber()
+  @IsPhoneNumber()
+  @IsNotEmpty()
   phone: string;
 
   @IsString()
-  @MinLength(8)
+  @IsNotEmpty()
   password: string;
 
   @IsEnum(Role)
+  @IsNotEmpty()
   role: Role;
 }

@@ -1,3 +1,4 @@
+import { MailerService } from '@nestjs-modules/mailer';
 import {
   HttpException,
   Injectable,
@@ -6,14 +7,15 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
-import { MailerService } from '@nestjs-modules/mailer';
-import { Model } from 'mongoose';
 import { Request } from 'express';
+import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
+import { ResetPasswordDto, SignInDto, ForgotPasswordDto } from 'src/dtos';
+import { TokenType } from 'src/enums';
+import { IUser } from 'src/interfaces';
 import { User } from 'src/schemas';
-import { ForgotPasswordDto, ResetPasswordDto, SignInDto } from 'src/dtos';
-import { IPayload, IUserResponse } from 'src/interfaces';
+import { TokenService } from 'src/services';
 import { forgotPasswordTemplate } from 'src/templates';
 
 @Injectable()
@@ -21,111 +23,114 @@ export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private readonly configService: ConfigService,
-    private jwtService: JwtService,
     private mailerService: MailerService,
+    private jwtService: JwtService,
+    private tokenService: TokenService,
   ) {}
 
-  async signIn(dto: SignInDto): Promise<{
-    userResponse: IUserResponse;
-    authToken: string;
-    refreshToken: string;
-  }> {
+  async signIn(
+    dto: SignInDto,
+  ): Promise<{ userResponse: IUser; authToken: string; refreshToken: string }> {
     const user = await this.userModel
       .findOne({ email: dto.email })
       .populate('team');
+
     if (!user) throw new HttpException('User not found', 404);
 
     if (!(await bcrypt.compare(dto.password, user.password)))
       throw new UnauthorizedException();
 
-    const userResponse: IUserResponse = {
-      _id: user._id,
+    const userResponse = {
+      _id: user._id.toString(),
       name: user.name,
       email: user.email,
       phone: user.phone,
-      roles: user.roles,
+      role: user.role,
       team: user.team,
     };
 
-    const payload: IPayload = { sub: user._id, roles: user.roles };
+    const payload = {
+      sub: userResponse._id,
+      role: userResponse.role,
+      type: TokenType.AuthToken,
+    };
 
-    const authToken = await this.jwtService.signAsync(payload, {
-      secret: this.configService.get<string>('JWT_AUTH_SECRET'),
-      expiresIn: '30d', // change to 1d
-    });
+    const authToken = this.tokenService.jwtSign(payload);
+    payload.type = TokenType.RefreshToken;
+    const refreshToken = this.tokenService.jwtRefreshSign(payload);
 
-    const refreshToken = await this.jwtService.signAsync(payload, {
-      secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-      expiresIn: '7d',
-    });
-
-    return { userResponse, authToken, refreshToken };
+    return {
+      userResponse: userResponse,
+      authToken,
+      refreshToken,
+    };
   }
 
   async refreshToken(
     req: Request,
-  ): Promise<{ userResponse: IUserResponse; authToken: string }> {
-    const payload: IPayload = await this.jwtService.verifyAsync(
-      req['refresh'],
-      {
-        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-      },
-    );
-    delete payload.exp;
-    delete payload.iat;
+  ): Promise<{ userResponse: IUser; authToken: string }> {
+    const token = req.headers.refresh as string;
+    const payload = this.jwtService.decode(token);
 
     const user = await this.userModel.findById(payload.sub);
-    const userResponse: IUserResponse = {
-      _id: user._id,
+
+    const userResponse = {
+      _id: user._id.toString(),
       name: user.name,
       email: user.email,
       phone: user.phone,
-      roles: user.roles,
+      role: user.role,
       team: user.team,
     };
 
-    const authToken = await this.jwtService.signAsync(payload, {
-      secret: this.configService.get<string>('JWT_AUTH_SECRET'),
-      expiresIn: '1d',
-    });
+    payload.type = TokenType.AuthToken;
+    delete payload.exp;
+    delete payload.iat;
 
-    return { userResponse, authToken };
+    const authToken = this.tokenService.jwtSign(payload);
+
+    return {
+      userResponse,
+      authToken,
+    };
   }
 
   async forgotPassword(dto: ForgotPasswordDto): Promise<boolean> {
     const user = await this.userModel.findOne({ email: dto.email });
+
     if (!user) throw new HttpException('User not found', 404);
 
-    const payload: IPayload = { sub: user._id, roles: user.roles };
-    const resetPasswordToken = await this.jwtService.signAsync(payload, {
-      secret: this.configService.get<string>('JWT_FORGOT_PASSWORD_SECRET'),
-      expiresIn: '1h',
-    });
-    const link = `${this.configService.get<string>('BASE_URL')}/reset-password/${resetPasswordToken}`;
+    const payload = {
+      sub: user._id.toString(),
+      role: user.role,
+      type: TokenType.ForgotPasswordToken,
+    };
 
-    const email = await this.mailerService.sendMail({
+    const token = this.tokenService.jwtForgotPasswordSign(payload);
+    const link = `${this.configService.get<string>('BASE_URL')}/reset-password/${token}`;
+    const template = forgotPasswordTemplate(link);
+
+    const res = await this.mailerService.sendMail({
       from: this.configService.get<string>('EMAIL_ADDRESS'),
       to: user.email,
-      subject: 'Reset password',
-      html: forgotPasswordTemplate(link),
+      subject: 'Reset Password',
+      html: template,
     });
 
-    if (!(email.response.split(' ')[0] === '250')) return false;
+    if (!(res.response.split(' ')[0] === '250')) return false;
 
     return true;
   }
 
   async resetPassword(token: string, dto: ResetPasswordDto): Promise<boolean> {
-    if (!(dto.password === dto.passwordConfirmation))
+    if (dto.password !== dto.passwordConfirmation)
       throw new HttpException('Passwords do not match', 403);
 
-    const { sub } = await this.jwtService.verifyAsync(token, {
-      secret: this.configService.get<string>('JWT_FORGOT_PASSWORD_SECRET'),
-    });
     const hashedPassword = await bcrypt.hash(dto.password, 10);
+    const payload = this.tokenService.jwtVerify(token);
 
     await this.userModel.findByIdAndUpdate(
-      sub,
+      payload.sub,
       { $set: { password: hashedPassword } },
       { new: true },
     );

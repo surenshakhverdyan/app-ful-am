@@ -1,6 +1,6 @@
-import { IUserResponse } from 'src/interfaces';
+import { User } from 'src/schemas';
 
-export const welcomeTemplate = (userResponse: IUserResponse): string => {
+export const welcomeTemplate = (user: User): string => {
   const content = `
     <!DOCTYPE html>
     <html>
@@ -20,8 +20,8 @@ export const welcomeTemplate = (userResponse: IUserResponse): string => {
                 <tr>
                   <td style="padding: 20px;">
                     <p>Your user profile credentials is</p>
-                    <p><b>username: ${userResponse.email}</b></p>
-                    <p><b>password: ${userResponse.password}</b></p>
+                    <p><b>username: ${user.email}</b></p>
+                    <p><b>password: ${user.password}</b></p>
                     <p>If you didn't create an account on our website, you can safely ignore this email.</p>
                   </td>
                 </tr>

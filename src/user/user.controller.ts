@@ -1,35 +1,19 @@
-import {
-  Body,
-  Controller,
-  Headers,
-  Patch,
-  Put,
-  UseGuards,
-} from '@nestjs/common';
-
-import { AuthGuard } from 'src/guards';
-import { UserService } from './user.service';
+import { Body, Controller, Patch, Put } from '@nestjs/common';
 import { UpdatePasswordDto, UpdateProfileDto } from 'src/dtos';
-import { IUserResponse } from 'src/interfaces';
+import { IUser } from 'src/interfaces';
+import { UpdateUserService } from 'src/services';
 
-@UseGuards(AuthGuard)
 @Controller('user')
 export class UserController {
-  constructor(private userService: UserService) {}
-
-  @Patch('update-password')
-  updatePassword(
-    @Headers('authorization') token: string,
-    @Body() dto: UpdatePasswordDto,
-  ): Promise<boolean> {
-    return this.userService.updatePassword(token, dto);
-  }
+  constructor(private updateUserService: UpdateUserService) {}
 
   @Put('update-profile')
-  updateProfile(
-    @Headers('authorization') token: string,
-    @Body() dto: UpdateProfileDto,
-  ): Promise<IUserResponse> {
-    return this.userService.updateProfile(token, dto);
+  updateUser(@Body() dto: UpdateProfileDto): Promise<IUser> {
+    return this.updateUserService.userUpdate(dto);
+  }
+
+  @Patch('update-password')
+  updatePassword(@Body() dto: UpdatePasswordDto): Promise<boolean> {
+    return this.updateUserService.updatePassword(dto);
   }
 }

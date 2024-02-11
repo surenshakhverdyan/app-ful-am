@@ -1,10 +1,9 @@
-import { Types } from 'mongoose';
-
-import { Role } from 'src/enums';
+import { TokenType } from 'src/enums';
 
 export interface IPayload {
-  sub: Types.ObjectId;
-  roles: [Role];
+  sub: string;
+  role: string;
+  type: TokenType;
   iat?: Date;
   exp?: Date;
 }

@@ -1,12 +1,7 @@
-import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Position } from 'src/enums';
 
 export class UpdatePlayerDto {
-  @IsString()
-  @IsNotEmpty()
-  teamId: string;
-
   @IsString()
   @IsNotEmpty()
   playerId: string;
@@ -15,10 +10,14 @@ export class UpdatePlayerDto {
   @IsOptional()
   name?: string;
 
-  @IsEnum(Position)
+  @IsString()
   @IsOptional()
   position?: Position;
 
   @IsOptional()
   number?: number;
+
+  @IsString()
+  @IsOptional()
+  avatar?: string;
 }

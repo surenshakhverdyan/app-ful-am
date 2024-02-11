@@ -1,14 +1,14 @@
 import { Controller, Get, Param, Res } from '@nestjs/common';
 import { Response } from 'express';
 
-import { PublicService } from './public.service';
+import { ImageService } from './image.service';
 
 @Controller('public')
 export class PublicController {
-  constructor(private publicService: PublicService) {}
+  constructor(private imageService: ImageService) {}
 
   @Get('images/:image')
   getImage(@Param('image') path: string, @Res() res: Response): void {
-    return res.sendFile(this.publicService.getImage(path));
+    return res.sendFile(this.imageService.getImage(path));
   }
 }

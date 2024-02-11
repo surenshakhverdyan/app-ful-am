@@ -1,25 +1,39 @@
 import { Module } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
+import { JwtService } from '@nestjs/jwt';
 
-import { UserService } from './user.service';
 import { UserController } from './user.controller';
-import { Team, TeamSchema, User, UserSchema } from 'src/schemas';
+import { TeamController } from './team.controller';
+import {
+  DeletePlayerService,
+  TokenService,
+  UpdateUserService,
+} from 'src/services';
+import {
+  Player,
+  PlayerSchema,
+  Team,
+  TeamSchema,
+  User,
+  UserSchema,
+} from 'src/schemas';
+import { TeamService } from './team.service';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      {
-        name: User.name,
-        schema: UserSchema,
-      },
-      {
-        name: Team.name,
-        schema: TeamSchema,
-      },
+      { name: User.name, schema: UserSchema },
+      { name: Team.name, schema: TeamSchema },
+      { name: Player.name, schema: PlayerSchema },
     ]),
   ],
-  providers: [UserService, JwtService],
-  controllers: [UserController],
+  controllers: [UserController, TeamController],
+  providers: [
+    UpdateUserService,
+    JwtService,
+    TokenService,
+    TeamService,
+    DeletePlayerService,
+  ],
 })
 export class UserModule {}
