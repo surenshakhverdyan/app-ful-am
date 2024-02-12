@@ -24,14 +24,8 @@ export class Game {
         team: { type: Types.ObjectId, ref: 'Team' },
         goals: [
           {
-            player: { type: Types.ObjectId, ref: 'Player' },
-            count: { type: Number },
-          },
-        ],
-        assists: [
-          {
-            from: { type: Types.ObjectId, ref: 'Player' },
-            to: { type: Types.ObjectId, ref: 'Player' },
+            assist: { type: Types.ObjectId, ref: 'Player' },
+            goal: { type: Types.ObjectId, ref: 'Player' },
           },
         ],
         cards: [
@@ -44,7 +38,7 @@ export class Game {
       },
     ],
   })
-  team1: { team: Team; goals: []; assists: []; cards: [] }[];
+  team1: { team: Team; goals: []; cards: [] }[];
 
   @Prop({
     type: [
@@ -52,14 +46,8 @@ export class Game {
         team: { type: Types.ObjectId, ref: 'Team' },
         goals: [
           {
-            player: { type: Types.ObjectId, ref: 'Player' },
-            count: { type: Number },
-          },
-        ],
-        assists: [
-          {
-            from: { type: Types.ObjectId, ref: 'Player' },
-            to: { type: Types.ObjectId, ref: 'Player' },
+            assist: { type: Types.ObjectId, ref: 'Player' },
+            goal: { type: Types.ObjectId, ref: 'Player' },
           },
         ],
         cards: [
@@ -72,7 +60,7 @@ export class Game {
       },
     ],
   })
-  team2: { team: Team; goals: []; assists: []; cards: [] }[];
+  team2: { team: Team; goals: []; cards: [] }[];
 
   @Prop({
     type: String,
