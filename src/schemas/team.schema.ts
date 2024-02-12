@@ -17,6 +17,8 @@ export class Team {
   @Prop({
     required: true,
     type: String,
+    unique: true,
+    uppercase: true,
   })
   name: string;
 

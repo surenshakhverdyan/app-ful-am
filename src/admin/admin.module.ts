@@ -3,6 +3,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 
 import {
+  Basket,
+  BasketSchema,
+  Game,
+  GameSchema,
+  Ligue,
+  LigueSchema,
   Player,
   PlayerSchema,
   Team,
@@ -25,6 +31,9 @@ import { AdminController } from './admin.controller';
       { name: User.name, schema: UserSchema },
       { name: Team.name, schema: TeamSchema },
       { name: Player.name, schema: PlayerSchema },
+      { name: Ligue.name, schema: LigueSchema },
+      { name: Game.name, schema: GameSchema },
+      { name: Basket.name, schema: BasketSchema },
     ]),
   ],
   providers: [

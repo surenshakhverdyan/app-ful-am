@@ -21,7 +21,7 @@ export class TokenService {
   jwtSign(payload: IPayload): string {
     const token = this.jwtService.sign(payload, {
       secret: this.configService.get<string>('JWT_AUTH_SECRET'),
-      expiresIn: '1d',
+      expiresIn: '30d', // to be change 1d
     });
     return token;
   }
