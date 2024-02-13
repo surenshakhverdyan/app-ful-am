@@ -24,6 +24,8 @@ import {
 } from 'src/services';
 import { UserService } from './user.service';
 import { AdminController } from './admin.controller';
+import { LigueController } from './ligue/ligue.controller';
+import { LigueService } from './ligue/ligue.service';
 
 @Module({
   imports: [
@@ -43,7 +45,8 @@ import { AdminController } from './admin.controller';
     UpdateUserService,
     DeletePlayerService,
     TeamService,
+    LigueService,
   ],
-  controllers: [AdminController],
+  controllers: [AdminController, LigueController],
 })
 export class AdminModule {}
