@@ -1,0 +1,901 @@
+{
+	"info": {
+		"_postman_id": "8c6a330c-66eb-4992-86c9-edd7427228e0",
+		"name": "app-ful-am",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25301126"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "reset-password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"156354112\",\n    \"passwordConfirmation\": \"156354112\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM3NzFkMzQxNTBhZjYwMTBkZTdmYmEiLCJyb2xlIjoiYWRtaW4iLCJ0eXBlIjoiRlBUIiwiaWF0IjoxNzA3NjQ0NTY3LCJleHAiOjE3MDc2NDgxNjd9.ITdRwjQfmBooIhA_9tWTRC9ywsJ0GE1GunrfNgrmEng",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"reset-password",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM3NzFkMzQxNTBhZjYwMTBkZTdmYmEiLCJyb2xlIjoiYWRtaW4iLCJ0eXBlIjoiRlBUIiwiaWF0IjoxNzA3NjQ0NTY3LCJleHAiOjE3MDc2NDgxNjd9.ITdRwjQfmBooIhA_9tWTRC9ywsJ0GE1GunrfNgrmEng"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign-in",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"wapp.develope@gmail.com\",\n    \"password\": \"156354111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/sign-in",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh-token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "refresh",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YmQxOGY3OWE1Y2I5Mzc5YWU1MmYiLCJyb2xlIjoidXNlciIsInR5cGUiOiJSVCIsImlhdCI6MTcwNzcyMDA3MiwiZXhwIjoxNzA4MzI0ODcyfQ.bWthjOHfH7MJcGd_GhhssUpfsNbbQ2HwWjJvZdYw-w4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/auth/refresh-token",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"agent.-.007@mail.ru\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/forgot-password",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "create-user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"User\",\n    \"email\": \"wapp.develope@gmail.com\",\n    \"phone\": \"+37494900356\",\n    \"password\": \"156354111\",\n    \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/admin/create-user",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"create-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"156354111\",\n    \"newPassword\": \"156354111\",\n    \"passwordConfirmation\": \"156354111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/admin/update-password",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"update-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Administrator\",\n    \"email\": \"agent.-.007@mail.ru\",\n    \"phone\": \"+37494900359\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/admin/update-profile",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"update-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"65c897aca9f13225903781f9\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/admin/delete-user",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"delete-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-player",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"playerId\": \"65c8eeb961a5111d19b81437\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/admin/delete-player",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"delete-player"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/admin/get-users",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"get-users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-teams",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/admin/get-teams",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"get-teams"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "update-password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"156354111\",\n    \"newPassword\": \"156354111\",\n    \"passwordConfirmation\": \"156354111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/update-password",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"update-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Administrator\",\n    \"email\": \"wapp.develope@gmail.com\",\n    \"phone\": \"+37494900356\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/update-profile",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"update-profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "team",
+			"item": [
+				{
+					"name": "update-player",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/suren/Pictures/IMG_1766.jpg"
+								},
+								{
+									"key": "playerId",
+									"value": "65c8eeb961a5111d19b8143f",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Artak Edigaryan",
+									"type": "text"
+								},
+								{
+									"key": "position",
+									"value": "Goalkeeper",
+									"type": "text"
+								},
+								{
+									"key": "number",
+									"value": "30",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/team/update-player",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"team",
+								"update-player"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-team-avatar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/suren/Pictures/Me&Lil/IMG_8592.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/team/update-team-avatar",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"team",
+								"update-team-avatar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-player",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Lionel Messi",
+									"type": "text"
+								},
+								{
+									"key": "number",
+									"value": "32",
+									"type": "text"
+								},
+								{
+									"key": "position",
+									"value": "Goalkeeper",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/suren/Pictures/Me&Lil/IMG_8296.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/team/add-player",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"team",
+								"add-player"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-team",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Socker",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-02-08 13-27-17.png"
+								},
+								{
+									"key": "players[0][name]",
+									"value": "Henrik Mkhitaryan",
+									"type": "text"
+								},
+								{
+									"key": "players[0][number]",
+									"value": "19",
+									"type": "text"
+								},
+								{
+									"key": "players[0][position]",
+									"value": "Head Coach",
+									"type": "text"
+								},
+								{
+									"key": "players[0][avatar]",
+									"type": "file",
+									"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-02-05 14-12-53.png"
+								},
+								{
+									"key": "players[1][name]",
+									"value": "Henrik Mkhitaryan",
+									"type": "text"
+								},
+								{
+									"key": "players[1][number]",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "players[1][position]",
+									"value": "Head Coach",
+									"type": "text"
+								},
+								{
+									"key": "players[1][avatar]",
+									"type": "file",
+									"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-02-01 16-00-44.png"
+								},
+								{
+									"key": "players[2][name]",
+									"value": "Henrik Mkhitaryan",
+									"type": "text"
+								},
+								{
+									"key": "players[2][number]",
+									"value": "21",
+									"type": "text"
+								},
+								{
+									"key": "players[2][position]",
+									"value": "Head Coach",
+									"type": "text"
+								},
+								{
+									"key": "players[2][avatar]",
+									"type": "file",
+									"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-01-25 18-04-37.png"
+								},
+								{
+									"key": "players[3][name]",
+									"value": "Henrik Mkhitaryan",
+									"type": "text"
+								},
+								{
+									"key": "players[3][number]",
+									"value": "22",
+									"type": "text"
+								},
+								{
+									"key": "players[3][position]",
+									"value": "Head Coach",
+									"type": "text"
+								},
+								{
+									"key": "players[3][avatar]",
+									"type": "file",
+									"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-01-24 17-37-07.png"
+								},
+								{
+									"key": "players[4][name]",
+									"value": "Henrik Mkhitaryan",
+									"type": "text"
+								},
+								{
+									"key": "players[4][number]",
+									"value": "23",
+									"type": "text"
+								},
+								{
+									"key": "players[4][position]",
+									"value": "Head Coach",
+									"type": "text"
+								},
+								{
+									"key": "players[5][name]",
+									"value": "Henrik Mkhitaryan",
+									"type": "text"
+								},
+								{
+									"key": "players[5][number]",
+									"value": "24",
+									"type": "text"
+								},
+								{
+									"key": "players[5][position]",
+									"value": "Head Coach",
+									"type": "text"
+								},
+								{
+									"key": "players[6][name]",
+									"value": "Henrik Mkhitaryan",
+									"type": "text"
+								},
+								{
+									"key": "players[6][number]",
+									"value": "25",
+									"type": "text"
+								},
+								{
+									"key": "players[6][position]",
+									"value": "Head Coach",
+									"type": "text"
+								},
+								{
+									"key": "players[7][name]",
+									"value": "Henrik Mkhitaryan",
+									"type": "text"
+								},
+								{
+									"key": "players[7][number]",
+									"value": "26",
+									"type": "text"
+								},
+								{
+									"key": "players[7][position]",
+									"value": "Head Coach",
+									"type": "text"
+								},
+								{
+									"key": "players[8][name]",
+									"value": "Henrik Mkhitaryan",
+									"type": "text"
+								},
+								{
+									"key": "players[8][number]",
+									"value": "27",
+									"type": "text"
+								},
+								{
+									"key": "players[8][position]",
+									"value": "Head Coach",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/team/create-team",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"team",
+								"create-team"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-player",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"playerId\": \"65c9bef1f79a5cb9379ae557\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/team/delete-player",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"team",
+								"delete-player"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "public",
+			"item": [
+				{
+					"name": "images",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/public/images/1705778938671.jpeg",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"public",
+								"images",
+								"1705778938671.jpeg"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ligue",
+			"item": [
+				{
+					"name": "create-ligue",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"chmpions ligue\",\n    \"teams\": [\n        {\n            \"team\": \"65c9c0dc070ec84b57daf0ec\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/admin/create-ligue",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"create-ligue"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
