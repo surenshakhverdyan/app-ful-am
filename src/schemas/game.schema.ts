@@ -21,7 +21,7 @@ export class Game {
     type: Types.ObjectId,
     ref: 'Team',
   })
-  win: Team;
+  winner: Team;
 
   @Prop({
     type: [

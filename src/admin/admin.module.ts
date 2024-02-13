@@ -26,6 +26,8 @@ import { UserService } from './user.service';
 import { AdminController } from './admin.controller';
 import { LigueController } from './ligue/ligue.controller';
 import { LigueService } from './ligue/ligue.service';
+import { GameController } from './game/game.controller';
+import { GameService } from './game/game.service';
 
 @Module({
   imports: [
@@ -46,7 +48,8 @@ import { LigueService } from './ligue/ligue.service';
     DeletePlayerService,
     TeamService,
     LigueService,
+    GameService,
   ],
-  controllers: [AdminController, LigueController],
+  controllers: [AdminController, LigueController, GameController],
 })
 export class AdminModule {}

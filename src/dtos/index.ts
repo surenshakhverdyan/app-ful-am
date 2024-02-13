@@ -10,3 +10,4 @@ export * from './update-player.dto';
 export * from './add-player.dto';
 export * from './delete-player.dto';
 export * from './create-ligue.dto';
+export * from './create-game.dto';
