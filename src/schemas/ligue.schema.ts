@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 
 import { Team } from './team.schema';
 import { Game } from './game.schema';
+import { LigueStatus } from 'src/enums';
 
 @Schema({ timestamps: true })
 export class Ligue {
@@ -45,6 +46,13 @@ export class Ligue {
     ],
   })
   teams: { team: Team; points: number }[];
+
+  @Prop({
+    type: String,
+    enum: Object.values(LigueStatus),
+    default: LigueStatus.Active,
+  })
+  status: LigueStatus;
 }
 
 export const LigueSchema = SchemaFactory.createForClass(Ligue);

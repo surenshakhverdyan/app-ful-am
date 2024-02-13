@@ -3,6 +3,8 @@ import { Types } from 'mongoose';
 
 import { Ligue } from './ligue.schema';
 import { Team } from './team.schema';
+import { GameStatus } from 'src/enums';
+import { Player } from './player.schema';
 
 @Schema({ timestamps: true })
 export class Game {
@@ -25,6 +27,7 @@ export class Game {
     type: [
       {
         team: { type: Types.ObjectId, ref: 'Team' },
+        players: { type: Types.ObjectId, ref: 'Player' },
         goals: [
           {
             assist: { type: Types.ObjectId, ref: 'Player' },
@@ -41,12 +44,13 @@ export class Game {
       },
     ],
   })
-  team1: { team: Team; goals: []; cards: [] }[];
+  team1: { team: Team; players: Player[]; goals: []; cards: [] }[];
 
   @Prop({
     type: [
       {
         team: { type: Types.ObjectId, ref: 'Team' },
+        players: { type: Types.ObjectId, ref: 'Player' },
         goals: [
           {
             assist: { type: Types.ObjectId, ref: 'Player' },
@@ -63,7 +67,7 @@ export class Game {
       },
     ],
   })
-  team2: { team: Team; goals: []; cards: [] }[];
+  team2: { team: Team; players: Player[]; goals: []; cards: [] }[];
 
   @Prop({
     type: String,
@@ -74,6 +78,13 @@ export class Game {
     type: [{ type: String }],
   })
   images: string[];
+
+  @Prop({
+    type: String,
+    enum: Object.values(GameStatus),
+    default: GameStatus.Pending,
+  })
+  status: GameStatus;
 }
 
 export const GameSchema = SchemaFactory.createForClass(Game);
