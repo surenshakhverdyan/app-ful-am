@@ -6,6 +6,9 @@ import { Team } from './team.schema';
 
 @Schema({ timestamps: true })
 export class Game {
+  @Prop({ type: Date })
+  dataTime: Date;
+
   @Prop({
     type: Types.ObjectId,
     ref: 'Ligue',
