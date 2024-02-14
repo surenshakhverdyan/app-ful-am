@@ -44,7 +44,6 @@ export class ScheduleService {
   async acceptGameSchedule(dto: UpdateGameTeamsDto): Promise<Game> {
     try {
       const team1 = await this.scheduleModel.findById(dto.team1);
-      console.log(team1);
       const team2 = await this.scheduleModel.findById(dto.team2);
       const game = await this.gameModel.findByIdAndUpdate(
         team1.game,
