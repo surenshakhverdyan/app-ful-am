@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 
 import { ScheduleService } from './schedule.service';
 import { CreateScheduleDto } from 'src/dtos';
+import { UserScheduleGuard } from 'src/guards';
 
+@UseGuards(UserScheduleGuard)
 @Controller('schedule')
 export class ScheduleController {
   constructor(private scheduleService: ScheduleService) {}

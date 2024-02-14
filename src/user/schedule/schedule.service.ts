@@ -21,7 +21,16 @@ export class ScheduleService {
   async getScheduler(): Promise<Team> {
     const token = this.request.params.token;
     const payload = this.jwtService.decode(token);
-    const [teamId] = payload.sub.split(' ');
+    const [teamId, gameId] = payload.sub.split(' ');
+
+    const schedule = await this.scheduleModel.findOne({
+      team: new Types.ObjectId(teamId),
+      game: new Types.ObjectId(gameId),
+    });
+
+    if (schedule)
+      throw new HttpException('You have already scheduled the game', 403);
+
     const team = await this.teamModel.findById(teamId).populate({
       path: 'players',
       model: 'Player',
@@ -36,6 +45,15 @@ export class ScheduleService {
     const token = this.request.params.token;
     const payload = this.jwtService.decode(token);
     const [teamId, gameId] = payload.sub.split(' ');
+
+    const schedule = await this.scheduleModel.findOne({
+      team: new Types.ObjectId(teamId),
+      game: new Types.ObjectId(gameId),
+    });
+
+    if (schedule)
+      throw new HttpException('You have already scheduled the game', 403);
+
     dto.game = new Types.ObjectId(gameId);
     dto.team = new Types.ObjectId(teamId);
     const players: Array<Types.ObjectId> = [];
