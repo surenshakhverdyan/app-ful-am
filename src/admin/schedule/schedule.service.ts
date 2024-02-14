@@ -5,6 +5,7 @@ import { Request } from 'express';
 import { Model, Types } from 'mongoose';
 
 import { UpdateGameTeamsDto } from 'src/dtos';
+import { GameStatus } from 'src/enums';
 import { Game, Schedule } from 'src/schemas';
 
 @Injectable()
@@ -48,7 +49,7 @@ export class ScheduleService {
       const game = await this.gameModel.findByIdAndUpdate(
         team1.game,
         {
-          $set: { team1: team1, team2: team2 },
+          $set: { team1: team1, team2: team2, status: GameStatus.Active },
         },
         { new: true },
       );
