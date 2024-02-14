@@ -12,3 +12,4 @@ export * from './delete-player.dto';
 export * from './create-ligue.dto';
 export * from './create-game.dto';
 export * from './create-schedule.dto';
+export * from './update-game-teams.dto';

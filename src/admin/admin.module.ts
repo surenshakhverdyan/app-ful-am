@@ -11,6 +11,8 @@ import {
   LigueSchema,
   Player,
   PlayerSchema,
+  Schedule,
+  ScheduleSchema,
   Team,
   TeamSchema,
   User,
@@ -28,6 +30,8 @@ import { LigueController } from './ligue/ligue.controller';
 import { LigueService } from './ligue/ligue.service';
 import { GameController } from './game/game.controller';
 import { GameService } from './game/game.service';
+import { ScheduleController } from './schedule/schedule.controller';
+import { ScheduleService } from './schedule/schedule.service';
 
 @Module({
   imports: [
@@ -38,6 +42,7 @@ import { GameService } from './game/game.service';
       { name: Ligue.name, schema: LigueSchema },
       { name: Game.name, schema: GameSchema },
       { name: Basket.name, schema: BasketSchema },
+      { name: Schedule.name, schema: ScheduleSchema },
     ]),
   ],
   providers: [
@@ -49,7 +54,13 @@ import { GameService } from './game/game.service';
     TeamService,
     LigueService,
     GameService,
+    ScheduleService,
   ],
-  controllers: [AdminController, LigueController, GameController],
+  controllers: [
+    AdminController,
+    LigueController,
+    GameController,
+    ScheduleController,
+  ],
 })
 export class AdminModule {}
