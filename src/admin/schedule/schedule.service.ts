@@ -1,4 +1,6 @@
+import { MailerService } from '@nestjs-modules/mailer';
 import { HttpException, Inject, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { REQUEST } from '@nestjs/core';
 import { InjectModel } from '@nestjs/mongoose';
 import { Request } from 'express';
@@ -7,6 +9,7 @@ import { Model, Types } from 'mongoose';
 import { UpdateGameTeamsDto } from 'src/dtos';
 import { GameStatus } from 'src/enums';
 import { Game, Schedule } from 'src/schemas';
+import { gameDateTimeTemplate } from 'src/templates';
 
 @Injectable()
 export class ScheduleService {
@@ -14,6 +17,8 @@ export class ScheduleService {
     @InjectModel(Schedule.name) private scheduleModel: Model<Schedule>,
     @InjectModel(Game.name) private gameModel: Model<Game>,
     @Inject(REQUEST) private request: Request,
+    private mailerService: MailerService,
+    private readonly configService: ConfigService,
   ) {}
 
   async getGameScheduleList(): Promise<Schedule[]> {
@@ -27,11 +32,6 @@ export class ScheduleService {
           path: 'team',
           model: 'Team',
           select: 'avatar name _id',
-          populate: {
-            path: 'user',
-            model: 'User',
-            select: 'email -_id',
-          },
         })
         .select('-createdAt -updatedAt -__v');
 
@@ -43,15 +43,56 @@ export class ScheduleService {
 
   async acceptGameSchedule(dto: UpdateGameTeamsDto): Promise<Game> {
     try {
-      const team1 = await this.scheduleModel.findById(dto.team1);
-      const team2 = await this.scheduleModel.findById(dto.team2);
+      const team1 = await this.scheduleModel.findById(dto.team1).populate({
+        path: 'team',
+        model: 'Team',
+        select: 'name',
+        populate: {
+          path: 'user',
+          model: 'User',
+          select: 'email',
+        },
+      });
+      const team2 = await this.scheduleModel.findById(dto.team2).populate({
+        path: 'team',
+        model: 'Team',
+        select: 'name',
+        populate: {
+          path: 'user',
+          model: 'User',
+          select: 'email',
+        },
+      });
       const game = await this.gameModel.findByIdAndUpdate(
         team1.game,
         {
-          $set: { team1: team1, team2: team2, status: GameStatus.Active },
+          $set: {
+            team1: team1,
+            team2: team2,
+            dateTime: dto.dateTime,
+            status: GameStatus.Active,
+          },
         },
         { new: true },
       );
+
+      const data = {
+        dateTime: game.dateTime,
+        team1: team1.team.name,
+        team2: team2.team.name,
+      };
+
+      const emails = [team1.team.user.email, team2.team.user.email];
+      for (let i = 0; i < emails.length; i++) {
+        const element = emails[i];
+        const template = gameDateTimeTemplate(data);
+        await this.mailerService.sendMail({
+          from: this.configService.get<string>('EMAIL_ADDRESS'),
+          to: element,
+          subject: 'Game Date',
+          html: template,
+        });
+      }
 
       return game;
     } catch (error: any) {

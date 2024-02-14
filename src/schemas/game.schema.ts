@@ -9,7 +9,7 @@ import { Player } from './player.schema';
 @Schema({ timestamps: true })
 export class Game {
   @Prop({ type: Date })
-  dataTime: Date;
+  dateTime: Date;
 
   @Prop({
     type: Types.ObjectId,

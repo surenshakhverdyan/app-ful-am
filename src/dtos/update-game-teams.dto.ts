@@ -7,4 +7,7 @@ export class UpdateGameTeamsDto {
 
   @IsNotEmpty()
   team2: Types.ObjectId;
+
+  @IsNotEmpty()
+  dateTime: Date;
 }
