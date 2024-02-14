@@ -306,6 +306,35 @@
 					"response": []
 				},
 				{
+					"name": "get-game-schedule-list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/admin/get-game-schedule-list/65cc64b6c0e6289f8f3265c9",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"get-game-schedule-list",
+								"65cc64b6c0e6289f8f3265c9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get-users",
 					"request": {
 						"auth": {
@@ -356,6 +385,43 @@
 							"path": [
 								"admin",
 								"get-teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accept-game-schedule",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"team1\": \"65cc84e8f54a8684fc85dd27\",\n    \"team2\": \"65cc84e8f54a8684fc85dd29\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/admin/accept-game-schedule",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"accept-game-schedule"
 							]
 						}
 					},
@@ -890,6 +956,95 @@
 							"path": [
 								"admin",
 								"create-ligue"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-game",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ligue\": \"65cb1fb2a02761e39ea66704\",\n    \"basket\": \"65cb2c85dece70ebbf2b21ef\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/admin/create-game",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"create-game"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "scheduler",
+			"item": [
+				{
+					"name": "get-scheduler",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/schedule/get-scheduler/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"schedule",
+								"get-scheduler",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-schedule",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2023-01-06\",\n    \"players\": [\n        \"65c9c0dc070ec84b57daf0ef\",\n        \"65c9c0dc070ec84b57daf0f3\",\n        \"65c9c0dc070ec84b57daf0f7\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/schedule/create-schedule/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"schedule",
+								"create-schedule",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg"
 							]
 						}
 					},
