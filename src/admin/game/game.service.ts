@@ -32,6 +32,7 @@ export class GameService {
         .populate({
           path: 'teams',
           model: 'Team',
+          match: { status: 'active' },
           select: '_id',
           populate: {
             path: 'user',

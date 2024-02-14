@@ -12,12 +12,16 @@ import {
 import {
   Player,
   PlayerSchema,
+  Schedule,
+  ScheduleSchema,
   Team,
   TeamSchema,
   User,
   UserSchema,
 } from 'src/schemas';
 import { TeamService } from './team.service';
+import { ScheduleController } from './schedule/schedule.controller';
+import { ScheduleService } from './schedule/schedule.service';
 
 @Module({
   imports: [
@@ -25,15 +29,17 @@ import { TeamService } from './team.service';
       { name: User.name, schema: UserSchema },
       { name: Team.name, schema: TeamSchema },
       { name: Player.name, schema: PlayerSchema },
+      { name: Schedule.name, schema: ScheduleSchema },
     ]),
   ],
-  controllers: [UserController, TeamController],
+  controllers: [UserController, TeamController, ScheduleController],
   providers: [
     UpdateUserService,
     JwtService,
     TokenService,
     TeamService,
     DeletePlayerService,
+    ScheduleService,
   ],
 })
 export class UserModule {}

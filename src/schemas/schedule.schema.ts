@@ -1,4 +1,4 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
 import { Game } from './game.schema';
@@ -27,3 +27,5 @@ export class Schedule {
   @Prop({ type: Date })
   date: Date;
 }
+
+export const ScheduleSchema = SchemaFactory.createForClass(Schedule);
