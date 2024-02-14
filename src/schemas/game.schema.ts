@@ -27,7 +27,7 @@ export class Game {
     type: [
       {
         team: { type: Types.ObjectId, ref: 'Team' },
-        players: { type: Types.ObjectId, ref: 'Player' },
+        players: [{ type: Types.ObjectId, ref: 'Player' }],
         goals: [
           {
             assist: { type: Types.ObjectId, ref: 'Player' },
@@ -50,7 +50,7 @@ export class Game {
     type: [
       {
         team: { type: Types.ObjectId, ref: 'Team' },
-        players: { type: Types.ObjectId, ref: 'Player' },
+        players: [{ type: Types.ObjectId, ref: 'Player' }],
         goals: [
           {
             assist: { type: Types.ObjectId, ref: 'Player' },
