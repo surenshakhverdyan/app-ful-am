@@ -7,9 +7,7 @@ import { Basket } from 'src/schemas';
 
 @Injectable()
 export class BasketService {
-  constructor(
-    @InjectModel(BasketService.name) private basketModel: Model<Basket>,
-  ) {}
+  constructor(@InjectModel(Basket.name) private basketModel: Model<Basket>) {}
 
   async createBasket(dto: CreateBasketDto): Promise<Basket> {
     try {
