@@ -42,6 +42,14 @@ export class TokenService {
     return forgotPasswordToken;
   }
 
+  jwtGameScheduleSign(payload: IPayload): string {
+    const gameScheduleToken = this.jwtService.sign(payload, {
+      secret: this.configService.get<string>('JWT_GAME_SCHEDULE_SECRET'),
+      expiresIn: '5d',
+    });
+    return gameScheduleToken;
+  }
+
   jwtVerify(token: string): IPayload {
     try {
       const { type } = this.jwtService.decode(token);
@@ -55,6 +63,9 @@ export class TokenService {
           break;
         case TokenType.ForgotPasswordToken:
           secret = this.configService.get<string>('JWT_FORGOT_PASSWORD_SECRET');
+          break;
+        case TokenType.GameScheduleToken:
+          secret = this.configService.get<string>('JWT_GAME_SCHEDULE_SECRET');
           break;
       }
       const payload = this.jwtService.verify(token, {
