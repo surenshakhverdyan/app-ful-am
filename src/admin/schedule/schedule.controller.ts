@@ -15,8 +15,8 @@ export class ScheduleController {
     return this.scheduleService.getGameScheduleList();
   }
 
-  @Post('accept-game-schedule')
-  acceptGameSchedule(@Body() dto: UpdateGameTeamsDto): Promise<Game> {
-    return this.scheduleService.acceptGameSchedule(dto);
+  @Post('set-game')
+  setGame(@Body() dto: UpdateGameTeamsDto): Promise<Game> {
+    return this.scheduleService.setGame(dto);
   }
 }

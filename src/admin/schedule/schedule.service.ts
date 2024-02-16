@@ -41,7 +41,7 @@ export class ScheduleService {
     }
   }
 
-  async acceptGameSchedule(dto: UpdateGameTeamsDto): Promise<Game> {
+  async setGame(dto: UpdateGameTeamsDto): Promise<Game> {
     try {
       const team1 = await this.scheduleModel.findById(dto.team1).populate({
         path: 'team',
@@ -63,6 +63,7 @@ export class ScheduleService {
           select: 'email',
         },
       });
+
       const game = await this.gameModel.findByIdAndUpdate(
         team1.game,
         {
@@ -86,6 +87,7 @@ export class ScheduleService {
       for (let i = 0; i < emails.length; i++) {
         const element = emails[i];
         const template = gameDateTimeTemplate(data);
+
         await this.mailerService.sendMail({
           from: this.configService.get<string>('EMAIL_ADDRESS'),
           to: element,
