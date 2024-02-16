@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "8c6a330c-66eb-4992-86c9-edd7427228e0",
+		"_postman_id": "4b4649bf-fa60-4abc-b9f4-a099c037072e",
 		"name": "app-ful-am",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25301126"
+		"_exporter_id": "32307856"
 	},
 	"item": [
 		{
@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"wapp.develope@gmail.com\",\n    \"password\": \"156354111\"\n}",
+							"raw": "{\n    \"email\": \"agent.-.007@mail.ru\",\n    \"password\": \"156354112\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -120,6 +120,122 @@
 		{
 			"name": "admin",
 			"item": [
+				{
+					"name": "ligue",
+					"item": [
+						{
+							"name": "create-ligue",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"chmpions ligue\",\n    \"teams\": [\n        {\n            \"team\": \"65c8eeb961a5111d19b81430\"\n        },\n        {\n            \"team\": \"65cd16c2633c932b1014e6cd\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/admin/create-ligue",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"admin",
+										"create-ligue"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create-game",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ligue\": \"65cb1fb2a02761e39ea66704\",\n    \"basket\": \"65cb2c85dece70ebbf2b21ef\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/admin/create-game",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"admin",
+										"create-game"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create-basket",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ligue\": \"65cd1a9b1f8950fee417e55a\",\n    \"teams\": [\n        \"65c8eeb961a5111d19b81430\",\n        \"65cd16c2633c932b1014e6cd\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/admin/create-basket",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"admin",
+										"create-basket"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
 				{
 					"name": "create-user",
 					"request": {
@@ -433,6 +549,58 @@
 			"name": "user",
 			"item": [
 				{
+					"name": "scheduler",
+					"item": [
+						{
+							"name": "get-scheduler",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/schedule/get-scheduler/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"schedule",
+										"get-scheduler",
+										"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create-schedule",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"date\": \"2023-01-06\",\n    \"players\": [\n        \"65c9c0dc070ec84b57daf0ef\",\n        \"65c9c0dc070ec84b57daf0f3\",\n        \"65c9c0dc070ec84b57daf0f7\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/schedule/create-schedule/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"schedule",
+										"create-schedule",
+										"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "update-password",
 					"request": {
 						"auth": {
@@ -615,7 +783,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{USER_TOKEN}}",
+									"value": "{{USER2_TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -643,7 +811,7 @@
 								{
 									"key": "avatar",
 									"type": "file",
-									"src": "/home/suren/Pictures/Me&Lil/IMG_8296.JPG"
+									"src": []
 								}
 							]
 						},
@@ -668,7 +836,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{USER_TOKEN}}",
+									"value": "{{USER2_TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -686,7 +854,7 @@
 								{
 									"key": "avatar",
 									"type": "file",
-									"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-02-08 13-27-17.png"
+									"src": "/home/suren/Pictures/Screenshots/Screenshot from 2024-01-17 02-56-28.png"
 								},
 								{
 									"key": "players[0][name]",
@@ -706,7 +874,7 @@
 								{
 									"key": "players[0][avatar]",
 									"type": "file",
-									"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-02-05 14-12-53.png"
+									"src": "/home/suren/Pictures/IMG_1766.jpg"
 								},
 								{
 									"key": "players[1][name]",
@@ -726,7 +894,7 @@
 								{
 									"key": "players[1][avatar]",
 									"type": "file",
-									"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-02-01 16-00-44.png"
+									"src": []
 								},
 								{
 									"key": "players[2][name]",
@@ -746,7 +914,7 @@
 								{
 									"key": "players[2][avatar]",
 									"type": "file",
-									"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-01-25 18-04-37.png"
+									"src": []
 								},
 								{
 									"key": "players[3][name]",
@@ -766,7 +934,7 @@
 								{
 									"key": "players[3][avatar]",
 									"type": "file",
-									"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-01-24 17-37-07.png"
+									"src": []
 								},
 								{
 									"key": "players[4][name]",
@@ -820,7 +988,7 @@
 								},
 								{
 									"key": "players[7][number]",
-									"value": "26",
+									"value": "27",
 									"type": "text"
 								},
 								{
@@ -835,7 +1003,7 @@
 								},
 								{
 									"key": "players[8][number]",
-									"value": "27",
+									"value": "26",
 									"type": "text"
 								},
 								{
@@ -914,137 +1082,6 @@
 								"public",
 								"images",
 								"1705778938671.jpeg"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "ligue",
-			"item": [
-				{
-					"name": "create-ligue",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ADMIN_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"chmpions ligue\",\n    \"teams\": [\n        {\n            \"team\": \"65c9c0dc070ec84b57daf0ec\"\n        }\n    ]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/admin/create-ligue",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"admin",
-								"create-ligue"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create-game",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ADMIN_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"ligue\": \"65cb1fb2a02761e39ea66704\",\n    \"basket\": \"65cb2c85dece70ebbf2b21ef\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/admin/create-game",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"admin",
-								"create-game"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "scheduler",
-			"item": [
-				{
-					"name": "get-scheduler",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE_URL}}/schedule/get-scheduler/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"schedule",
-								"get-scheduler",
-								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create-schedule",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"date\": \"2023-01-06\",\n    \"players\": [\n        \"65c9c0dc070ec84b57daf0ef\",\n        \"65c9c0dc070ec84b57daf0f3\",\n        \"65c9c0dc070ec84b57daf0f7\"\n    ]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/schedule/create-schedule/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"schedule",
-								"create-schedule",
-								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg"
 							]
 						}
 					},
