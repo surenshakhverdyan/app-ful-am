@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "4b4649bf-fa60-4abc-b9f4-a099c037072e",
+		"_postman_id": "61516473-5013-4d26-a2ed-d41cedfec279",
 		"name": "app-ful-am",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "32307856"
+		"_exporter_id": "25301126"
 	},
 	"item": [
 		{
@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"agent.-.007@mail.ru\",\n    \"password\": \"156354112\"\n}",
+							"raw": "{\n    \"email\": \"wapp.develope@gmail.com\",\n    \"password\": \"156354111\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -177,7 +177,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"ligue\": \"65cb1fb2a02761e39ea66704\",\n    \"basket\": \"65cb2c85dece70ebbf2b21ef\"\n}",
+									"raw": "{\n    \"ligue\": \"65cb1fb2a02761e39ea66704\",\n    \"basket\": \"65cda817baf0fe123edd7514\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -192,6 +192,43 @@
 									"path": [
 										"admin",
 										"create-game"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "set-game",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"dateTime\": \"2024-02-24 20:30\",\n    \"team1\": \"65cf0f8774fc3635fa6eddbb\",\n    \"team2\": \"65cf0f4a74fc3635fa6eddb8\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/admin/set-game",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"admin",
+										"set-game"
 									]
 								}
 							},
@@ -505,43 +542,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "accept-game-schedule",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ADMIN_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"team1\": \"65cc84e8f54a8684fc85dd27\",\n    \"team2\": \"65cc84e8f54a8684fc85dd29\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/admin/accept-game-schedule",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"admin",
-								"accept-game-schedule"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -577,7 +577,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"date\": \"2023-01-06\",\n    \"players\": [\n        \"65c9c0dc070ec84b57daf0ef\",\n        \"65c9c0dc070ec84b57daf0f3\",\n        \"65c9c0dc070ec84b57daf0f7\"\n    ]\n}",
+									"raw": "{\n    \"date\": \"2024-02-24\",\n    \"players\": [\n        \"65cf0b9a0058723b5e646eb2\",\n        \"65cf0b9b0058723b5e646ebe\",\n        \"65cf0b9b0058723b5e646ec6\",\n        \"65cf0b9b0058723b5e646ece\"\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -585,14 +585,403 @@
 									}
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/schedule/create-schedule/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg",
+									"raw": "{{BASE_URL}}/schedule/create-schedule/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWNmMGI5YTAwNTg3MjNiNWU2NDZlYWIgNjVjZjBlYjAxN2RkYzg2Y2E1ODRmYjYxIiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgwNjg1MjgsImV4cCI6MTcwODUwMDUyOH0.47T4YfCyXrb7_Wwod8wSdK-Wd2G4mVxFq-86pVm8Y2s",
 									"host": [
 										"{{BASE_URL}}"
 									],
 									"path": [
 										"schedule",
 										"create-schedule",
-										"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg"
+										"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWNmMGI5YTAwNTg3MjNiNWU2NDZlYWIgNjVjZjBlYjAxN2RkYzg2Y2E1ODRmYjYxIiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgwNjg1MjgsImV4cCI6MTcwODUwMDUyOH0.47T4YfCyXrb7_Wwod8wSdK-Wd2G4mVxFq-86pVm8Y2s"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "team",
+					"item": [
+						{
+							"name": "update-player",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": "/home/suren/Pictures/IMG_1766.jpg"
+										},
+										{
+											"key": "playerId",
+											"value": "65c8eeb961a5111d19b8143f",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Artak Edigaryan",
+											"type": "text"
+										},
+										{
+											"key": "position",
+											"value": "Goalkeeper",
+											"type": "text"
+										},
+										{
+											"key": "number",
+											"value": "30",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/team/update-player",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"team",
+										"update-player"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-team-avatar",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": "/home/suren/Pictures/Me&Lil/IMG_8592.JPG"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/team/update-team-avatar",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"team",
+										"update-team-avatar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add-player",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER2_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Lionel Messi",
+											"type": "text"
+										},
+										{
+											"key": "number",
+											"value": "32",
+											"type": "text"
+										},
+										{
+											"key": "position",
+											"value": "Goalkeeper",
+											"type": "text"
+										},
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/team/add-player",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"team",
+										"add-player"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create-team",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER1_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Socker2",
+											"type": "text"
+										},
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "players[0][name]",
+											"value": "Henrik Mkhitaryan",
+											"type": "text"
+										},
+										{
+											"key": "players[0][number]",
+											"value": "19",
+											"type": "text"
+										},
+										{
+											"key": "players[0][position]",
+											"value": "Head Coach",
+											"type": "text"
+										},
+										{
+											"key": "players[0][avatar]",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "players[1][name]",
+											"value": "Henrik Mkhitaryan",
+											"type": "text"
+										},
+										{
+											"key": "players[1][number]",
+											"value": "20",
+											"type": "text"
+										},
+										{
+											"key": "players[1][position]",
+											"value": "Head Coach",
+											"type": "text"
+										},
+										{
+											"key": "players[1][avatar]",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "players[2][name]",
+											"value": "Henrik Mkhitaryan",
+											"type": "text"
+										},
+										{
+											"key": "players[2][number]",
+											"value": "21",
+											"type": "text"
+										},
+										{
+											"key": "players[2][position]",
+											"value": "Head Coach",
+											"type": "text"
+										},
+										{
+											"key": "players[2][avatar]",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "players[3][name]",
+											"value": "Henrik Mkhitaryan",
+											"type": "text"
+										},
+										{
+											"key": "players[3][number]",
+											"value": "22",
+											"type": "text"
+										},
+										{
+											"key": "players[3][position]",
+											"value": "Head Coach",
+											"type": "text"
+										},
+										{
+											"key": "players[3][avatar]",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "players[4][name]",
+											"value": "Henrik Mkhitaryan",
+											"type": "text"
+										},
+										{
+											"key": "players[4][number]",
+											"value": "23",
+											"type": "text"
+										},
+										{
+											"key": "players[4][position]",
+											"value": "Head Coach",
+											"type": "text"
+										},
+										{
+											"key": "players[5][name]",
+											"value": "Henrik Mkhitaryan",
+											"type": "text"
+										},
+										{
+											"key": "players[5][number]",
+											"value": "24",
+											"type": "text"
+										},
+										{
+											"key": "players[5][position]",
+											"value": "Head Coach",
+											"type": "text"
+										},
+										{
+											"key": "players[6][name]",
+											"value": "Henrik Mkhitaryan",
+											"type": "text"
+										},
+										{
+											"key": "players[6][number]",
+											"value": "25",
+											"type": "text"
+										},
+										{
+											"key": "players[6][position]",
+											"value": "Head Coach",
+											"type": "text"
+										},
+										{
+											"key": "players[7][name]",
+											"value": "Henrik Mkhitaryan",
+											"type": "text"
+										},
+										{
+											"key": "players[7][number]",
+											"value": "27",
+											"type": "text"
+										},
+										{
+											"key": "players[7][position]",
+											"value": "Head Coach",
+											"type": "text"
+										},
+										{
+											"key": "players[8][name]",
+											"value": "Henrik Mkhitaryan",
+											"type": "text"
+										},
+										{
+											"key": "players[8][number]",
+											"value": "26",
+											"type": "text"
+										},
+										{
+											"key": "players[8][position]",
+											"value": "Head Coach",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/team/create-team",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"team",
+										"create-team"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-player",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"playerId\": \"65c9bef1f79a5cb9379ae557\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/team/delete-player",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"team",
+										"delete-player"
 									]
 								}
 							},
@@ -669,395 +1058,6 @@
 							"path": [
 								"user",
 								"update-profile"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "team",
-			"item": [
-				{
-					"name": "update-player",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{USER_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "avatar",
-									"type": "file",
-									"src": "/home/suren/Pictures/IMG_1766.jpg"
-								},
-								{
-									"key": "playerId",
-									"value": "65c8eeb961a5111d19b8143f",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "Artak Edigaryan",
-									"type": "text"
-								},
-								{
-									"key": "position",
-									"value": "Goalkeeper",
-									"type": "text"
-								},
-								{
-									"key": "number",
-									"value": "30",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/team/update-player",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"team",
-								"update-player"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update-team-avatar",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{USER_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "avatar",
-									"type": "file",
-									"src": "/home/suren/Pictures/Me&Lil/IMG_8592.JPG"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/team/update-team-avatar",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"team",
-								"update-team-avatar"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "add-player",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{USER2_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "Lionel Messi",
-									"type": "text"
-								},
-								{
-									"key": "number",
-									"value": "32",
-									"type": "text"
-								},
-								{
-									"key": "position",
-									"value": "Goalkeeper",
-									"type": "text"
-								},
-								{
-									"key": "avatar",
-									"type": "file",
-									"src": []
-								}
-							]
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/team/add-player",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"team",
-								"add-player"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create-team",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{USER2_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "Socker",
-									"type": "text"
-								},
-								{
-									"key": "avatar",
-									"type": "file",
-									"src": "/home/suren/Pictures/Screenshots/Screenshot from 2024-01-17 02-56-28.png"
-								},
-								{
-									"key": "players[0][name]",
-									"value": "Henrik Mkhitaryan",
-									"type": "text"
-								},
-								{
-									"key": "players[0][number]",
-									"value": "19",
-									"type": "text"
-								},
-								{
-									"key": "players[0][position]",
-									"value": "Head Coach",
-									"type": "text"
-								},
-								{
-									"key": "players[0][avatar]",
-									"type": "file",
-									"src": "/home/suren/Pictures/IMG_1766.jpg"
-								},
-								{
-									"key": "players[1][name]",
-									"value": "Henrik Mkhitaryan",
-									"type": "text"
-								},
-								{
-									"key": "players[1][number]",
-									"value": "20",
-									"type": "text"
-								},
-								{
-									"key": "players[1][position]",
-									"value": "Head Coach",
-									"type": "text"
-								},
-								{
-									"key": "players[1][avatar]",
-									"type": "file",
-									"src": []
-								},
-								{
-									"key": "players[2][name]",
-									"value": "Henrik Mkhitaryan",
-									"type": "text"
-								},
-								{
-									"key": "players[2][number]",
-									"value": "21",
-									"type": "text"
-								},
-								{
-									"key": "players[2][position]",
-									"value": "Head Coach",
-									"type": "text"
-								},
-								{
-									"key": "players[2][avatar]",
-									"type": "file",
-									"src": []
-								},
-								{
-									"key": "players[3][name]",
-									"value": "Henrik Mkhitaryan",
-									"type": "text"
-								},
-								{
-									"key": "players[3][number]",
-									"value": "22",
-									"type": "text"
-								},
-								{
-									"key": "players[3][position]",
-									"value": "Head Coach",
-									"type": "text"
-								},
-								{
-									"key": "players[3][avatar]",
-									"type": "file",
-									"src": []
-								},
-								{
-									"key": "players[4][name]",
-									"value": "Henrik Mkhitaryan",
-									"type": "text"
-								},
-								{
-									"key": "players[4][number]",
-									"value": "23",
-									"type": "text"
-								},
-								{
-									"key": "players[4][position]",
-									"value": "Head Coach",
-									"type": "text"
-								},
-								{
-									"key": "players[5][name]",
-									"value": "Henrik Mkhitaryan",
-									"type": "text"
-								},
-								{
-									"key": "players[5][number]",
-									"value": "24",
-									"type": "text"
-								},
-								{
-									"key": "players[5][position]",
-									"value": "Head Coach",
-									"type": "text"
-								},
-								{
-									"key": "players[6][name]",
-									"value": "Henrik Mkhitaryan",
-									"type": "text"
-								},
-								{
-									"key": "players[6][number]",
-									"value": "25",
-									"type": "text"
-								},
-								{
-									"key": "players[6][position]",
-									"value": "Head Coach",
-									"type": "text"
-								},
-								{
-									"key": "players[7][name]",
-									"value": "Henrik Mkhitaryan",
-									"type": "text"
-								},
-								{
-									"key": "players[7][number]",
-									"value": "27",
-									"type": "text"
-								},
-								{
-									"key": "players[7][position]",
-									"value": "Head Coach",
-									"type": "text"
-								},
-								{
-									"key": "players[8][name]",
-									"value": "Henrik Mkhitaryan",
-									"type": "text"
-								},
-								{
-									"key": "players[8][number]",
-									"value": "26",
-									"type": "text"
-								},
-								{
-									"key": "players[8][position]",
-									"value": "Head Coach",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/team/create-team",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"team",
-								"create-team"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete-player",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{USER_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"playerId\": \"65c9bef1f79a5cb9379ae557\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/team/delete-player",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"team",
-								"delete-player"
 							]
 						}
 					},
