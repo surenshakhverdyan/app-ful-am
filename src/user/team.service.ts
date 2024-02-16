@@ -33,7 +33,7 @@ export class TeamService {
     const savedImages: Array<string> = [];
 
     try {
-      if (avatars['avatar'][0] !== undefined) {
+      if (avatars['avatar'] !== undefined) {
         const fileName = `${Date.now() + Math.floor(Math.random() * 99999)}${extname(avatars['avatar'][0].originalname)}`;
         fs.writeFileSync(`uploads/${fileName}`, avatars['avatar'][0].buffer);
         dto.avatar = fileName;
