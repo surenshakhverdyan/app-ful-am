@@ -6,7 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Request } from 'express';
 import { Model, Types } from 'mongoose';
 
-import { UpdateGameTeamsDto } from 'src/dtos';
+import { SetGameDto } from 'src/dtos';
 import { GameStatus } from 'src/enums';
 import { Game, Schedule } from 'src/schemas';
 import { gameDateTimeTemplate } from 'src/templates';
@@ -41,7 +41,7 @@ export class ScheduleService {
     }
   }
 
-  async setGame(dto: UpdateGameTeamsDto): Promise<Game> {
+  async setGame(dto: SetGameDto): Promise<Game> {
     try {
       const team1 = await this.scheduleModel.findById(dto.team1).populate({
         path: 'team',
