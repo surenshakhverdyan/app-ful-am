@@ -33,6 +33,8 @@ import { GameService } from './game/game.service';
 import { ScheduleController } from './schedule/schedule.controller';
 import { ScheduleService } from './schedule/schedule.service';
 import { BasketService } from './ligue/basket.service';
+import { StatisticsController } from './game/statistics/statistics.controller';
+import { StatisticsService } from './game/statistics/statistics.service';
 
 @Module({
   imports: [
@@ -57,12 +59,14 @@ import { BasketService } from './ligue/basket.service';
     GameService,
     ScheduleService,
     BasketService,
+    StatisticsService,
   ],
   controllers: [
     AdminController,
     LigueController,
     GameController,
     ScheduleController,
+    StatisticsController,
   ],
 })
 export class AdminModule {}

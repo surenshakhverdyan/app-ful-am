@@ -6,6 +6,9 @@ import { Status } from 'src/enums';
 
 @Schema({ timestamps: true })
 export class Team {
+  equals(team: string) {
+    throw new Error('Method not implemented.');
+  }
   @Prop({
     required: true,
     type: Types.ObjectId,

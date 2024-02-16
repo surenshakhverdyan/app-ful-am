@@ -24,50 +24,46 @@ export class Game {
   winner: Team;
 
   @Prop({
-    type: [
-      {
-        team: { type: Types.ObjectId, ref: 'Team' },
-        players: [{ type: Types.ObjectId, ref: 'Player' }],
-        goals: [
-          {
-            assist: { type: Types.ObjectId, ref: 'Player' },
-            goal: { type: Types.ObjectId, ref: 'Player' },
-          },
-        ],
-        cards: [
-          {
-            player: { type: Types.ObjectId, ref: 'Player' },
-            yellow: { type: Number },
-            red: { type: Number },
-          },
-        ],
-      },
-    ],
+    type: {
+      team: { type: Types.ObjectId, ref: 'Team' },
+      players: [{ type: Types.ObjectId, ref: 'Player' }],
+      goals: [
+        {
+          assist: { type: Types.ObjectId, ref: 'Player' },
+          goal: { type: Types.ObjectId, ref: 'Player' },
+        },
+      ],
+      cards: [
+        {
+          player: { type: Types.ObjectId, ref: 'Player' },
+          yellow: { type: Number },
+          red: { type: Number },
+        },
+      ],
+    },
   })
-  team1: { team: Team; players: Player[]; goals: []; cards: [] }[];
+  team1: { team: Team; players: Player[]; goals: []; cards: [] };
 
   @Prop({
-    type: [
-      {
-        team: { type: Types.ObjectId, ref: 'Team' },
-        players: [{ type: Types.ObjectId, ref: 'Player' }],
-        goals: [
-          {
-            assist: { type: Types.ObjectId, ref: 'Player' },
-            goal: { type: Types.ObjectId, ref: 'Player' },
-          },
-        ],
-        cards: [
-          {
-            player: { type: Types.ObjectId, ref: 'Player' },
-            yellow: { type: Number },
-            red: { type: Number },
-          },
-        ],
-      },
-    ],
+    type: {
+      team: { type: Types.ObjectId, ref: 'Team' },
+      players: [{ type: Types.ObjectId, ref: 'Player' }],
+      goals: [
+        {
+          assist: { type: Types.ObjectId, ref: 'Player' },
+          goal: { type: Types.ObjectId, ref: 'Player' },
+        },
+      ],
+      cards: [
+        {
+          player: { type: Types.ObjectId, ref: 'Player' },
+          yellow: { type: Number },
+          red: { type: Number },
+        },
+      ],
+    },
   })
-  team2: { team: Team; players: Player[]; goals: []; cards: [] }[];
+  team2: { team: Team; players: Player[]; goals: []; cards: [] };
 
   @Prop({
     type: String,

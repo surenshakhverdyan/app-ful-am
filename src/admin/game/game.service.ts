@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 
 import { CreateGameDto } from 'src/dtos';
-import { Role, TokenType } from 'src/enums';
+import { Role, Status, TokenType } from 'src/enums';
 import { IPopulatedBasket } from 'src/interfaces';
 import { Basket, Game, Ligue } from 'src/schemas';
 import { TokenService } from 'src/services';
@@ -39,7 +39,7 @@ export class GameService {
         .populate({
           path: 'teams',
           model: 'Team',
-          match: { status: 'active' },
+          match: { status: Status.Active },
           select: '_id',
           populate: {
             path: 'user',
