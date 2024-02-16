@@ -7,7 +7,7 @@ import { Model, Types } from 'mongoose';
 import { CreateGameDto } from 'src/dtos';
 import { Role, TokenType } from 'src/enums';
 import { IPopulatedBasket } from 'src/interfaces';
-import { Basket, Game } from 'src/schemas';
+import { Basket, Game, Ligue } from 'src/schemas';
 import { TokenService } from 'src/services';
 import { scheduleGameTemplate } from 'src/templates';
 
@@ -16,6 +16,7 @@ export class GameService {
   constructor(
     @InjectModel(Game.name) private gameModel: Model<Game>,
     @InjectModel(Basket.name) private basketModel: Model<Basket>,
+    @InjectModel(Ligue.name) private ligueModel: Model<Ligue>,
     private tokenService: TokenService,
     private mailerService: MailerService,
     private readonly configService: ConfigService,
@@ -26,6 +27,12 @@ export class GameService {
       const game = await this.gameModel.create({
         ligue: new Types.ObjectId(dto.ligue),
       });
+
+      await this.ligueModel.findByIdAndUpdate(
+        dto.ligue,
+        { $push: { games: game._id } },
+        { new: true },
+      );
 
       const basket: IPopulatedBasket = await this.basketModel
         .findById(dto.basket)
