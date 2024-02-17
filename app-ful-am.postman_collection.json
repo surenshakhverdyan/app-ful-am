@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "61516473-5013-4d26-a2ed-d41cedfec279",
+		"_postman_id": "3ee276e1-31b1-4511-95fc-da823f1ad27e",
 		"name": "app-ful-am",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25301126"
+		"_exporter_id": "32307856"
 	},
 	"item": [
 		{
@@ -266,6 +266,85 @@
 									"path": [
 										"admin",
 										"create-basket"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "statistics",
+					"item": [
+						{
+							"name": "update-game-statistics",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"game\": \"65cfba0f255afaad1e28576e\",\n    \"team\": \"65cd16c2633c932b1014e6cd\",\n    \"goals\": [\n        {\n            \"assist\": \"65cd16c2633c932b1014e6d0\",\n            \"goal\": \"65cd16c2633c932b1014e6d4\"\n        },\n        {\n            \"assist\": \"65cd16c2633c932b1014e6d0\",\n            \"goal\": \"65cd16c2633c932b1014e6d4\"\n        }\n    ],\n    \"cards\": [\n        {\n            \"player\": \"65cd16c2633c932b1014e6d4\",\n            \"yellow\": 1\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/admin/update-game-statistics",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"admin",
+										"update-game-statistics"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "change-game-status",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"gameId\": \"65cfba0f255afaad1e28576e\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/admin/change-game-status",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"admin",
+										"change-game-status"
 									]
 								}
 							},

@@ -2,7 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
 import { Ligue } from './ligue.schema';
-import { Team } from './team.schema';
 import { GameStatus } from 'src/enums';
 import { Player } from './player.schema';
 
@@ -21,7 +20,7 @@ export class Game {
     type: Types.ObjectId,
     ref: 'Team',
   })
-  winner: Team;
+  winner: Types.ObjectId;
 
   @Prop({
     type: {

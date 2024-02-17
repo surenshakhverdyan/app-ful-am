@@ -2,15 +2,16 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { UpdateGameStatisticsDto } from 'src/dtos';
+import { ChangeGameStatusDto, UpdateGameStatisticsDto } from 'src/dtos';
 import { GameStatus } from 'src/enums';
-import { Game, Player } from 'src/schemas';
+import { Game, Ligue, Player } from 'src/schemas';
 
 @Injectable()
 export class StatisticsService {
   constructor(
     @InjectModel(Game.name) private gameModel: Model<Game>,
     @InjectModel(Player.name) private playerModel: Model<Player>,
+    @InjectModel(Ligue.name) private ligueModel: Model<Ligue>,
   ) {}
 
   async updateGameStatistics(dto: UpdateGameStatisticsDto): Promise<Game> {
@@ -98,6 +99,42 @@ export class StatisticsService {
         }
       }
 
+      await game.save();
+
+      return game;
+    } catch (error: any) {
+      throw new HttpException(error.message, 500);
+    }
+  }
+
+  async changeGameStatus(dto: ChangeGameStatusDto): Promise<Game> {
+    try {
+      const game = await this.gameModel.findById(dto.gameId);
+
+      if (game.team1.goals.length > game.team2.goals.length) {
+        game.winner = game.team1.team;
+        await this.ligueModel.updateOne(
+          { _id: game.ligue, 'teams.team': game.team1.team },
+          { $inc: { 'teams.$.points': 3 } },
+        );
+      } else if (game.team2.goals.length > game.team1.goals.length) {
+        game.winner = game.team2.team;
+        await this.ligueModel.updateOne(
+          { _id: game.ligue, 'teams.team': game.team2.team },
+          { $inc: { 'teams.$.points': 3 } },
+        );
+      } else {
+        await this.ligueModel.updateOne(
+          { _id: game.ligue, 'teams.team': game.team1.team },
+          { $inc: { 'teams.$.points': 1 } },
+        );
+        await this.ligueModel.updateOne(
+          { _id: game.ligue, 'teams.team': game.team2.team },
+          { $inc: { 'teams.$.points': 1 } },
+        );
+      }
+
+      game.status = GameStatus.Ended;
       await game.save();
 
       return game;

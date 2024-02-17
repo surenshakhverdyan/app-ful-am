@@ -15,3 +15,4 @@ export * from './create-schedule.dto';
 export * from './set-game.dto';
 export * from './create-basket.dto';
 export * from './update-game-statistics.dto';
+export * from './change-game-status.dto';
