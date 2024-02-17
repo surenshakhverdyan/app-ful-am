@@ -42,7 +42,12 @@ export class Game {
       ],
     },
   })
-  team1: { team: Team; players: Player[]; goals: []; cards: [] };
+  team1: {
+    team: Types.ObjectId;
+    players: Player[];
+    goals?: Array<{ assist?: Types.ObjectId; goal?: Types.ObjectId }>;
+    cards?: Array<{ player?: Types.ObjectId; yellow?: number; red?: number }>;
+  };
 
   @Prop({
     type: {
@@ -63,7 +68,12 @@ export class Game {
       ],
     },
   })
-  team2: { team: Team; players: Player[]; goals: []; cards: [] };
+  team2: {
+    team: Types.ObjectId;
+    players: Player[];
+    goals?: Array<{ assist?: Types.ObjectId; goal?: Types.ObjectId }>;
+    cards?: Array<{ player?: Types.ObjectId; yellow?: number; red?: number }>;
+  };
 
   @Prop({
     type: String,
