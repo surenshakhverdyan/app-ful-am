@@ -34,11 +34,11 @@ class Cards {
 export class UpdateGameStatisticsDto {
   @IsString()
   @IsNotEmpty()
-  game: string;
+  gameId: Types.ObjectId;
 
   @IsString()
   @IsNotEmpty()
-  team: string;
+  teamId: Types.ObjectId;
 
   @IsArray()
   @IsOptional()

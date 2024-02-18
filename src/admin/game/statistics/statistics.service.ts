@@ -3,33 +3,33 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { ChangeGameStatusDto, UpdateGameStatisticsDto } from 'src/dtos';
-import { GameStatus } from 'src/enums';
-import { Game, Ligue, Player } from 'src/schemas';
+import { GameStatus, Status } from 'src/enums';
+import { Game, League, Player } from 'src/schemas';
 
 @Injectable()
 export class StatisticsService {
   constructor(
     @InjectModel(Game.name) private gameModel: Model<Game>,
     @InjectModel(Player.name) private playerModel: Model<Player>,
-    @InjectModel(Ligue.name) private ligueModel: Model<Ligue>,
+    @InjectModel(League.name) private leagueModel: Model<League>,
   ) {}
 
   async updateGameStatistics(dto: UpdateGameStatisticsDto): Promise<Game> {
     try {
-      const game = await this.gameModel.findById(dto.game);
+      const game = await this.gameModel.findById(dto.gameId);
 
       if (game.status !== GameStatus.Active)
         throw new HttpException('The game will be active', 403);
 
-      if (game.team1.team.equals(dto.team)) {
+      if (game.team1.team.equals(dto.teamId)) {
         if (dto.cards && dto.cards.length > 0) {
           for (let i = 0; i < dto.cards.length; i++) {
             const element = dto.cards[i];
             game.team1.cards.push(element);
-            if (element.red !== undefined)
+            if (element.red)
               await this.playerModel.findByIdAndUpdate(
                 element.player,
-                { $inc: { redCards: 1 } },
+                { $inc: { redCards: 1 }, $set: { status: Status.Inactive } },
                 { new: true },
               );
             else
@@ -64,10 +64,10 @@ export class StatisticsService {
           for (let i = 0; i < dto.cards.length; i++) {
             const element = dto.cards[i];
             game.team2.cards.push(element);
-            if (element.red !== undefined)
+            if (element.red)
               await this.playerModel.findByIdAndUpdate(
                 element.player,
-                { $inc: { redCards: 1 } },
+                { $inc: { redCards: 1 }, $set: { status: Status.Inactive } },
                 { new: true },
               );
             else
@@ -112,24 +112,22 @@ export class StatisticsService {
       const game = await this.gameModel.findById(dto.gameId);
 
       if (game.team1.goals.length > game.team2.goals.length) {
-        game.winner = game.team1.team;
-        await this.ligueModel.updateOne(
-          { _id: game.ligue, 'teams.team': game.team1.team },
+        await this.leagueModel.updateOne(
+          { _id: game.league, 'teams.team': game.team1.team },
           { $inc: { 'teams.$.points': 3 } },
         );
       } else if (game.team2.goals.length > game.team1.goals.length) {
-        game.winner = game.team2.team;
-        await this.ligueModel.updateOne(
-          { _id: game.ligue, 'teams.team': game.team2.team },
+        await this.leagueModel.updateOne(
+          { _id: game.league, 'teams.team': game.team2.team },
           { $inc: { 'teams.$.points': 3 } },
         );
       } else {
-        await this.ligueModel.updateOne(
-          { _id: game.ligue, 'teams.team': game.team1.team },
+        await this.leagueModel.updateOne(
+          { _id: game.league, 'teams.team': game.team1.team },
           { $inc: { 'teams.$.points': 1 } },
         );
-        await this.ligueModel.updateOne(
-          { _id: game.ligue, 'teams.team': game.team2.team },
+        await this.leagueModel.updateOne(
+          { _id: game.league, 'teams.team': game.team2.team },
           { $inc: { 'teams.$.points': 1 } },
         );
       }

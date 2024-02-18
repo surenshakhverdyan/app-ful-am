@@ -1,14 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
-import { User } from './user.schema';
 import { Status } from 'src/enums';
+import { User } from './user.schema';
 
 @Schema({ timestamps: true })
 export class Team {
-  equals(team: string) {
-    throw new Error('Method not implemented.');
-  }
   @Prop({
     required: true,
     type: Types.ObjectId,
@@ -42,12 +39,11 @@ export class Team {
   players: Types.ObjectId[];
 
   @Prop({
-    required: true,
     type: String,
     enum: Object.values(Status),
     default: Status.Inactive,
   })
-  status: Status;
+  status: string;
 }
 
 export const TeamSchema = SchemaFactory.createForClass(Team);

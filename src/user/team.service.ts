@@ -47,7 +47,7 @@ export class TeamService {
         user: dto.user,
       });
 
-      user.team = team;
+      user.team = team._id;
       await user.save();
 
       for (let i = 0; i < dto.players.length; i++) {
@@ -89,10 +89,9 @@ export class TeamService {
   async updateTeamAvatar(avatar: Express.Multer.File): Promise<Team> {
     const token = this.tokenService.extractJwtFromHeaders(this.request);
     const { sub } = this.jwtService.decode(token);
-    const userId = new Types.ObjectId(sub);
     const savedImage: Array<string> = [];
 
-    const team = await this.teamModel.findOne({ user: userId });
+    const team = await this.teamModel.findOne({ user: sub });
 
     if (team.avatar !== undefined) fs.promises.unlink(`uploads/${team.avatar}`);
 
@@ -156,11 +155,12 @@ export class TeamService {
   ): Promise<Player> {
     const token = this.tokenService.extractJwtFromHeaders(this.request);
     const { sub } = this.jwtService.decode(token);
-    const userId = new Types.ObjectId(sub);
     const savedImage: Array<string> = [];
 
     try {
-      const team = await this.teamModel.findOne({ user: userId });
+      const team = await this.teamModel.findOne({
+        user: new Types.ObjectId(sub),
+      });
       if (avatar !== undefined) {
         const fileName = `${Date.now() + Math.floor(Math.random() * 99999)}${extname(avatar.originalname)}`;
         fs.writeFileSync(`uploads/${fileName}`, avatar.buffer);

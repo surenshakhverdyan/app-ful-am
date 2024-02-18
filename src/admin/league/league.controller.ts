@@ -1,22 +1,22 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 
-import { LigueService } from './ligue.service';
+import { LeagueService } from './league.service';
 import { AdminGuard } from 'src/guards';
-import { CreateLigueDto, CreateBasketDto } from 'src/dtos';
-import { Basket, Ligue } from 'src/schemas';
+import { CreateLeagueDto, CreateBasketDto } from 'src/dtos';
+import { Basket, League } from 'src/schemas';
 import { BasketService } from './basket.service';
 
 @UseGuards(AdminGuard)
 @Controller('admin')
-export class LigueController {
+export class LeagueController {
   constructor(
-    private ligueService: LigueService,
+    private leagueService: LeagueService,
     private basketService: BasketService,
   ) {}
 
-  @Post('create-ligue')
-  createLigue(@Body() dto: CreateLigueDto): Promise<Ligue> {
-    return this.ligueService.createLigue(dto);
+  @Post('create-league')
+  createLeague(@Body() dto: CreateLeagueDto): Promise<League> {
+    return this.leagueService.createLeague(dto);
   }
 
   @Post('create-basket')

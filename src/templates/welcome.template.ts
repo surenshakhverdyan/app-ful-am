@@ -1,6 +1,6 @@
 import { User } from 'src/schemas';
 
-export const welcomeTemplate = (user: User): string => {
+export const welcomeTemplate = (user: User, password: string): string => {
   const content = `
     <!DOCTYPE html>
     <html>
@@ -21,7 +21,7 @@ export const welcomeTemplate = (user: User): string => {
                   <td style="padding: 20px;">
                     <p>Your user profile credentials is</p>
                     <p><b>username: ${user.email}</b></p>
-                    <p><b>password: ${user.password}</b></p>
+                    <p><b>password: ${password}</b></p>
                     <p>If you didn't create an account on our website, you can safely ignore this email.</p>
                   </td>
                 </tr>

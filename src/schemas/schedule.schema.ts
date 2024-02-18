@@ -1,9 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
-import { Game } from './game.schema';
 import { Team } from './team.schema';
-import { Player } from './player.schema';
 
 @Schema({ timestamps: true })
 export class Schedule {
@@ -11,7 +9,7 @@ export class Schedule {
     type: Types.ObjectId,
     ref: 'Game',
   })
-  game: Game;
+  game: Types.ObjectId;
 
   @Prop({
     type: Types.ObjectId,
@@ -22,7 +20,7 @@ export class Schedule {
   @Prop({
     type: [{ type: Types.ObjectId, ref: 'Player' }],
   })
-  players: Player[];
+  players: Types.ObjectId[];
 
   @Prop({ type: Date })
   date: Date;

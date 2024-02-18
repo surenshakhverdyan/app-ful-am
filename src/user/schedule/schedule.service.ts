@@ -24,8 +24,8 @@ export class ScheduleService {
     const [teamId, gameId] = payload.sub.split(' ');
 
     const schedule = await this.scheduleModel.findOne({
-      team: new Types.ObjectId(teamId),
-      game: new Types.ObjectId(gameId),
+      team: teamId,
+      game: gameId,
     });
 
     if (schedule)
@@ -47,8 +47,8 @@ export class ScheduleService {
     const [teamId, gameId] = payload.sub.split(' ');
 
     const schedule = await this.scheduleModel.findOne({
-      team: new Types.ObjectId(teamId),
-      game: new Types.ObjectId(gameId),
+      team: teamId,
+      game: gameId,
     });
 
     if (schedule)
@@ -57,8 +57,10 @@ export class ScheduleService {
     dto.game = new Types.ObjectId(gameId);
     dto.team = new Types.ObjectId(teamId);
     const players: Array<Types.ObjectId> = [];
+
     dto.players.map((id) => {
-      players.push(new Types.ObjectId(id));
+      const element = new Types.ObjectId(id);
+      players.push(element);
     });
 
     try {
@@ -66,7 +68,7 @@ export class ScheduleService {
         game: dto.game,
         team: dto.team,
         date: dto.date,
-        players: players,
+        players,
       });
 
       return true;

@@ -1,12 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
-import { Team } from './team.schema';
-import { Game } from './game.schema';
-import { LigueStatus } from 'src/enums';
+import { LeagueStatus } from 'src/enums';
 
 @Schema({ timestamps: true })
-export class Ligue {
+export class League {
   @Prop({
     required: true,
     type: String,
@@ -18,24 +16,24 @@ export class Ligue {
     type: Types.ObjectId,
     ref: 'Team',
   })
-  place1: Team;
+  place1: Types.ObjectId;
 
   @Prop({
     type: Types.ObjectId,
     ref: 'Team',
   })
-  place2: Team;
+  place2: Types.ObjectId;
 
   @Prop({
     type: Types.ObjectId,
     ref: 'Team',
   })
-  place3: Team;
+  place3: Types.ObjectId;
 
   @Prop({
     type: [{ type: Types.ObjectId, ref: 'Game' }],
   })
-  games: Game[];
+  games: Types.ObjectId[];
 
   @Prop({
     type: [
@@ -45,14 +43,14 @@ export class Ligue {
       },
     ],
   })
-  teams: { team: Team; points: number }[];
+  teams: { team: Types.ObjectId; points: number }[];
 
   @Prop({
     type: String,
-    enum: Object.values(LigueStatus),
-    default: LigueStatus.Active,
+    enum: Object.values(LeagueStatus),
+    default: LeagueStatus.Active,
   })
-  status: LigueStatus;
+  status: string;
 }
 
-export const LigueSchema = SchemaFactory.createForClass(Ligue);
+export const LeagueSchema = SchemaFactory.createForClass(League);

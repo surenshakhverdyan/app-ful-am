@@ -1,9 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
-import { Ligue } from './ligue.schema';
 import { GameStatus } from 'src/enums';
-import { Player } from './player.schema';
 
 @Schema({ timestamps: true })
 export class Game {
@@ -12,15 +10,9 @@ export class Game {
 
   @Prop({
     type: Types.ObjectId,
-    ref: 'Ligue',
+    ref: 'League',
   })
-  ligue: Ligue;
-
-  @Prop({
-    type: Types.ObjectId,
-    ref: 'Team',
-  })
-  winner: Types.ObjectId;
+  league: Types.ObjectId;
 
   @Prop({
     type: {
@@ -43,7 +35,7 @@ export class Game {
   })
   team1: {
     team: Types.ObjectId;
-    players: Player[];
+    players: Types.ObjectId[];
     goals?: Array<{ assist?: Types.ObjectId; goal?: Types.ObjectId }>;
     cards?: Array<{ player?: Types.ObjectId; yellow?: number; red?: number }>;
   };
@@ -69,7 +61,7 @@ export class Game {
   })
   team2: {
     team: Types.ObjectId;
-    players: Player[];
+    players: Types.ObjectId[];
     goals?: Array<{ assist?: Types.ObjectId; goal?: Types.ObjectId }>;
     cards?: Array<{ player?: Types.ObjectId; yellow?: number; red?: number }>;
   };
@@ -89,7 +81,7 @@ export class Game {
     enum: Object.values(GameStatus),
     default: GameStatus.Pending,
   })
-  status: GameStatus;
+  status: string;
 }
 
 export const GameSchema = SchemaFactory.createForClass(Game);

@@ -10,7 +10,7 @@ export class AddPlayerDto {
 
   @IsEnum(Position)
   @IsNotEmpty()
-  position: Position;
+  position: string;
 
   @IsNotEmpty()
   number: number;

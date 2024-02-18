@@ -21,7 +21,7 @@ export const gameDateTimeTemplate = (data: {
                 </tr>
                 <tr>
                   <td style="padding: 20px;">
-                    <p>The game starts at <b>${data.dateTime}</b></p>
+                    <p>The game starts at <b>${new Date(data.dateTime).toDateString()}</b></p>
                     <p><b>team: ${data.team1}</b></p>
                     <p><b>VS</b></p>
                     <p><b>team: ${data.team2}</b></p>

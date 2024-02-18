@@ -14,11 +14,9 @@ export class DeletePlayerService {
   ) {}
 
   async DeletePlayer(dto: DeletePlayerDto): Promise<boolean> {
-    const playerId = new Types.ObjectId(dto.playerId);
-
     try {
       await this.playerModel.findByIdAndUpdate(
-        playerId,
+        dto.playerId,
         {
           $set: { status: Status.Deleted },
         },
@@ -26,8 +24,8 @@ export class DeletePlayerService {
       );
 
       const team = await this.teamModel.findOneAndUpdate(
-        { players: playerId },
-        { $pull: { players: playerId } },
+        { players: new Types.ObjectId(dto.playerId) },
+        { $pull: { players: dto.playerId } },
         { new: true },
       );
 

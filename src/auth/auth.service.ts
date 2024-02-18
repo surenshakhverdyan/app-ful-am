@@ -41,7 +41,7 @@ export class AuthService {
       throw new UnauthorizedException();
 
     const userResponse = {
-      _id: user._id.toString(),
+      _id: user._id,
       name: user.name,
       email: user.email,
       phone: user.phone,
@@ -75,7 +75,7 @@ export class AuthService {
     const user = await this.userModel.findById(payload.sub);
 
     const userResponse = {
-      _id: user._id.toString(),
+      _id: user._id,
       name: user.name,
       email: user.email,
       phone: user.phone,

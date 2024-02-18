@@ -1,10 +1,11 @@
 import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class CreateBasketDto {
   @IsString()
-  ligue: string;
+  league: Types.ObjectId;
 
   @IsArray()
   @IsNotEmpty()
-  teams: string[];
+  teams: Types.ObjectId[];
 }

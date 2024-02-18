@@ -11,7 +11,7 @@ export class CreateScheduleDto {
 
   @IsArray()
   @IsNotEmpty()
-  players: string[];
+  players: Types.ObjectId[];
 
   @IsDateString()
   @IsNotEmpty()

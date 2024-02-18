@@ -22,11 +22,11 @@ export class ScheduleService {
   ) {}
 
   async getGameScheduleList(): Promise<Schedule[]> {
-    const id = this.request.params.id;
+    const id = new Types.ObjectId(this.request.params.id);
     try {
       const scheduleList = await this.scheduleModel
         .find({
-          game: new Types.ObjectId(id),
+          game: id,
         })
         .populate({
           path: 'team',
@@ -65,12 +65,12 @@ export class ScheduleService {
       });
 
       const game = await this.gameModel.findByIdAndUpdate(
-        team1.game,
+        new Types.ObjectId(team1.game),
         {
           $set: {
             team1: team1,
             team2: team2,
-            dateTime: dto.dateTime,
+            dateTime: new Date(dto.dateTime),
             status: GameStatus.Active,
           },
         },

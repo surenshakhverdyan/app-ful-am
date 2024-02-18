@@ -1,11 +1,13 @@
+import { Types } from 'mongoose';
+
 export interface IPopulatedBasket {
-  _id: string;
-  ligue: string;
+  _id: Types.ObjectId;
+  league: Types.ObjectId;
   teams: [
     {
-      _id: string;
+      _id: Types.ObjectId;
       user: {
-        _id: string;
+        _id: Types.ObjectId;
         email: string;
       };
     },

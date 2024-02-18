@@ -30,7 +30,7 @@ export class UserService {
         role: dto.role,
       });
 
-      const template = welcomeTemplate(user);
+      const template = welcomeTemplate(user, dto.password);
 
       const res = await this.mailerService.sendMail({
         from: this.configService.get<string>('EMAIL_ADDRESS'),

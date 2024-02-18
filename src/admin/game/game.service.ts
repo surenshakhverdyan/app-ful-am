@@ -2,12 +2,12 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { HttpException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 
 import { CreateGameDto } from 'src/dtos';
 import { Role, Status, TokenType } from 'src/enums';
 import { IPopulatedBasket } from 'src/interfaces';
-import { Basket, Game, Ligue } from 'src/schemas';
+import { Basket, Game, League } from 'src/schemas';
 import { TokenService } from 'src/services';
 import { scheduleGameTemplate } from 'src/templates';
 
@@ -16,7 +16,7 @@ export class GameService {
   constructor(
     @InjectModel(Game.name) private gameModel: Model<Game>,
     @InjectModel(Basket.name) private basketModel: Model<Basket>,
-    @InjectModel(Ligue.name) private ligueModel: Model<Ligue>,
+    @InjectModel(League.name) private leagueModel: Model<League>,
     private tokenService: TokenService,
     private mailerService: MailerService,
     private readonly configService: ConfigService,
@@ -25,11 +25,11 @@ export class GameService {
   async createGame(dto: CreateGameDto): Promise<Game> {
     try {
       const game = await this.gameModel.create({
-        ligue: new Types.ObjectId(dto.ligue),
+        league: dto.league,
       });
 
-      await this.ligueModel.findByIdAndUpdate(
-        dto.ligue,
+      await this.leagueModel.findByIdAndUpdate(
+        dto.league,
         { $push: { games: game._id } },
         { new: true },
       );

@@ -1,4 +1,4 @@
-export enum LigueStatus {
+export enum LeagueStatus {
   Active = 'active',
   Archived = 'archived',
 }

@@ -7,8 +7,8 @@ import {
   BasketSchema,
   Game,
   GameSchema,
-  Ligue,
-  LigueSchema,
+  League,
+  LeagueSchema,
   Player,
   PlayerSchema,
   Schedule,
@@ -26,13 +26,13 @@ import {
 } from 'src/services';
 import { UserService } from './user.service';
 import { AdminController } from './admin.controller';
-import { LigueController } from './ligue/ligue.controller';
-import { LigueService } from './ligue/ligue.service';
+import { LeagueController } from './league/league.controller';
+import { LeagueService } from './league/league.service';
 import { GameController } from './game/game.controller';
 import { GameService } from './game/game.service';
 import { ScheduleController } from './schedule/schedule.controller';
 import { ScheduleService } from './schedule/schedule.service';
-import { BasketService } from './ligue/basket.service';
+import { BasketService } from './league/basket.service';
 import { StatisticsController } from './game/statistics/statistics.controller';
 import { StatisticsService } from './game/statistics/statistics.service';
 
@@ -42,7 +42,7 @@ import { StatisticsService } from './game/statistics/statistics.service';
       { name: User.name, schema: UserSchema },
       { name: Team.name, schema: TeamSchema },
       { name: Player.name, schema: PlayerSchema },
-      { name: Ligue.name, schema: LigueSchema },
+      { name: League.name, schema: LeagueSchema },
       { name: Game.name, schema: GameSchema },
       { name: Basket.name, schema: BasketSchema },
       { name: Schedule.name, schema: ScheduleSchema },
@@ -55,7 +55,7 @@ import { StatisticsService } from './game/statistics/statistics.service';
     UpdateUserService,
     DeletePlayerService,
     TeamService,
-    LigueService,
+    LeagueService,
     GameService,
     ScheduleService,
     BasketService,
@@ -63,7 +63,7 @@ import { StatisticsService } from './game/statistics/statistics.service';
   ],
   controllers: [
     AdminController,
-    LigueController,
+    LeagueController,
     GameController,
     ScheduleController,
     StatisticsController,

@@ -2,7 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 
 import { Position, Status } from 'src/enums';
-import { Team } from './team.schema';
 
 @Schema({ timestamps: true })
 export class Player {
@@ -38,7 +37,7 @@ export class Player {
     type: String,
     enum: Object.values(Position),
   })
-  position: Position;
+  position: string;
 
   @Prop({ type: Number })
   penalties: number;
@@ -56,19 +55,18 @@ export class Player {
   assists: number;
 
   @Prop({
-    required: true,
     type: String,
     enum: Object.values(Status),
     default: Status.Active,
   })
-  status: Status;
+  status: string;
 
   @Prop({
     required: true,
     type: Types.ObjectId,
     ref: 'Team',
   })
-  team: Team;
+  team: Types.ObjectId;
 }
 
 export const PlayerSchema = SchemaFactory.createForClass(Player);

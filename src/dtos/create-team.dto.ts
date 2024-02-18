@@ -20,7 +20,7 @@ class PlayerDTO {
   number: number;
 
   @IsEnum(Position)
-  position: Position;
+  position: string;
 
   @IsString()
   @IsOptional()

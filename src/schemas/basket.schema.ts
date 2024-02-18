@@ -1,22 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
-import { Ligue } from './ligue.schema';
-import { Team } from './team.schema';
-
 @Schema({ timestamps: true })
 export class Basket {
   @Prop({
     type: Types.ObjectId,
-    ref: 'Ligue',
+    ref: 'League',
     required: true,
   })
-  ligue: Ligue;
+  league: Types.ObjectId;
 
   @Prop({
     type: [{ type: Types.ObjectId, ref: 'Team' }],
   })
-  teams: Team[];
+  teams: Types.ObjectId[];
 }
 
 export const BasketSchema = SchemaFactory.createForClass(Basket);

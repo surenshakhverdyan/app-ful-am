@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { UpdatePasswordDto, UpdateProfileDto } from 'src/dtos';
 import { IUser } from 'src/interfaces';
 import { User } from 'src/schemas';
-import { TokenService } from './jwt.service';
+import { TokenService } from './token.service';
 
 @Injectable()
 export class UpdateUserService {
@@ -32,7 +32,7 @@ export class UpdateUserService {
       );
 
       const userResponse = {
-        _id: user._id.toString(),
+        _id: user._id,
         name: user.name,
         email: user.email,
         phone: user.phone,

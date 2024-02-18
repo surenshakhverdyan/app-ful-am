@@ -10,17 +10,15 @@ export class BasketService {
   constructor(@InjectModel(Basket.name) private basketModel: Model<Basket>) {}
 
   async createBasket(dto: CreateBasketDto): Promise<Basket> {
-    const ligue = new Types.ObjectId(dto.ligue);
-    const teams: Array<Types.ObjectId> = [];
-    dto.teams.map((team) => {
-      const element = new Types.ObjectId(team);
-      teams.push(element);
-    });
-
     try {
+      const teams: Array<Types.ObjectId> = [];
+      dto.teams.map((id) => {
+        const element = new Types.ObjectId(id);
+        teams.push(element);
+      });
       const basket = await this.basketModel.create({
-        ligue,
-        teams,
+        league: new Types.ObjectId(dto.league),
+        teams: teams,
       });
 
       return basket;

@@ -1,15 +1,12 @@
 import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { Types } from 'mongoose';
 
-class Team {
-  @IsString()
-  team: string;
-}
-
-export class CreateLigueDto {
+export class CreateLeagueDto {
   @IsString()
   @IsNotEmpty()
   name: string;
 
   @IsArray()
-  teams: Team[];
+  @IsNotEmpty()
+  teams: Types.ObjectId[];
 }
