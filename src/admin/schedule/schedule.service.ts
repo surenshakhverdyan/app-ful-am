@@ -7,8 +7,8 @@ import { Request } from 'express';
 import { Model, Types } from 'mongoose';
 
 import { SetGameDto } from 'src/dtos';
-import { GameStatus } from 'src/enums';
-import { Game, Schedule } from 'src/schemas';
+import { GameStatus, Status } from 'src/enums';
+import { Game, Player, Schedule, Team } from 'src/schemas';
 import { gameDateTimeTemplate } from 'src/templates';
 
 @Injectable()
@@ -16,6 +16,8 @@ export class ScheduleService {
   constructor(
     @InjectModel(Schedule.name) private scheduleModel: Model<Schedule>,
     @InjectModel(Game.name) private gameModel: Model<Game>,
+    @InjectModel(Team.name) private teamModel: Model<Team>,
+    @InjectModel(Player.name) private playerModel: Model<Player>,
     @Inject(REQUEST) private request: Request,
     private mailerService: MailerService,
     private readonly configService: ConfigService,
@@ -53,6 +55,22 @@ export class ScheduleService {
           select: 'email',
         },
       });
+      const team1players = await this.teamModel
+        .findById(team1.team)
+        .populate({
+          path: 'players',
+          model: 'Player',
+          match: { status: Status.Inactive },
+          select: '_id',
+        })
+        .select('_id');
+      team1players.players.map(async (player) => {
+        await this.playerModel.findByIdAndUpdate(
+          player._id,
+          { $set: { status: Status.Active } },
+          { new: true },
+        );
+      });
       const team2 = await this.scheduleModel.findById(dto.team2).populate({
         path: 'team',
         model: 'Team',
@@ -62,6 +80,22 @@ export class ScheduleService {
           model: 'User',
           select: 'email',
         },
+      });
+      const team2players = await this.teamModel
+        .findById(team2.team)
+        .populate({
+          path: 'players',
+          model: 'Player',
+          match: { status: Status.Inactive },
+          select: '_id',
+        })
+        .select('_id');
+      team2players.players.map(async (player) => {
+        await this.playerModel.findByIdAndUpdate(
+          player._id,
+          { $set: { status: Status.Active } },
+          { new: true },
+        );
       });
 
       const game = await this.gameModel.findByIdAndUpdate(

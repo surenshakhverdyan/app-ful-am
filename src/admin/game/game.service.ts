@@ -56,6 +56,7 @@ export class GameService {
           type: TokenType.GameScheduleToken,
         };
         const token = this.tokenService.jwtGameScheduleSign(payload);
+        console.log(token); // to be remove
         const link = `${this.configService.get<string>('BASE_URL')}/game-scheduler/${token}`;
         const template = scheduleGameTemplate(link);
 
