@@ -214,7 +214,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"dateTime\": \"2024-02-24 23:30\",\n    \"team1\": \"65d2fa85b4a412b473a69999\",\n    \"team2\": \"65d2faf3b4a412b473a6999f\"\n}",
+									"raw": "{\n    \"dateTime\": \"2024-02-24 23:30\",\n    \"team1\": \"65d315b0efc1da8d3f2c09b3\",\n    \"team2\": \"65d315e1efc1da8d3f2c09b9\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -643,14 +643,14 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/schedule/get-scheduler/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZjNjNDljMjM5YWI4ZDk0YmM5YmQgNjVkMmY5MDA4ZGYxZjY3ODYzM2I2MTdmIiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgzMjUxMjAsImV4cCI6MTcwODc1NzEyMH0.k55mLXV_MhGvl0_L37kdL2LLgOgzJMB9w1gq39cA9i4",
+									"raw": "{{BASE_URL}}/schedule/get-scheduler/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZjNjNDljMjM5YWI4ZDk0YmM5YmQgNjVkMzE1MTA3MGNhMDJhNjZkZDg0YzM3Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgzMzIzMDQsImV4cCI6MTcwODc2NDMwNH0.NIGy4KoAQwj2Y09WYBVO39B8WSdb-KSJMclQeM3un24",
 									"host": [
 										"{{BASE_URL}}"
 									],
 									"path": [
 										"schedule",
 										"get-scheduler",
-										"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZjNjNDljMjM5YWI4ZDk0YmM5YmQgNjVkMmY5MDA4ZGYxZjY3ODYzM2I2MTdmIiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgzMjUxMjAsImV4cCI6MTcwODc1NzEyMH0.k55mLXV_MhGvl0_L37kdL2LLgOgzJMB9w1gq39cA9i4"
+										"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZjNjNDljMjM5YWI4ZDk0YmM5YmQgNjVkMzE1MTA3MGNhMDJhNjZkZDg0YzM3Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgzMzIzMDQsImV4cCI6MTcwODc2NDMwNH0.NIGy4KoAQwj2Y09WYBVO39B8WSdb-KSJMclQeM3un24"
 									]
 								}
 							},
@@ -671,14 +671,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/schedule/create-schedule/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZjNjNDljMjM5YWI4ZDk0YmM5YmQgNjVkMmY5MDA4ZGYxZjY3ODYzM2I2MTdmIiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgzMjUxMjAsImV4cCI6MTcwODc1NzEyMH0.k55mLXV_MhGvl0_L37kdL2LLgOgzJMB9w1gq39cA9i4",
+									"raw": "{{BASE_URL}}/schedule/create-schedule/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZjNjNDljMjM5YWI4ZDk0YmM5YmQgNjVkMzE1MTA3MGNhMDJhNjZkZDg0YzM3Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgzMzIzMDQsImV4cCI6MTcwODc2NDMwNH0.NIGy4KoAQwj2Y09WYBVO39B8WSdb-KSJMclQeM3un24",
 									"host": [
 										"{{BASE_URL}}"
 									],
 									"path": [
 										"schedule",
 										"create-schedule",
-										"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZjNjNDljMjM5YWI4ZDk0YmM5YmQgNjVkMmY5MDA4ZGYxZjY3ODYzM2I2MTdmIiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgzMjUxMjAsImV4cCI6MTcwODc1NzEyMH0.k55mLXV_MhGvl0_L37kdL2LLgOgzJMB9w1gq39cA9i4"
+										"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZjNjNDljMjM5YWI4ZDk0YmM5YmQgNjVkMzE1MTA3MGNhMDJhNjZkZDg0YzM3Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgzMzIzMDQsImV4cCI6MTcwODc2NDMwNH0.NIGy4KoAQwj2Y09WYBVO39B8WSdb-KSJMclQeM3un24"
 									]
 								}
 							},
