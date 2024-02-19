@@ -91,7 +91,9 @@ export class TeamService {
     const { sub } = this.jwtService.decode(token);
     const savedImage: Array<string> = [];
 
-    const team = await this.teamModel.findOne({ user: sub });
+    const team = await this.teamModel.findOne({
+      user: new Types.ObjectId(sub),
+    });
 
     if (team.avatar !== undefined) fs.promises.unlink(`uploads/${team.avatar}`);
 

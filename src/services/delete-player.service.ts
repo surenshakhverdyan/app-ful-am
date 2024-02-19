@@ -25,7 +25,7 @@ export class DeletePlayerService {
 
       const team = await this.teamModel.findOneAndUpdate(
         { players: new Types.ObjectId(dto.playerId) },
-        { $pull: { players: dto.playerId } },
+        { $pull: { players: new Types.ObjectId(dto.playerId) } },
         { new: true },
       );
 

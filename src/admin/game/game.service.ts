@@ -2,7 +2,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { HttpException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 import { CreateGameDto } from 'src/dtos';
 import { Role, Status, TokenType } from 'src/enums';
@@ -25,7 +25,7 @@ export class GameService {
   async createGame(dto: CreateGameDto): Promise<Game> {
     try {
       const game = await this.gameModel.create({
-        league: dto.league,
+        league: new Types.ObjectId(dto.league),
       });
 
       await this.leagueModel.findByIdAndUpdate(
