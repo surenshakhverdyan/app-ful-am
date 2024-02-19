@@ -111,6 +111,10 @@ export class ScheduleService {
         { new: true },
       );
 
+      await this.scheduleModel.deleteMany({
+        _id: { $in: [dto.team1, dto.team2] },
+      });
+
       const data = {
         dateTime: game.dateTime,
         team1: team1.team.name,
