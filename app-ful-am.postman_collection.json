@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "3ee276e1-31b1-4511-95fc-da823f1ad27e",
+		"_postman_id": "da8e8f59-d349-426e-b47e-a2ee7c97e482",
 		"name": "app-ful-am",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "32307856"
+		"_exporter_id": "25301126"
 	},
 	"item": [
 		{
@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"password\": \"156354112\",\n    \"passwordConfirmation\": \"156354112\"\n}",
+							"raw": "{\n    \"password\": \"156354111\",\n    \"passwordConfirmation\": \"156354111\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,14 +24,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/auth/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM3NzFkMzQxNTBhZjYwMTBkZTdmYmEiLCJyb2xlIjoiYWRtaW4iLCJ0eXBlIjoiRlBUIiwiaWF0IjoxNzA3NjQ0NTY3LCJleHAiOjE3MDc2NDgxNjd9.ITdRwjQfmBooIhA_9tWTRC9ywsJ0GE1GunrfNgrmEng",
+							"raw": "{{BASE_URL}}/auth/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZWJkYzljMjM5YWI4ZDk0YmM5NzMiLCJyb2xlIjoiYWRtaW4iLCJ0eXBlIjoiRlBUIiwiaWF0IjoxNzA4MzIyMjIyLCJleHAiOjE3MDgzMjU4MjJ9.er85R1hq0F7d_7I3SMbnxVEdY-LChJcat0NWpW48vcs",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"auth",
 								"reset-password",
-								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM3NzFkMzQxNTBhZjYwMTBkZTdmYmEiLCJyb2xlIjoiYWRtaW4iLCJ0eXBlIjoiRlBUIiwiaWF0IjoxNzA3NjQ0NTY3LCJleHAiOjE3MDc2NDgxNjd9.ITdRwjQfmBooIhA_9tWTRC9ywsJ0GE1GunrfNgrmEng"
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZWJkYzljMjM5YWI4ZDk0YmM5NzMiLCJyb2xlIjoiYWRtaW4iLCJ0eXBlIjoiRlBUIiwiaWF0IjoxNzA4MzIyMjIyLCJleHAiOjE3MDgzMjU4MjJ9.er85R1hq0F7d_7I3SMbnxVEdY-LChJcat0NWpW48vcs"
 							]
 						}
 					},
@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"wapp.develope@gmail.com\",\n    \"password\": \"156354111\"\n}",
+							"raw": "{\n    \"email\": \"admin@mail.com\",\n    \"password\": \"156354111\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -71,7 +71,7 @@
 						"header": [
 							{
 								"key": "refresh",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YmQxOGY3OWE1Y2I5Mzc5YWU1MmYiLCJyb2xlIjoidXNlciIsInR5cGUiOiJSVCIsImlhdCI6MTcwNzcyMDA3MiwiZXhwIjoxNzA4MzI0ODcyfQ.bWthjOHfH7MJcGd_GhhssUpfsNbbQ2HwWjJvZdYw-w4",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZWJkYzljMjM5YWI4ZDk0YmM5NzMiLCJyb2xlIjoiYWRtaW4iLCJ0eXBlIjoiUlQiLCJpYXQiOjE3MDgzMjIxNDQsImV4cCI6MTcwODkyNjk0NH0.95GYnPuXRoFHg5l5fjTOXX-tojWQeIyPXxX4l5eUKpk",
 								"type": "text"
 							}
 						],
@@ -121,10 +121,10 @@
 			"name": "admin",
 			"item": [
 				{
-					"name": "ligue",
+					"name": "league",
 					"item": [
 						{
-							"name": "create-ligue",
+							"name": "create-league",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -140,7 +140,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"chmpions ligue\",\n    \"teams\": [\n        {\n            \"team\": \"65c8eeb961a5111d19b81430\"\n        },\n        {\n            \"team\": \"65cd16c2633c932b1014e6cd\"\n        }\n    ]\n}",
+									"raw": "{\n    \"name\": \"league1\",\n    \"teams\": [\n        {\n            \"team\": \"65d2f0539c239ab8d94bc990\"\n        },\n        {\n            \"team\": \"65d2f3c49c239ab8d94bc9bd\"\n        },\n        {\n            \"team\": \"65d2f4579c239ab8d94bc9e7\"\n        },\n        {\n            \"team\": \"65d2f73a9c239ab8d94bca11\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -148,13 +148,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/admin/create-ligue",
+									"raw": "{{BASE_URL}}/admin/create-league",
 									"host": [
 										"{{BASE_URL}}"
 									],
 									"path": [
 										"admin",
-										"create-ligue"
+										"create-league"
 									]
 								}
 							},
@@ -177,7 +177,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"ligue\": \"65cb1fb2a02761e39ea66704\",\n    \"basket\": \"65cda817baf0fe123edd7514\"\n}",
+									"raw": "{\n    \"league\": \"65d2f7f89c239ab8d94bca3a\",\n    \"basket\": \"65d2f8589c239ab8d94bca40\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -214,7 +214,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"dateTime\": \"2024-02-24 20:30\",\n    \"team1\": \"65cf0f8774fc3635fa6eddbb\",\n    \"team2\": \"65cf0f4a74fc3635fa6eddb8\"\n}",
+									"raw": "{\n    \"dateTime\": \"2024-02-24 23:30\",\n    \"team1\": \"65d2fa85b4a412b473a69999\",\n    \"team2\": \"65d2faf3b4a412b473a6999f\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -251,7 +251,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"ligue\": \"65cd1a9b1f8950fee417e55a\",\n    \"teams\": [\n        \"65c8eeb961a5111d19b81430\",\n        \"65cd16c2633c932b1014e6cd\"\n    ]\n}",
+									"raw": "{\n    \"league\": \"65d2f7f89c239ab8d94bca3a\",\n    \"teams\": [\n        \"65d2f0539c239ab8d94bc990\",\n        \"65d2f3c49c239ab8d94bc9bd\",\n        \"65d2f4579c239ab8d94bc9e7\",\n        \"65d2f73a9c239ab8d94bca11\"\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -293,7 +293,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"game\": \"65cfba0f255afaad1e28576e\",\n    \"team\": \"65cd16c2633c932b1014e6cd\",\n    \"goals\": [\n        {\n            \"assist\": \"65cd16c2633c932b1014e6d0\",\n            \"goal\": \"65cd16c2633c932b1014e6d4\"\n        },\n        {\n            \"assist\": \"65cd16c2633c932b1014e6d0\",\n            \"goal\": \"65cd16c2633c932b1014e6d4\"\n        }\n    ],\n    \"cards\": [\n        {\n            \"player\": \"65cd16c2633c932b1014e6d4\",\n            \"yellow\": 1\n        }\n    ]\n}",
+									"raw": "{\n    \"gameId\": \"65d2f9008df1f678633b617f\",\n    \"teamId\": \"65d2f3c49c239ab8d94bc9bd\",\n    \"goals\": [\n        {\n            \"assist\": \"65d2f3c49c239ab8d94bc9c0\",\n            \"goal\": \"65d2f3c49c239ab8d94bc9c4\"\n        },\n        {\n            \"goal\": \"65d2f3c49c239ab8d94bc9c8\"\n        },\n        {\n            \"goal\": \"65d2f3c49c239ab8d94bc9c8\"\n        }\n    ],\n    \"cards\": [\n        {\n            \"player\": \"65d2f3c49c239ab8d94bc9cc\",\n            \"yellow\": 1\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -330,7 +330,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"gameId\": \"65cfba0f255afaad1e28576e\"\n}",
+									"raw": "{\n    \"gameId\": \"65d2f9008df1f678633b617f\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -369,7 +369,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"User\",\n    \"email\": \"wapp.develope@gmail.com\",\n    \"phone\": \"+37494900356\",\n    \"password\": \"156354111\",\n    \"role\": \"user\"\n}",
+							"raw": "{\n    \"name\": \"User6\",\n    \"email\": \"user6@mail.com\",\n    \"phone\": \"+37411111117\",\n    \"password\": \"156354111\",\n    \"role\": \"user\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -480,7 +480,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": \"65c897aca9f13225903781f9\"\n}",
+							"raw": "{\n    \"userId\": \"65d2ec159c239ab8d94bc97b\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -517,7 +517,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"playerId\": \"65c8eeb961a5111d19b81437\"\n}",
+							"raw": "{\n    \"playerId\": \"65d2f0539c239ab8d94bc99b\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -553,14 +553,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/admin/get-game-schedule-list/65cc64b6c0e6289f8f3265c9",
+							"raw": "{{BASE_URL}}/admin/get-game-schedule-list/65d2f9008df1f678633b617f",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"admin",
 								"get-game-schedule-list",
-								"65cc64b6c0e6289f8f3265c9"
+								"65d2f9008df1f678633b617f"
 							]
 						}
 					},
@@ -632,18 +632,25 @@
 					"item": [
 						{
 							"name": "get-scheduler",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
-									"raw": "{{BASE_URL}}/schedule/get-scheduler/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg",
+									"raw": "{{BASE_URL}}/schedule/get-scheduler/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZjNjNDljMjM5YWI4ZDk0YmM5YmQgNjVkMmY5MDA4ZGYxZjY3ODYzM2I2MTdmIiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgzMjUxMjAsImV4cCI6MTcwODc1NzEyMH0.k55mLXV_MhGvl0_L37kdL2LLgOgzJMB9w1gq39cA9i4",
 									"host": [
 										"{{BASE_URL}}"
 									],
 									"path": [
 										"schedule",
 										"get-scheduler",
-										"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWM5YzBkYzA3MGVjODRiNTdkYWYwZWMgNjVjYzY0YjZjMGU2Mjg5ZjhmMzI2NWM5Iiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDc4OTM5NDIsImV4cCI6MTcwODMyNTk0Mn0._fs78gq0wfJ6KbL9-Pq-wYZ5-wdfaXtdInvEavyOjkg"
+										"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZjNjNDljMjM5YWI4ZDk0YmM5YmQgNjVkMmY5MDA4ZGYxZjY3ODYzM2I2MTdmIiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgzMjUxMjAsImV4cCI6MTcwODc1NzEyMH0.k55mLXV_MhGvl0_L37kdL2LLgOgzJMB9w1gq39cA9i4"
 									]
 								}
 							},
@@ -656,7 +663,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"date\": \"2024-02-24\",\n    \"players\": [\n        \"65cf0b9a0058723b5e646eb2\",\n        \"65cf0b9b0058723b5e646ebe\",\n        \"65cf0b9b0058723b5e646ec6\",\n        \"65cf0b9b0058723b5e646ece\"\n    ]\n}",
+									"raw": "{\n    \"date\": \"2024-02-24\",\n    \"players\": [\n        \"65d2f3c49c239ab8d94bc9c0\",\n        \"65d2f3c49c239ab8d94bc9c4\",\n        \"65d2f3c49c239ab8d94bc9c8\",\n        \"65d2f3c49c239ab8d94bc9cc\"\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -664,14 +671,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/schedule/create-schedule/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWNmMGI5YTAwNTg3MjNiNWU2NDZlYWIgNjVjZjBlYjAxN2RkYzg2Y2E1ODRmYjYxIiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgwNjg1MjgsImV4cCI6MTcwODUwMDUyOH0.47T4YfCyXrb7_Wwod8wSdK-Wd2G4mVxFq-86pVm8Y2s",
+									"raw": "{{BASE_URL}}/schedule/create-schedule/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZjNjNDljMjM5YWI4ZDk0YmM5YmQgNjVkMmY5MDA4ZGYxZjY3ODYzM2I2MTdmIiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgzMjUxMjAsImV4cCI6MTcwODc1NzEyMH0.k55mLXV_MhGvl0_L37kdL2LLgOgzJMB9w1gq39cA9i4",
 									"host": [
 										"{{BASE_URL}}"
 									],
 									"path": [
 										"schedule",
 										"create-schedule",
-										"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWNmMGI5YTAwNTg3MjNiNWU2NDZlYWIgNjVjZjBlYjAxN2RkYzg2Y2E1ODRmYjYxIiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgwNjg1MjgsImV4cCI6MTcwODUwMDUyOH0.47T4YfCyXrb7_Wwod8wSdK-Wd2G4mVxFq-86pVm8Y2s"
+										"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQyZjNjNDljMjM5YWI4ZDk0YmM5YmQgNjVkMmY5MDA4ZGYxZjY3ODYzM2I2MTdmIiwicm9sZSI6InVzZXIiLCJ0eXBlIjoiR1MiLCJpYXQiOjE3MDgzMjUxMjAsImV4cCI6MTcwODc1NzEyMH0.k55mLXV_MhGvl0_L37kdL2LLgOgzJMB9w1gq39cA9i4"
 									]
 								}
 							},
@@ -690,7 +697,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{USER_TOKEN}}",
+											"value": "{{USER1_TOKEN}}",
 											"type": "string"
 										}
 									]
@@ -703,26 +710,26 @@
 										{
 											"key": "avatar",
 											"type": "file",
-											"src": "/home/suren/Pictures/IMG_1766.jpg"
+											"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-01-12 16-22-43.png"
 										},
 										{
 											"key": "playerId",
-											"value": "65c8eeb961a5111d19b8143f",
+											"value": "65d2f0539c239ab8d94bc9a7",
 											"type": "text"
 										},
 										{
 											"key": "name",
-											"value": "Artak Edigaryan",
+											"value": "Lionel Messi",
 											"type": "text"
 										},
 										{
 											"key": "position",
-											"value": "Goalkeeper",
+											"value": "Striker",
 											"type": "text"
 										},
 										{
 											"key": "number",
-											"value": "30",
+											"value": "10",
 											"type": "text"
 										}
 									]
@@ -748,7 +755,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{USER_TOKEN}}",
+											"value": "{{USER2_TOKEN}}",
 											"type": "string"
 										}
 									]
@@ -761,7 +768,7 @@
 										{
 											"key": "avatar",
 											"type": "file",
-											"src": "/home/suren/Pictures/Me&Lil/IMG_8592.JPG"
+											"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-01-30 16-20-28.png"
 										}
 									]
 								},
@@ -786,7 +793,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{USER2_TOKEN}}",
+											"value": "{{USER1_TOKEN}}",
 											"type": "string"
 										}
 									]
@@ -798,23 +805,23 @@
 									"formdata": [
 										{
 											"key": "name",
-											"value": "Lionel Messi",
+											"value": "Levon Muradyan",
 											"type": "text"
 										},
 										{
 											"key": "number",
-											"value": "32",
+											"value": "11",
 											"type": "text"
 										},
 										{
 											"key": "position",
-											"value": "Goalkeeper",
+											"value": "Center Midfielder",
 											"type": "text"
 										},
 										{
 											"key": "avatar",
 											"type": "file",
-											"src": []
+											"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-01-31 12-38-09.png"
 										}
 									]
 								},
@@ -839,7 +846,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{USER1_TOKEN}}",
+											"value": "{{USER4_TOKEN}}",
 											"type": "string"
 										}
 									]
@@ -851,7 +858,7 @@
 									"formdata": [
 										{
 											"key": "name",
-											"value": "Socker2",
+											"value": "Socker4",
 											"type": "text"
 										},
 										{
@@ -861,17 +868,17 @@
 										},
 										{
 											"key": "players[0][name]",
-											"value": "Henrik Mkhitaryan",
+											"value": "Arsen Iskandaryan",
 											"type": "text"
 										},
 										{
 											"key": "players[0][number]",
-											"value": "19",
+											"value": "1",
 											"type": "text"
 										},
 										{
 											"key": "players[0][position]",
-											"value": "Head Coach",
+											"value": "Goalkeeper",
 											"type": "text"
 										},
 										{
@@ -881,12 +888,12 @@
 										},
 										{
 											"key": "players[1][name]",
-											"value": "Henrik Mkhitaryan",
+											"value": "Alik Iskandaryan",
 											"type": "text"
 										},
 										{
 											"key": "players[1][number]",
-											"value": "20",
+											"value": "2",
 											"type": "text"
 										},
 										{
@@ -901,17 +908,17 @@
 										},
 										{
 											"key": "players[2][name]",
-											"value": "Henrik Mkhitaryan",
+											"value": "David Karapetyan",
 											"type": "text"
 										},
 										{
 											"key": "players[2][number]",
-											"value": "21",
+											"value": "3",
 											"type": "text"
 										},
 										{
 											"key": "players[2][position]",
-											"value": "Head Coach",
+											"value": "Center Defender",
 											"type": "text"
 										},
 										{
@@ -921,17 +928,17 @@
 										},
 										{
 											"key": "players[3][name]",
-											"value": "Henrik Mkhitaryan",
+											"value": "Vigen Hayrapetyan",
 											"type": "text"
 										},
 										{
 											"key": "players[3][number]",
-											"value": "22",
+											"value": "4",
 											"type": "text"
 										},
 										{
 											"key": "players[3][position]",
-											"value": "Head Coach",
+											"value": "Right Defender",
 											"type": "text"
 										},
 										{
@@ -941,78 +948,103 @@
 										},
 										{
 											"key": "players[4][name]",
-											"value": "Henrik Mkhitaryan",
+											"value": "Edgar Petrosyan",
 											"type": "text"
 										},
 										{
 											"key": "players[4][number]",
-											"value": "23",
+											"value": "5",
 											"type": "text"
 										},
 										{
 											"key": "players[4][position]",
-											"value": "Head Coach",
+											"value": "Left Defender",
 											"type": "text"
 										},
 										{
+											"key": "player[4][avatar]",
+											"type": "file",
+											"src": []
+										},
+										{
 											"key": "players[5][name]",
-											"value": "Henrik Mkhitaryan",
+											"value": "Gagik Avanesyan",
 											"type": "text"
 										},
 										{
 											"key": "players[5][number]",
-											"value": "24",
+											"value": "6",
 											"type": "text"
 										},
 										{
 											"key": "players[5][position]",
-											"value": "Head Coach",
+											"value": "Center Midfielder",
 											"type": "text"
 										},
 										{
+											"key": "players[5][avatar]",
+											"type": "file",
+											"src": []
+										},
+										{
 											"key": "players[6][name]",
-											"value": "Henrik Mkhitaryan",
+											"value": "Raul",
 											"type": "text"
 										},
 										{
 											"key": "players[6][number]",
-											"value": "25",
+											"value": "7",
 											"type": "text"
 										},
 										{
 											"key": "players[6][position]",
-											"value": "Head Coach",
+											"value": "Right Midfielder",
 											"type": "text"
 										},
 										{
+											"key": "players[6][avatar]",
+											"type": "file",
+											"src": []
+										},
+										{
 											"key": "players[7][name]",
-											"value": "Henrik Mkhitaryan",
+											"value": "Vigen Hovhannisyan",
 											"type": "text"
 										},
 										{
 											"key": "players[7][number]",
-											"value": "27",
+											"value": "8",
 											"type": "text"
 										},
 										{
 											"key": "players[7][position]",
-											"value": "Head Coach",
+											"value": "Left Midfielder",
 											"type": "text"
 										},
 										{
+											"key": "players[7][avatar]",
+											"type": "file",
+											"src": []
+										},
+										{
 											"key": "players[8][name]",
-											"value": "Henrik Mkhitaryan",
+											"value": "Arkadi Karapetyan",
 											"type": "text"
 										},
 										{
 											"key": "players[8][number]",
-											"value": "26",
+											"value": "9",
 											"type": "text"
 										},
 										{
 											"key": "players[8][position]",
-											"value": "Head Coach",
+											"value": "Striker",
 											"type": "text"
+										},
+										{
+											"key": "players[8][avatar]",
+											"type": "file",
+											"src": []
 										}
 									]
 								},
@@ -1037,7 +1069,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{USER_TOKEN}}",
+											"value": "{{USER1_TOKEN}}",
 											"type": "string"
 										}
 									]
@@ -1046,7 +1078,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"playerId\": \"65c9bef1f79a5cb9379ae557\"\n}",
+									"raw": "{\n    \"playerId\": \"65d2f0539c239ab8d94bc9a7\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1076,7 +1108,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{USER_TOKEN}}",
+									"value": "{{USER1_TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -1113,7 +1145,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{USER_TOKEN}}",
+									"value": "{{USER1_TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -1122,7 +1154,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Administrator\",\n    \"email\": \"wapp.develope@gmail.com\",\n    \"phone\": \"+37494900356\"\n}",
+							"raw": "{\n    \"name\": \"User1\",\n    \"email\": \"user1@mail.com\",\n    \"phone\": \"+37494900356\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1153,14 +1185,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/public/images/1705778938671.jpeg",
+							"raw": "{{BASE_URL}}/public/images/1708323851010.png",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"public",
 								"images",
-								"1705778938671.jpeg"
+								"1708323851010.png"
 							]
 						}
 					},
