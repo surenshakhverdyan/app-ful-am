@@ -5,3 +5,4 @@ export * from './basket.schema';
 export * from './game.schema';
 export * from './league.schema';
 export * from './schedule.schema';
+export * from './transfer.schema';

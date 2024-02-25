@@ -16,6 +16,8 @@ import {
   ScheduleSchema,
   Team,
   TeamSchema,
+  Transfer,
+  TransferSchema,
   User,
   UserSchema,
 } from 'src/schemas';
@@ -30,6 +32,7 @@ import { ScheduleService } from './schedule/schedule.service';
       { name: Team.name, schema: TeamSchema },
       { name: Player.name, schema: PlayerSchema },
       { name: Schedule.name, schema: ScheduleSchema },
+      { name: Transfer.name, schema: TransferSchema },
     ]),
   ],
   controllers: [UserController, TeamController, ScheduleController],

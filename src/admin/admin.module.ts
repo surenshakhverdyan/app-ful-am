@@ -15,6 +15,8 @@ import {
   ScheduleSchema,
   Team,
   TeamSchema,
+  Transfer,
+  TransferSchema,
   User,
   UserSchema,
 } from 'src/schemas';
@@ -46,6 +48,7 @@ import { StatisticsService } from './game/statistics/statistics.service';
       { name: Game.name, schema: GameSchema },
       { name: Basket.name, schema: BasketSchema },
       { name: Schedule.name, schema: ScheduleSchema },
+      { name: Transfer.name, schema: TransferSchema },
     ]),
   ],
   providers: [
