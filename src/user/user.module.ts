@@ -10,6 +10,8 @@ import {
   UpdateUserService,
 } from 'src/services';
 import {
+  Config,
+  ConfigSchema,
   Player,
   PlayerSchema,
   Schedule,
@@ -24,6 +26,8 @@ import {
 import { TeamService } from './team.service';
 import { ScheduleController } from './schedule/schedule.controller';
 import { ScheduleService } from './schedule/schedule.service';
+import { TransferController } from './transfer/transfer.controller';
+import { TransferService } from './transfer/transfer.service';
 
 @Module({
   imports: [
@@ -33,9 +37,15 @@ import { ScheduleService } from './schedule/schedule.service';
       { name: Player.name, schema: PlayerSchema },
       { name: Schedule.name, schema: ScheduleSchema },
       { name: Transfer.name, schema: TransferSchema },
+      { name: Config.name, schema: ConfigSchema },
     ]),
   ],
-  controllers: [UserController, TeamController, ScheduleController],
+  controllers: [
+    UserController,
+    TeamController,
+    ScheduleController,
+    TransferController,
+  ],
   providers: [
     UpdateUserService,
     JwtService,
@@ -43,6 +53,7 @@ import { ScheduleService } from './schedule/schedule.service';
     TeamService,
     DeletePlayerService,
     ScheduleService,
+    TransferService,
   ],
 })
 export class UserModule {}

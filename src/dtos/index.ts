@@ -16,3 +16,6 @@ export * from './set-game.dto';
 export * from './create-basket.dto';
 export * from './update-game-statistics.dto';
 export * from './change-game-status.dto';
+export * from './transfer.dto';
+export * from './transfer-config.dto';
+export * from './accept-transfer.dto';

@@ -15,7 +15,13 @@ export class Transfer {
     type: Types.ObjectId,
     ref: 'Team',
   })
-  team: Types.ObjectId;
+  fromTeam: Types.ObjectId;
+
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'Team',
+  })
+  toTeam: Types.ObjectId;
 
   @Prop({
     type: String,

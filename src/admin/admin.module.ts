@@ -5,6 +5,8 @@ import { JwtService } from '@nestjs/jwt';
 import {
   Basket,
   BasketSchema,
+  Config,
+  ConfigSchema,
   Game,
   GameSchema,
   League,
@@ -37,6 +39,8 @@ import { ScheduleService } from './schedule/schedule.service';
 import { BasketService } from './league/basket.service';
 import { StatisticsController } from './game/statistics/statistics.controller';
 import { StatisticsService } from './game/statistics/statistics.service';
+import { TransferController } from './transfer/transfer.controller';
+import { TransferService } from './transfer/transfer.service';
 
 @Module({
   imports: [
@@ -49,6 +53,7 @@ import { StatisticsService } from './game/statistics/statistics.service';
       { name: Basket.name, schema: BasketSchema },
       { name: Schedule.name, schema: ScheduleSchema },
       { name: Transfer.name, schema: TransferSchema },
+      { name: Config.name, schema: ConfigSchema },
     ]),
   ],
   providers: [
@@ -63,6 +68,7 @@ import { StatisticsService } from './game/statistics/statistics.service';
     ScheduleService,
     BasketService,
     StatisticsService,
+    TransferService,
   ],
   controllers: [
     AdminController,
@@ -70,6 +76,7 @@ import { StatisticsService } from './game/statistics/statistics.service';
     GameController,
     ScheduleController,
     StatisticsController,
+    TransferController,
   ],
 })
 export class AdminModule {}

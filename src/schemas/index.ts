@@ -6,3 +6,4 @@ export * from './game.schema';
 export * from './league.schema';
 export * from './schedule.schema';
 export * from './transfer.schema';
+export * from './config.schema';
