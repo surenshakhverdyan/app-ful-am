@@ -46,7 +46,7 @@ export class TransferService {
 
       const transferred = (
         await transfer.populate({
-          path: 'team',
+          path: 'toTeam',
           model: 'Team',
           select: 'name',
         })
