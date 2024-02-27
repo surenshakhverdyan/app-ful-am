@@ -62,7 +62,7 @@ export class AdminController {
   }
 
   @Delete('delete-player')
-  deltePlayer(@Body() dto: DeletePlayerDto): Promise<boolean> {
+  deletePlayer(@Body() dto: DeletePlayerDto): Promise<boolean> {
     return this.deletePlayerService.DeletePlayer(dto);
   }
 
