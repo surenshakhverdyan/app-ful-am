@@ -1,9 +1,9 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { InjectModel } from '@nestjs/mongoose';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Request } from 'express';
-import { Model, Types } from 'mongoose';
+import { Connection, Model, Types } from 'mongoose';
 import { extname } from 'path';
 import * as fs from 'fs';
 
@@ -18,6 +18,7 @@ export class TeamService {
     @InjectModel(Team.name) private teamModel: Model<Team>,
     @InjectModel(Player.name) private playerModel: Model<Player>,
     @InjectModel(User.name) private userModel: Model<User>,
+    @InjectConnection() private connection: Connection,
     @Inject(REQUEST) private request: Request,
     private jwtService: JwtService,
     private tokenService: TokenService,
@@ -32,7 +33,11 @@ export class TeamService {
     const user = await this.userModel.findById(sub);
     const savedImages: Array<string> = [];
 
+    const session = await this.connection.startSession();
+
     try {
+      session.startTransaction();
+
       if (avatars['avatar'] !== undefined) {
         const fileName = `${Date.now() + Math.floor(Math.random() * 99999)}${extname(avatars['avatar'][0].originalname)}`;
         fs.writeFileSync(`uploads/${fileName}`, avatars['avatar'][0].buffer);
@@ -41,14 +46,17 @@ export class TeamService {
       }
       dto.user = user._id;
 
-      const team = await this.teamModel.create({
-        name: dto.name,
-        avatar: dto.avatar,
-        user: dto.user,
-      });
+      const [team] = await this.teamModel.create(
+        {
+          name: dto.name,
+          avatar: dto.avatar,
+          user: dto.user,
+        },
+        { session },
+      );
 
       user.team = team._id;
-      await user.save();
+      await user.save({ session });
 
       for (let i = 0; i < dto.players.length; i++) {
         if (avatars[`players[${i}][avatar]`] !== undefined) {
@@ -61,15 +69,21 @@ export class TeamService {
           savedImages.push(fileName);
         }
         dto.players[i].team = team._id;
-        const player = await this.playerModel.create(dto.players[i]);
+        const [player] = await this.playerModel.create(
+          { ...dto.players[i] },
+          { session },
+        );
         team.players.push(player._id);
-        await team.save();
+        await team.save({ session });
       }
 
       if (dto.players.length > 8) {
         team.status = Status.Active;
-        team.save();
+        await team.save({ session });
       }
+
+      await session.commitTransaction();
+      session.endSession();
 
       return team.populate({
         path: 'players',
@@ -77,6 +91,9 @@ export class TeamService {
         select: '-updatedAt -createdAt -__v -team',
       });
     } catch (error: any) {
+      await session.abortTransaction();
+      session.endSession();
+
       for (let i = 0; i < savedImages.length; i++) {
         const element = savedImages[i];
         fs.promises.unlink(`uploads/${element}`);
@@ -159,7 +176,11 @@ export class TeamService {
     const { sub } = this.jwtService.decode(token);
     const savedImage: Array<string> = [];
 
+    const session = await this.connection.startSession();
+
     try {
+      session.startTransaction();
+
       const team = await this.teamModel.findOne({
         user: new Types.ObjectId(sub),
       });
@@ -171,17 +192,23 @@ export class TeamService {
       }
       dto.team = team._id;
 
-      const player = await this.playerModel.create(dto);
+      const [player] = await this.playerModel.create({ ...dto }, { session });
       team.players.push(player._id);
-      await team.save();
+      await team.save({ session });
 
       if (team.players.length > 8) {
         team.status = Status.Active;
-        await team.save();
+        await team.save({ session });
       }
+
+      await session.commitTransaction();
+      session.endSession();
 
       return player;
     } catch (error: any) {
+      await session.abortTransaction();
+      session.endSession();
+
       for (let i = 0; i < savedImage.length; i++) {
         const element = savedImage[i];
         fs.promises.unlink(`uploads/${element}`);

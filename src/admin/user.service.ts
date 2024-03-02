@@ -1,8 +1,8 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 import { MailerService } from '@nestjs-modules/mailer';
-import { Model } from 'mongoose';
+import { Connection, Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 import { CreateUserDto, DeleteUserDto } from 'src/dtos';
@@ -16,6 +16,7 @@ export class UserService {
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Team.name) private teamModel: Model<Team>,
     @InjectModel(Player.name) private playerModel: Model<Player>,
+    @InjectConnection() private connection: Connection,
     private readonly configService: ConfigService,
     private mailerService: MailerService,
   ) {}
@@ -50,13 +51,20 @@ export class UserService {
   }
 
   async deleteUser(dto: DeleteUserDto): Promise<boolean> {
+    const session = await this.connection.startSession();
     try {
-      const user = await this.userModel.findByIdAndDelete(dto.userId);
-      const team = await this.teamModel.findOneAndUpdate(
-        { user: user._id },
-        { $set: { status: Status.Deleted } },
-        { new: true },
-      );
+      session.startTransaction();
+
+      const user = await this.userModel
+        .findByIdAndDelete(dto.userId)
+        .session(session);
+      const team = await this.teamModel
+        .findOneAndUpdate(
+          { user: user._id },
+          { $set: { status: Status.Deleted } },
+          { new: true },
+        )
+        .session(session);
       if (team && team.players.length > 0) {
         team.players.map(async (player) => {
           await this.playerModel.findByIdAndUpdate(
@@ -67,8 +75,14 @@ export class UserService {
         });
       }
 
+      await session.commitTransaction();
+      session.endSession();
+
       return true;
     } catch (error: any) {
+      await session.abortTransaction();
+      session.endSession();
+
       throw new HttpException(error.message, 500);
     }
   }

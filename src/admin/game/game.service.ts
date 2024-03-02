@@ -1,8 +1,8 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { HttpException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { Connection, Model, Types } from 'mongoose';
 
 import { CreateGameDto } from 'src/dtos';
 import { Role, Status, TokenType } from 'src/enums';
@@ -17,22 +17,30 @@ export class GameService {
     @InjectModel(Game.name) private gameModel: Model<Game>,
     @InjectModel(Basket.name) private basketModel: Model<Basket>,
     @InjectModel(League.name) private leagueModel: Model<League>,
+    @InjectConnection() private connection: Connection,
     private tokenService: TokenService,
     private mailerService: MailerService,
     private readonly configService: ConfigService,
   ) {}
 
   async createGame(dto: CreateGameDto): Promise<Game> {
-    try {
-      const game = await this.gameModel.create({
-        league: new Types.ObjectId(dto.league),
-      });
+    const session = await this.connection.startSession();
 
-      await this.leagueModel.findByIdAndUpdate(
-        dto.league,
-        { $push: { games: game._id } },
-        { new: true },
+    try {
+      session.startTransaction();
+
+      const [game] = await this.gameModel.create(
+        { league: new Types.ObjectId(dto.league) },
+        { session: session },
       );
+
+      await this.leagueModel
+        .findByIdAndUpdate(
+          dto.league,
+          { $push: { games: game._id } },
+          { new: true },
+        )
+        .session(session);
 
       const basket: IPopulatedBasket = await this.basketModel
         .findById(dto.basket)
@@ -56,7 +64,6 @@ export class GameService {
           type: TokenType.GameScheduleToken,
         };
         const token = this.tokenService.jwtGameScheduleSign(payload);
-        console.log(token); // to be remove
         const link = `${this.configService.get<string>('BASE_URL')}/game-scheduler/${token}`;
         const template = scheduleGameTemplate(link);
 
@@ -68,8 +75,14 @@ export class GameService {
         });
       });
 
+      await session.commitTransaction();
+      session.endSession();
+
       return game;
     } catch (error: any) {
+      await session.abortTransaction();
+      session.endSession();
+
       throw new HttpException(error.message, 500);
     }
   }
