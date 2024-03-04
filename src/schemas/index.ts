@@ -7,3 +7,4 @@ export * from './league.schema';
 export * from './schedule.schema';
 export * from './transfer.schema';
 export * from './config.schema';
+export * from './join-request.schema';

@@ -19,3 +19,4 @@ export * from './change-game-status.dto';
 export * from './transfer.dto';
 export * from './transfer-config.dto';
 export * from './accept-transfer.dto';
+export * from './create-join-request.dto';

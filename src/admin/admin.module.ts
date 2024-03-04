@@ -9,6 +9,8 @@ import {
   ConfigSchema,
   Game,
   GameSchema,
+  JoinRequest,
+  JoinRequestSchema,
   League,
   LeagueSchema,
   Player,
@@ -41,6 +43,8 @@ import { StatisticsController } from './game/statistics/statistics.controller';
 import { StatisticsService } from './game/statistics/statistics.service';
 import { TransferController } from './transfer/transfer.controller';
 import { TransferService } from './transfer/transfer.service';
+import { JoinRequestService } from './join-request/join-request.service';
+import { JoinRequestController } from './join-request/join-request.controller';
 
 @Module({
   imports: [
@@ -54,6 +58,7 @@ import { TransferService } from './transfer/transfer.service';
       { name: Schedule.name, schema: ScheduleSchema },
       { name: Transfer.name, schema: TransferSchema },
       { name: Config.name, schema: ConfigSchema },
+      { name: JoinRequest.name, schema: JoinRequestSchema },
     ]),
   ],
   providers: [
@@ -69,6 +74,7 @@ import { TransferService } from './transfer/transfer.service';
     BasketService,
     StatisticsService,
     TransferService,
+    JoinRequestService,
   ],
   controllers: [
     AdminController,
@@ -77,6 +83,7 @@ import { TransferService } from './transfer/transfer.service';
     ScheduleController,
     StatisticsController,
     TransferController,
+    JoinRequestController,
   ],
 })
 export class AdminModule {}
