@@ -432,6 +432,39 @@
 					]
 				},
 				{
+					"name": "joinRequests",
+					"item": [
+						{
+							"name": "join-requests",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/admin/join-requests",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"admin",
+										"join-requests"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "create-user",
 					"request": {
 						"auth": {
@@ -1314,6 +1347,33 @@
 								"public",
 								"images",
 								"1708323851010.png"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "join-request/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Name\",\n    \"email\": \"test@mail.com\",\n    \"phone\": \"+37411222222\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/join-request/create",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"join-request",
+								"create"
 							]
 						}
 					},
