@@ -20,3 +20,4 @@ export * from './transfer.dto';
 export * from './transfer-config.dto';
 export * from './accept-transfer.dto';
 export * from './create-join-request.dto';
+export * from './join-request.dto';

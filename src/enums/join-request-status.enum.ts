@@ -1,4 +1,5 @@
 export enum JoinRequestStatus {
   Active = 'active',
-  Inactive = 'inactive',
+  Accepted = 'accepted',
+  Rejected = 'rejected',
 }
