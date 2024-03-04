@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "da8e8f59-d349-426e-b47e-a2ee7c97e482",
+		"_postman_id": "19075553-724d-4a1e-9902-ef9c647559da",
 		"name": "app-ful-am",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25301126"
+		"_exporter_id": "28872600"
 	},
 	"item": [
 		{
@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"admin@mail.com\",\n    \"password\": \"156354111\"\n}",
+							"raw": "{\n    \"email\": \"user1@mail.com\",\n    \"password\": \"156354111\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -353,6 +353,85 @@
 					]
 				},
 				{
+					"name": "transfers",
+					"item": [
+						{
+							"name": "set-transfers-date",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"endTransfers\": 1709151000000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/admin/set-transfers-date",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"admin",
+										"set-transfers-date"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "transfer",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"transferId\": \"65def01d8c5162809ea46248\",\n    \"status\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/admin/transfer",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"admin",
+										"transfer"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "create-user",
 					"request": {
 						"auth": {
@@ -369,7 +448,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"User6\",\n    \"email\": \"user6@mail.com\",\n    \"phone\": \"+37411111117\",\n    \"password\": \"156354111\",\n    \"role\": \"user\"\n}",
+							"raw": "{\n    \"name\": \"User 2\",\n    \"email\": \"user_2@mail.com\",\n    \"phone\": \"+37411222222\",\n    \"password\": \"156354111\",\n    \"role\": \"user\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -846,7 +925,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{USER4_TOKEN}}",
+											"value": "{{USER_TOKEN}}",
 											"type": "string"
 										}
 									]
@@ -858,7 +937,7 @@
 									"formdata": [
 										{
 											"key": "name",
-											"value": "Socker4",
+											"value": "Socker2",
 											"type": "text"
 										},
 										{
@@ -1093,6 +1172,48 @@
 									"path": [
 										"team",
 										"delete-player"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "transfer",
+					"item": [
+						{
+							"name": "create-transfer",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER2_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"playerId\": \"65dc8003bb02a19a8adb8a05\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/transfer/create-transfer",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"transfer",
+										"create-transfer"
 									]
 								}
 							},
