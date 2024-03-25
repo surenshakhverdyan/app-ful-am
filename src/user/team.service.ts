@@ -47,11 +47,13 @@ export class TeamService {
       dto.user = user._id;
 
       const [team] = await this.teamModel.create(
-        {
-          name: dto.name,
-          avatar: dto.avatar,
-          user: dto.user,
-        },
+        [
+          {
+            name: dto.name,
+            avatar: dto.avatar,
+            user: dto.user,
+          },
+        ],
         { session },
       );
 
@@ -70,7 +72,7 @@ export class TeamService {
         }
         dto.players[i].team = team._id;
         const [player] = await this.playerModel.create(
-          { ...dto.players[i] },
+          [{ ...dto.players[i] }],
           { session },
         );
         team.players.push(player._id);
