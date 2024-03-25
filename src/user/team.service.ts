@@ -153,7 +153,7 @@ export class TeamService {
     }
 
     try {
-      const player = this.playerModel.findByIdAndUpdate(
+      const player = await this.playerModel.findByIdAndUpdate(
         dto.playerId,
         { $set: dto },
         { new: true },
